@@ -7,7 +7,6 @@ var xhrRequest = function (url, type, callback) {
   xhr.send();
 };
 
-
 function getAPIResult() {
     var url = "http://urlab.be/spaceapi.json";
 
@@ -18,16 +17,22 @@ function getAPIResult() {
             var json = JSON.parse(responseText);
 
             var space = json["space"];
+            console.log('HackerSpace name is ' + space);
 
             var email = json["contact"]["email"];
+            console.log('HackerSpace mail is ' + email);
 
             var irc = json["contact"]["irc"];
+            console.log('HackerSpace irc is ' + irc);
 
             var facebook = json["contact"]["facebook"];
+            console.log('HackerSpace facebook is ' + facebook);
 
             var twitter = json["contact"]["twitter"];
+            console.log('HackerSpace twitter is ' + twitter);
 
             var openstate = json["state"]["open"];
+            console.log('Is HackerSpace open ? : ' + openstate);
 
             var number_of_peoples = json["sensors"]["people_now_present"][0]["value"];
             console.log('There is ' + number_of_peoples + ' persons in the hackerspace');
@@ -41,7 +46,7 @@ function getAPIResult() {
                 "KEY_IRC" : irc,
                 "KEY_FACEBOOK" : facebook,
                 "KEY_TWITTER" : twitter,
-                "KEY_OPEN_STATE" : openstate
+                "KEY_OPEN_STATE" : openstate,
                 "KEY_NUMBER_OF_PEOPLE_PRESENT" : number_of_peoples,
                 "KEY_LIST_OF_PEOPLE_PRESENT" : people_presents
             };
