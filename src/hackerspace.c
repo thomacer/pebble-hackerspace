@@ -12,7 +12,7 @@
 #define KEY_LIST_OF_PEOPLE_PRESENT 7
 
 static char* space_info_title[NUMBER_OF_SCRAPPED_INFO];
-/* static char* space_info_subtitle[NUMBER_OF_SCRAPPED_INFO]; */
+static char* space_info_subtitle[NUMBER_OF_SCRAPPED_INFO];
 /* static char** space_info_icons[NUMBER_OF_SCRAPPED_INFO]; */
 
 /* This variable will be set when we get the JSON from SpaceAPI. */
@@ -49,6 +49,10 @@ static void inbox_dropped_callback(AppMessageResult reason, void *context) {
 
 static void inbox_connected_person_callback(DictionaryIterator *iterator, void *context) {
   Tuple *space_tuple = dict_find(iterator, KEY_SPACE);
+  Tuple *email_tuple = dict_find(iterator, KEY_EMAIL);
+  Tuple *irc_tuple = dict_find(iterator, KEY_IRC);
+  Tuple *facebook_tuple = dict_find(iterator, KEY_FACEBOOK);
+  Tuple *twitter_tuple = dict_find(iterator, KEY_TWITTER);
   Tuple *number_tuple = dict_find(iterator, KEY_NUMBER_OF_PEOPLE_PRESENT);
   /* Tuple *person_present_tuple = dict_find(iterator, KEY_LIST_OF_PEOPLE_PRESENT); */
 
@@ -57,29 +61,73 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
   if (space_tuple) {
     snprintf(space_name_buffer, sizeof(space_name_buffer), "%s", space_tuple->value->cstring);
   }
-  if (number_tuple) {
-    static char number_of_people_buffer[16];
-    snprintf(number_of_people_buffer, sizeof(number_of_people_buffer), "%d persons connected.", (int) number_tuple->value->int32);
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
-    space_info_title[space_info_current_number] = number_of_people_buffer;
+
+  if (email_tuple) {
+    static char email_buffer[32];
+    static char email_subtitle_buffer[32];
+    snprintf(email_buffer, sizeof(email_buffer), "Mail.");
+    snprintf(email_subtitle_buffer, sizeof(email_subtitle_buffer), "%s", email_tuple->value->cstring);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added mail connected in position : %i", space_info_current_number);
+    space_info_title[space_info_current_number] = email_buffer;
+    space_info_subtitle[space_info_current_number] = email_subtitle_buffer;
     ++space_info_current_number;
   }
+
+  if (irc_tuple) {
+    static char irc_buffer[32];
+    static char irc_subtitle_buffer[32];
+    snprintf(irc_buffer, sizeof(irc_buffer), "IRC");
+    snprintf(irc_subtitle_buffer, sizeof(irc_subtitle_buffer), "%s", irc_tuple->value->cstring);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added irc connected in position : %i", space_info_current_number);
+    space_info_title[space_info_current_number] = irc_buffer;
+    space_info_subtitle[space_info_current_number] = irc_subtitle_buffer;
+    ++space_info_current_number;
+  }
+
+  if (facebook_tuple) {
+    static char facebook_buffer[32];
+    static char facebook_subtitle_buffer[32];
+    snprintf(facebook_buffer, sizeof(facebook_buffer), "Facebook");
+    snprintf(facebook_subtitle_buffer, sizeof(facebook_subtitle_buffer), "%s", facebook_tuple->value->cstring);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added facebook connected in position : %i", space_info_current_number);
+    space_info_title[space_info_current_number] = facebook_buffer;
+    space_info_subtitle[space_info_current_number] = facebook_subtitle_buffer;
+    ++space_info_current_number;
+  }
+
+  if (twitter_tuple) {
+    static char twitter_buffer[32];
+    static char twitter_subtitle_buffer[32];
+    snprintf(twitter_buffer, sizeof(twitter_buffer), "Twitter");
+    snprintf(twitter_subtitle_buffer, sizeof(twitter_subtitle_buffer), "%s", twitter_tuple->value->cstring);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added twitter connected in position : %i", space_info_current_number);
+    space_info_title[space_info_current_number] = twitter_buffer;
+    space_info_subtitle[space_info_current_number] = twitter_subtitle_buffer;
+    ++space_info_current_number;
+  }
+
+  if (number_tuple) {
+    static char number_of_people_buffer[32];
+    static char number_of_people_subtitle_buffer[32];
+    snprintf(number_of_people_buffer, sizeof(number_of_people_buffer), "Persons connected.");
+    snprintf(number_of_people_subtitle_buffer, sizeof(number_of_people_subtitle_buffer), "%d", (int) number_tuple->value->int32);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
+    space_info_title[space_info_current_number] = number_of_people_buffer;
+    space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer;
+    ++space_info_current_number;
+  }
+
 
   /* text_layer_set_text(number_of_people_layer, number_of_people_buffer); */
 
   layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
+  menu_layer_reload_data(s_menu_layer);
 }
 
 /* ------------------------------------------------------------------------
  *                      Gestion lignes de la liste
  * ------------------------------------------------------------------------
  */
-
-
-/* - Header.
- * - Navigation.
- */
-#define NUMBER_OF_SECTIONS 2
 
 /* @desc Return number of sections.
  *
@@ -88,12 +136,13 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
  *
  * @return {uint16_t} : Number of sections.
  */
+/* - Header.
+ * - Navigation.
+ */
+#define NUMBER_OF_SECTIONS 2
 static uint16_t menu_get_num_sections_callback(MenuLayer* menu_layer, void* data) {
     return NUMBER_OF_SECTIONS;
 }
-
-/* Only 1 image is shown. */
-#define NUMBER_OF_ITEM_IN_HEADER 1
 
 /* @desc Get number of "items" by "section".
  *
@@ -101,6 +150,8 @@ static uint16_t menu_get_num_sections_callback(MenuLayer* menu_layer, void* data
  * @param {section_index} :
  * @param {data} :
  */
+/* Only 1 image is shown. */
+#define NUMBER_OF_ITEM_IN_HEADER 1
 static uint16_t menu_get_num_rows_callback(MenuLayer* menu_layer, uint16_t section_index, void* data) {
     switch (section_index) {
         case 0:
@@ -125,21 +176,21 @@ static int16_t menu_get_header_height_callback(MenuLayer* menu_layer, uint16_t s
 /* @desc Get cell size.
  */
 static int16_t menu_get_cell_height_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *callback_context) {
-    if (menu_layer_is_index_selected(menu_layer, cell_index)) {
-        switch (cell_index->section) {
-            case 0:
-                switch (cell_index->row) {
-                    case 0:
-                        return gbitmap_get_bounds(s_logo_bitmap).size.h;
-                    default:
-                        return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
-                }
-            default:
-                return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
-        }
-    } else {
-        return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
+    switch (cell_index->section) {
+        case 0:
+            switch (cell_index->row) {
+                case 0:
+                    return gbitmap_get_bounds(s_logo_bitmap).size.h;
+                default:
+                    return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
+            }
+        default:
+            return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
     }
+    /* if (menu_layer_is_index_selected(menu_layer, cell_index)) { */
+    /* } else { */
+    /*     return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT; */
+    /* } */
 }
 
 /* @desc Draw the headers sections.
@@ -175,7 +226,7 @@ static void menu_draw_row_callback(GContext* ctx, const Layer* cell_layer, MenuI
             graphics_draw_bitmap_in_rect(ctx, s_logo_bitmap, GRect(x_offset, y_offset, size.w, size.h));
             break;
         case 1:
-            menu_cell_basic_draw(ctx, cell_layer, space_info_title[cell_index->row], NULL, NULL);
+            menu_cell_basic_draw(ctx, cell_layer, space_info_title[cell_index->row], space_info_subtitle[cell_index->row],NULL);
             break;
     }
 }
