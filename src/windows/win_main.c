@@ -1,5 +1,7 @@
 #include "win_main.h"
 #include "../globals.h"
+#include "./win_contact.h"
+#include "./win_state.h"
 
 static Window* window;
 
@@ -46,10 +48,11 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
   t_facebook = dict_find(iterator, KEY_FACEBOOK);
   t_twitter = dict_find(iterator, KEY_TWITTER);
 
-  win_contact_init();
+  /* win_contact_init(); */
+  win_state_init();
 
   if (t_space) {
-    snprintf(space_name_buffer, sizeof(space_name_buffer), "%s", t_space->value->cstring);
+    snprintf(space_name_buffer, BUFFER_SIZE, "%s", t_space->value->cstring);
   }
 
   space_info_current_number = 0;
@@ -57,28 +60,28 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
   /* Creating the "Contact" menu button
    * It will acces to another window.
    */
-  static char contact_window_buffer[32];
-  static char contact_window_subtitle_buffer[32];
-  snprintf(contact_window_buffer, sizeof(contact_window_buffer), "Contact.");
-  snprintf(contact_window_subtitle_buffer, sizeof(contact_window_subtitle_buffer), "Contact info about %s", t_space->value->cstring);
+  static char contact_window_buffer[BUFFER_SIZE];
+  static char contact_window_subtitle_buffer[BUFFER_SIZE];
+  snprintf(contact_window_buffer, BUFFER_SIZE, "Contact.");
+  snprintf(contact_window_subtitle_buffer, BUFFER_SIZE, "Contact info about %s", t_space->value->cstring);
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Contact section added : %i", space_info_current_number);
   space_info_title[space_info_current_number] = contact_window_buffer;
   space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
-  space_info_callback[space_info_current_number] = win_contact_show;
+  /* space_info_callback[space_info_current_number] = win_contact_show; */
 
   ++space_info_current_number;
 
   /* Drawing the second section with info about person present in the hackerspace.
    */
   if (t_number) {
-    static char number_of_people_buffer[32];
-    static char number_of_people_subtitle_buffer[32];
-    snprintf(number_of_people_buffer, sizeof(number_of_people_buffer), "Persons connected.");
-    snprintf(number_of_people_subtitle_buffer, sizeof(number_of_people_subtitle_buffer), "%d", (int) t_number->value->int32);
+    static char number_of_people_buffer[BUFFER_SIZE];
+    static char number_of_people_subtitle_buffer[BUFFER_SIZE];
+    snprintf(number_of_people_buffer, BUFFER_SIZE, "Persons connected.");
+    snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%d persons", (int) t_number->value->int32);
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
     space_info_title[space_info_current_number] = number_of_people_buffer;
     space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer;
-    /* space_info_callback[space_info_current_number] = NULL; */
+    space_info_callback[space_info_current_number] = win_state_show;
     ++space_info_current_number;
   }
 
@@ -289,6 +292,8 @@ void win_main_init(void) {
 
 void win_main_deinit(void) {
   window_destroy(window);
+  /* win_contact_deinit(); */
+  win_state_deinit();
 }
 
 

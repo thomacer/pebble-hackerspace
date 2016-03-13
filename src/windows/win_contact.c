@@ -4,7 +4,6 @@
 static Window* window = NULL;
 
 static SimpleMenuLayer* s_menu_layer = NULL;
-static GBitmap* s_header_bitmap = NULL;
 
 static uint16_t space_contact_current_number = 0;
 

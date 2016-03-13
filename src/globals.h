@@ -15,14 +15,16 @@
 #define KEY_NUMBER_OF_PEOPLE_PRESENT 6
 #define KEY_LIST_OF_PEOPLE_PRESENT 7
 
-static Tuple* t_space = NULL;
-static Tuple* t_number = NULL;
-static Tuple* t_email = NULL;
-static Tuple* t_irc = NULL;
-static Tuple* t_facebook = NULL;
-static Tuple* t_twitter = NULL;
+#define BUFFER_SIZE 32
+
+extern Tuple* t_space;
+extern Tuple* t_number;
+extern Tuple* t_email;
+extern Tuple* t_irc;
+extern Tuple* t_facebook;
+extern Tuple* t_twitter;
 
 /* Keep track of the hackerspace name */
-static char space_name_buffer[32];
+extern char* space_name_buffer;
 
 #endif
