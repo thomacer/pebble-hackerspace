@@ -16,31 +16,31 @@ function getAPIResult() {
         function(responseText) {
             var json = JSON.parse(responseText);
 
-            var space = json["space"];
+            var space = json['space'];
             console.log('HackerSpace name is ' + space);
 
-            var email = json["contact"]["email"];
+            var email = json['contact']['email'];
             console.log('HackerSpace mail is ' + email);
 
-            var irc = json["contact"]["irc"];
+            var irc = json['contact']['irc'];
             console.log('HackerSpace irc is ' + irc);
 
-            var facebook = json["contact"]["facebook"];
+            var facebook = json['contact']['facebook'];
             console.log('HackerSpace facebook is ' + facebook);
 
-            var twitter = json["contact"]["twitter"];
+            var twitter = json['contact']['twitter'];
             console.log('HackerSpace twitter is ' + twitter);
 
-            var openstate = json["state"]["open"];
+            var openstate = json['state']['open'];
             console.log('Is HackerSpace open ? : ' + openstate);
 
-            var number_of_peoples = json["sensors"]["people_now_present"][0]["value"];
+            var number_of_peoples = json['sensors']['people_now_present'][0]['value'];
             console.log('There is ' + number_of_peoples + ' persons in the hackerspace');
 
-            var people_presents = json["sensors"]["people_now_present"][0]["names"];
+            var people_presents = json['sensors']['people_now_present'][0]['names'];
             console.log('Names are : ' + people_presents);
 
-            result_dict = {
+            var result_dict = {
                 "KEY_SPACE" : space,
                 "KEY_EMAIL" : email,
                 "KEY_IRC" : irc,
