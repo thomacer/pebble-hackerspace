@@ -1,39 +1,46 @@
 {
-  "uuid": "a2d33e61-7bd5-4222-8187-5de924c2ff62",
-  "shortName": "Hackerspace",
-  "longName": "Hackerspace",
-  "companyName": "thomacer",
-  "versionLabel": "1.0",
-  "sdkVersion": "3",
-  "targetPlatforms": ["aplite", "basalt", "chalk"],
-  "enableMultiJS": true,
-  "watchapp": {
-    "watchface": false
-  },
-  "appKeys": {
-    "KEY_SPACE" : 0,
-    "KEY_EMAIL" : 1,
-    "KEY_IRC" : 2,
-    "KEY_FACEBOOK" : 3,
-    "KEY_TWITTER" : 4,
-    "KEY_OPEN_STATE" : 5,
-    "KEY_NUMBER_OF_PEOPLE_PRESENT" : 6,
-    "KEY_LIST_OF_PEOPLE_PRESENT" : 7
-  },
-  "resources": {
-    "media": [
-        {
-            "type": "font",
-            "name": "FONT_PERFECT_DOS_48",
-            "file": "fonts/perfect-dos-vga.ttf",
-            "compatibility":"2.7"
-        },
-        {
-            "type": "bitmap",
-            "name": "URLAB_LOGO",
-            "file": "images/urlab.png"
-        }
-    ]
-
-  }
+    "appKeys": {
+        "KEY_EMAIL": 1,
+        "KEY_FACEBOOK": 3,
+        "KEY_IRC": 2,
+        "KEY_LIST_OF_PEOPLE_PRESENT": 7,
+        "KEY_NUMBER_OF_PEOPLE_PRESENT": 6,
+        "KEY_OPEN_STATE": 5,
+        "KEY_SPACE": 0,
+        "KEY_TWITTER": 4
+    },
+    "capabilities": [
+        ""
+    ],
+    "companyName": "thomacer",
+    "enableMultiJS": true,
+    "longName": "Hackerspace",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/urlab.png",
+                "name": "URLAB_LOGO",
+                "type": "bitmap"
+            },
+            {
+                "compatibility": "2.7",
+                "file": "fonts/perfect-dos-vga.ttf",
+                "name": "FONT_PERFECT_DOS_48",
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Hackerspace",
+    "targetPlatforms": [
+        "aplite",
+        "basalt",
+        "chalk"
+    ],
+    "uuid": "a2d33e61-7bd5-4222-8187-5de924c2ff62",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
 }
