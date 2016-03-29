@@ -1,7 +1,7 @@
 #include "./win_contact.h"
 #include "../libs/pebble-assist.h"
 
-static Window* window = NULL;
+static Window* s_window = NULL;
 
 static SimpleMenuLayer* s_menu_layer = NULL;
 
@@ -84,20 +84,20 @@ static void window_unload(Window *window) {
 }
 
 void win_contact_show(void) {
-  window_stack_push(window, true);
+  window_stack_push(s_window, true);
 }
 
 void win_contact_init(void) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "CREATING NEW WINDOW : contact_window");
-  window = window_create();
+  s_window = window_create();
 
-  window_set_window_handlers(window, (WindowHandlers) {
-    .load = window_load,
+  window_set_window_handlers(s_window, (WindowHandlers) {
+    .appear = window_load,
     .unload = window_unload,
   });
 }
 
 void win_contact_deinit(void) {
-    window_unload(window);
-    window_destroy(window);
+    /* window_unload(s_window); */
+    window_destroy(s_window);
 }

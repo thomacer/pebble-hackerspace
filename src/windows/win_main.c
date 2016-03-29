@@ -48,7 +48,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
   t_facebook = dict_find(iterator, KEY_FACEBOOK);
   t_twitter = dict_find(iterator, KEY_TWITTER);
 
-  /* win_contact_init(); */
+  win_contact_init();
   win_state_init();
 
   if (t_space) {
@@ -67,7 +67,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Contact section added : %i", space_info_current_number);
   space_info_title[space_info_current_number] = contact_window_buffer;
   space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
-  /* space_info_callback[space_info_current_number] = win_contact_show; */
+  space_info_callback[space_info_current_number] = win_contact_show;
 
   ++space_info_current_number;
 
