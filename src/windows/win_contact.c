@@ -27,41 +27,43 @@ static void window_load (Window *window) {
 
   space_contact_current_number = 0;
 
-  if (t_email) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Mail",
-        .subtitle = t_email->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added mail : %i", space_contact_current_number);
-  }
-
-  if (t_irc) {
+  if (t_contact_irc) {
     s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
         .title = "IRC",
-        .subtitle = t_irc->value->cstring,
+        .subtitle = t_contact_irc->value->cstring,
         .callback = action_callback,
     };
     DEBUG("Added irc : %i", space_contact_current_number);
   }
 
-  if (t_facebook) {
+  if (t_contact_twitter) {
+    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
+        .title = "Twitter",
+        .subtitle = t_contact_twitter->value->cstring,
+        .callback = action_callback,
+    };
+    DEBUG("Added twitter in position : %i", space_contact_current_number);
+  }
+
+  if (t_contact_facebook) {
     s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
         .title = "Facebook",
-        .subtitle = t_facebook->value->cstring,
+        .subtitle = t_contact_facebook->value->cstring,
         .callback = action_callback,
     };
     DEBUG("Added facebook : %i", space_contact_current_number);
   }
 
-  if (t_twitter) {
+  if (t_contact_email) {
     s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Twitter",
-        .subtitle = t_twitter->value->cstring,
+        .title = "Mail",
+        .subtitle = t_contact_email->value->cstring,
         .callback = action_callback,
     };
-    DEBUG("Added twitter in position : %i", space_contact_current_number);
+    DEBUG("Added mail : %i", space_contact_current_number);
   }
+
+
 
   s_menu_sections[0] = (SimpleMenuSection) {
       .title = "Contacts section",

@@ -42,11 +42,20 @@ static void inbox_dropped_callback(AppMessageResult reason, void *context) {
 static void inbox_connected_person_callback(DictionaryIterator *iterator, void *context) {
   /* Get the name of the hackerspace. */
   t_space = dict_find(iterator, KEY_SPACE);
+
+  t_contact_phone_number = dict_find(iterator, KEY_CONTACT_PHONE_NUMBER);
+  t_contact_sip_adress = dict_find(iterator, KEY_CONTACT_SIP_ADDRESS);
+  t_contact_irc = dict_find(iterator, KEY_CONTACT_IRC);
+  t_contact_twitter = dict_find(iterator, KEY_CONTACT_TWITTER);
+  t_contact_facebook = dict_find(iterator, KEY_CONTACT_FACEBOOK);
+  t_contact_identica = dict_find(iterator, KEY_CONTACT_IDENTICA);
+  t_contact_foursquare = dict_find(iterator, KEY_CONTACT_FOURSQUARE);
+  t_contact_email = dict_find(iterator, KEY_CONTACT_EMAIL);
+  t_contact_mailing_list = dict_find(iterator, KEY_CONTACT_MAILLING_LIST);
+  t_contact_jabber = dict_find(iterator, KEY_CONTACT_JABBER);
+  t_contact_issue_mail = dict_find(iterator, KEY_CONTACT_ISSUE_MAIL);
+
   t_number = dict_find(iterator, KEY_NUMBER_OF_PEOPLE_PRESENT);
-  t_email = dict_find(iterator, KEY_EMAIL);
-  t_irc = dict_find(iterator, KEY_IRC);
-  t_facebook = dict_find(iterator, KEY_FACEBOOK);
-  t_twitter = dict_find(iterator, KEY_TWITTER);
 
   win_contact_init();
   win_state_init();

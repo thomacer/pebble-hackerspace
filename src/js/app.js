@@ -19,18 +19,49 @@ function getAPIResult() {
             var space = json['space'];
             console.log('HackerSpace name is ' + space);
 
-            var email = json['contact']['email'];
-            console.log('HackerSpace mail is ' + email);
+            var website_url = json['url'];
+            console.log('HackerSpace url is ' + website_url);
+
+            // ---- Contact section information.
+            var phone_number = json['contact']['phone'];
+            console.log('HackerSpace phone number is ' + phone_number);
+
+            var sip_address = json['contact']['sip'];
+            console.log('HackerSpace sip adress is ' + sip_address);
+
+            // TODO var keymasters = json['contact']['keymasters'];
 
             var irc = json['contact']['irc'];
             console.log('HackerSpace irc is ' + irc);
 
-            var facebook = json['contact']['facebook'];
-            console.log('HackerSpace facebook is ' + facebook);
-
             var twitter = json['contact']['twitter'];
             console.log('HackerSpace twitter is ' + twitter);
 
+            var facebook = json['contact']['facebook'];
+            console.log('HackerSpace facebook is ' + facebook);
+
+            // TODO var google = json['contact']['google'];
+
+            var identica = json['contact']['identica'];
+            console.log('HackerSpace identica is ' + identica);
+
+            var foursquare_id = json['contact']['foursquare'];
+            console.log('HackerSpace foursquare ID is ' + foursquare_id);
+
+            var email = json['contact']['email'];
+            console.log('HackerSpace mail is ' + email);
+
+            var mailing_list = json['contact']['ml'];
+            console.log('HackerSpace mailing list address is ' + mailing_list);
+
+            var jabber = json['contact']['jabber'];
+            console.log('HackerSpace jabber chatroom address is ' + jabber);
+
+            var mail_issue = json['contact']['issue_mail'];
+            console.log('HackerSpace mail for issues is ' + mail_issue);
+            // -----------------------------------------------------------------
+
+            // ---- State of the Hackerspace section.
             var openstate = json['state']['open'];
             console.log('Is HackerSpace open ? : ' + openstate);
 
@@ -39,13 +70,23 @@ function getAPIResult() {
 
             var people_presents = json['sensors']['people_now_present'][0]['names'];
             console.log('Names are : ' + people_presents);
+            // -----------------------------------------------------------------
 
             var result_dict = {
                 "KEY_SPACE" : space,
-                "KEY_EMAIL" : email,
-                "KEY_IRC" : irc,
-                "KEY_FACEBOOK" : facebook,
-                "KEY_TWITTER" : twitter,
+                
+                "KEY_CONTACT_PHONE_NUMBER" : phone_number,
+                "KEY_CONTACT_SIP_ADDRESS" : sip_address,
+                "KEY_CONTACT_IRC" : irc,
+                "KEY_CONTACT_TWITTER" : twitter,
+                "KEY_CONTACT_FACEBOOK" : facebook,
+                "KEY_CONTACT_IDENTICA" : identica,
+                "KEY_CONTACT_FOURSQUARE" : foursquare_id,
+                "KEY_CONTACT_EMAIL" : email,
+                "KEY_CONTACT_MAILLING_LIST" : mailing_list,
+                "KEY_CONTACT_JABBER" : jabber,
+                "KEY_CONTACT_ISSUE_MAIL" : mail_issue,
+
                 "KEY_OPEN_STATE" : openstate,
                 "KEY_NUMBER_OF_PEOPLE_PRESENT" : number_of_peoples,
                 "KEY_LIST_OF_PEOPLE_PRESENT" : people_presents
