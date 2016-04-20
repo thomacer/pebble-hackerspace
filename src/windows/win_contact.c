@@ -94,7 +94,7 @@ void win_contact_init(void) {
   s_window = window_create();
 
   window_set_window_handlers(s_window, (WindowHandlers) {
-    .appear = window_load,
+    .load = window_load,
     .unload = window_unload,
   });
 }

@@ -1,22 +1,27 @@
 {
     "appKeys": {
-        "KEY_SPACE": 0,
+        "KEY_TYPE" : 99,
 
-        "KEY_CONTACT_PHONE_NUMBER" : 1,
-        "KEY_CONTACT_SIP_ADDRESS" : 2,
-        "KEY_CONTACT_IRC" : 3,                                         
-        "KEY_CONTACT_TWITTER" : 4,
-        "KEY_CONTACT_FACEBOOK" : 5,
-        "KEY_CONTACT_IDENTICA" : 6,
-        "KEY_CONTACT_FOURSQUARE" : 7,
-        "KEY_CONTACT_EMAIL" : 8,
-        "KEY_CONTACT_MAILLING_LIST" : 9,
-        "KEY_CONTACT_JABBER" : 10,
-        "KEY_CONTACT_ISSUE_MAIL" : 11,
+        "KEY_SPACE": 100,
+        "KEY_CONTACT_PHONE_NUMBER" : 101,
+        "KEY_CONTACT_SIP_ADDRESS" : 102,
+        "KEY_CONTACT_IRC" : 103,                                         
+        "KEY_CONTACT_TWITTER" : 104,
+        "KEY_CONTACT_FACEBOOK" : 105,
+        "KEY_CONTACT_IDENTICA" : 106,
+        "KEY_CONTACT_FOURSQUARE" : 107,
+        "KEY_CONTACT_EMAIL" : 108,
+        "KEY_CONTACT_MAILLING_LIST" : 109,
+        "KEY_CONTACT_JABBER" : 110,
+        "KEY_CONTACT_ISSUE_MAIL" : 111,
 
-        "KEY_OPEN_STATE": 12,
-        "KEY_NUMBER_OF_PEOPLE_PRESENT": 13,
-        "KEY_LIST_OF_PEOPLE_PRESENT": 14
+        "KEY_OPEN_STATE": 112,
+        "KEY_NUMBER_OF_PEOPLE_PRESENT": 113,
+        "KEY_LIST_OF_PEOPLE_PRESENT": 114,
+
+        "KEY_ELEMENT" : 200,
+        "KEY_INDEX" : 201,
+        "KEY_SIZE" : 202
     },
     "capabilities": [
         ""

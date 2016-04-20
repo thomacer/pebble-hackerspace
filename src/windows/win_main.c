@@ -21,83 +21,6 @@ static char* space_info_subtitle[MAX_NUMBER_OF_MENU];
 /* static char** space_info_icons[MAX_NUMBER_OF_MENU]; */
 static void (*space_info_callback[MAX_NUMBER_OF_MENU]) () = {};
 
-
-/* ------------------------------------------------------------------------
- *                      Partie communication avec l'API.
- * ------------------------------------------------------------------------
- */
-
-static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
-}
-
-static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
-}
-
-static void inbox_dropped_callback(AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
-}
-
-static void inbox_connected_person_callback(DictionaryIterator *iterator, void *context) {
-  /* Get the name of the hackerspace. */
-  t_space = dict_find(iterator, KEY_SPACE);
-
-  t_contact_phone_number = dict_find(iterator, KEY_CONTACT_PHONE_NUMBER);
-  t_contact_sip_adress = dict_find(iterator, KEY_CONTACT_SIP_ADDRESS);
-  t_contact_irc = dict_find(iterator, KEY_CONTACT_IRC);
-  t_contact_twitter = dict_find(iterator, KEY_CONTACT_TWITTER);
-  t_contact_facebook = dict_find(iterator, KEY_CONTACT_FACEBOOK);
-  t_contact_identica = dict_find(iterator, KEY_CONTACT_IDENTICA);
-  t_contact_foursquare = dict_find(iterator, KEY_CONTACT_FOURSQUARE);
-  t_contact_email = dict_find(iterator, KEY_CONTACT_EMAIL);
-  t_contact_mailing_list = dict_find(iterator, KEY_CONTACT_MAILLING_LIST);
-  t_contact_jabber = dict_find(iterator, KEY_CONTACT_JABBER);
-  t_contact_issue_mail = dict_find(iterator, KEY_CONTACT_ISSUE_MAIL);
-
-  t_number = dict_find(iterator, KEY_NUMBER_OF_PEOPLE_PRESENT);
-
-  win_contact_init();
-  win_state_init();
-
-  if (t_space) {
-    snprintf(space_name_buffer, BUFFER_SIZE, "%s", t_space->value->cstring);
-  }
-
-  space_info_current_number = 0;
-
-  /* Creating the "Contact" menu button
-   * It will acces to another window.
-   */
-  static char contact_window_buffer[BUFFER_SIZE];
-  static char contact_window_subtitle_buffer[BUFFER_SIZE];
-  snprintf(contact_window_buffer, BUFFER_SIZE, "Contact.");
-  snprintf(contact_window_subtitle_buffer, BUFFER_SIZE, "Contact info about %s", t_space->value->cstring);
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Contact section added : %i", space_info_current_number);
-  space_info_title[space_info_current_number] = contact_window_buffer;
-  space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
-  space_info_callback[space_info_current_number] = win_contact_show;
-
-  ++space_info_current_number;
-
-  /* Drawing the second section with info about person present in the hackerspace.
-   */
-  if (t_number) {
-    static char number_of_people_buffer[BUFFER_SIZE];
-    static char number_of_people_subtitle_buffer[BUFFER_SIZE];
-    snprintf(number_of_people_buffer, BUFFER_SIZE, "Persons connected.");
-    snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%d persons", (int) t_number->value->int32);
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
-    space_info_title[space_info_current_number] = number_of_people_buffer;
-    space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer;
-    space_info_callback[space_info_current_number] = win_state_show;
-    ++space_info_current_number;
-  }
-
-  layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
-  menu_layer_reload_data(s_menu_layer);
-}
-
 /* ------------------------------------------------------------------------
  *                      MENU HANDLING
  * ------------------------------------------------------------------------
@@ -280,6 +203,48 @@ static void window_unload(Window *window) {
   menu_layer_destroy(s_menu_layer);
 }
 
+void win_main_update(void) {
+  /* win_contact_init(); */
+  /* win_state_init(); */
+
+  if (t_space) {
+      snprintf(space_name_buffer, BUFFER_SIZE, "%s", t_space->value->cstring);
+  }
+
+  space_info_current_number = 0;
+
+  /* Drawing the second section with info about person present in the hackerspace.
+   */
+  if (t_number) {
+      static char number_of_people_buffer[BUFFER_SIZE];
+      static char number_of_people_subtitle_buffer[BUFFER_SIZE];
+      snprintf(number_of_people_buffer, BUFFER_SIZE, "Persons connected.");
+      snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%d persons", (int) t_number->value->int32);
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
+      space_info_title[space_info_current_number] = number_of_people_buffer;
+      space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer;
+      space_info_callback[space_info_current_number] = win_state_show;
+      ++space_info_current_number;
+  }
+
+  /* Creating the "Contact" menu button
+   * It will acces to another window.
+   */
+  static char contact_window_buffer[BUFFER_SIZE];
+  static char contact_window_subtitle_buffer[BUFFER_SIZE];
+  snprintf(contact_window_buffer, BUFFER_SIZE, "Contact.");
+  snprintf(contact_window_subtitle_buffer, BUFFER_SIZE, "Contact info about %s", t_space->value->cstring);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Contact section added : %i", space_info_current_number);
+  space_info_title[space_info_current_number] = contact_window_buffer;
+  space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
+  space_info_callback[space_info_current_number] = win_contact_show;
+
+  ++space_info_current_number;
+
+  layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
+  menu_layer_reload_data(s_menu_layer);
+}
+
 void win_main_init(void) {
   strcpy(space_name_buffer, "Hackerspace");
 
@@ -289,14 +254,6 @@ void win_main_init(void) {
     .unload = window_unload,
   });
   window_stack_push(window, true);
-
-  // Register callbacks
-  app_message_register_inbox_received(inbox_connected_person_callback);
-  app_message_register_inbox_dropped(inbox_dropped_callback);
-  app_message_register_outbox_failed(outbox_failed_callback);
-  app_message_register_outbox_sent(outbox_sent_callback);
-
-  app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
 }
 
 void win_main_deinit(void) {
@@ -304,5 +261,3 @@ void win_main_deinit(void) {
   /* win_contact_deinit(); */
   win_state_deinit();
 }
-
-

@@ -7,6 +7,37 @@ var xhrRequest = function (url, type, callback) {
   xhr.send();
 };
 
+function sendNextItem(items, index) {
+    // Build message
+    var dict = {};
+    dict['KEY_ELEMENT'] = items[index];
+    dict['KEY_INDEX'] = index;
+    dict['KEY_SIZE'] = items.length;
+    dict['KEY_TYPE'] = 1;
+
+    // Send the message
+    Pebble.sendAppMessage(dict, function () {
+        // Use success callback to increment index
+        index++;
+
+        console.log("SENT (list) : " + dict);
+
+        if(index < items.length) {
+            // Send next item
+            sendNextItem(items, index);
+        } else {
+            console.log('Last item sent!');
+        }
+    }, function () {
+        console.log('Item transmission failed at index: ' + index);
+    });
+}
+
+function send_people_present_list (list) {
+    var index = 0;
+    sendNextItem(list, index);
+}
+
 function getAPIResult() {
     var url = "http://urlab.be/spaceapi.json";
 
@@ -89,12 +120,15 @@ function getAPIResult() {
 
                 "KEY_OPEN_STATE" : openstate,
                 "KEY_NUMBER_OF_PEOPLE_PRESENT" : number_of_peoples,
-                "KEY_LIST_OF_PEOPLE_PRESENT" : people_presents
+                "KEY_LIST_OF_PEOPLE_PRESENT" : people_presents,
+
+                "KEY_TYPE" : 0,
             };
 
             // Send to Pebble
             Pebble.sendAppMessage(result_dict,
                 function(e) {
+                    send_people_present_list(people_presents);
                     console.log('API info sent to Pebble successfully!');
                 },
                 function(e) {
