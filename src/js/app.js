@@ -1,3 +1,6 @@
+var SPACE_INFO_TYPE = 0;
+var PEOPLE_PRESENT_LIST_ELEMENT_TYPE = 1;
+
 var xhrRequest = function (url, type, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
@@ -7,38 +10,47 @@ var xhrRequest = function (url, type, callback) {
   xhr.send();
 };
 
-function sendNextItem(items, index) {
-    // Build message
-    var dict = {};
-    dict['KEY_ELEMENT'] = items[index];
-    dict['KEY_INDEX'] = index;
-    dict['KEY_SIZE'] = items.length;
-    dict['KEY_TYPE'] = 1;
 
+/* @desc : Send a preformated list item to pebble c.
+ *
+ * @param {item} : Item from a list.
+ * @param {index} : Index of the item.
+ */
+var sendListItem = function (item, index) {
     // Send the message
-    Pebble.sendAppMessage(dict, function () {
-        // Use success callback to increment index
-        index++;
-
-        console.log("SENT (list) : " + dict);
-
-        if(index < items.length) {
-            // Send next item
-            sendNextItem(items, index);
-        } else {
-            console.log('Last item sent!');
-        }
+    Pebble.sendAppMessage(item, function () {
+        console.log("SENT (list) : " + JSON.stringify(dict));
     }, function () {
-        console.log('Item transmission failed at index: ' + index);
+        console.log('Item transmission failed at index ' + index + ' for : ' + items);
     });
 }
 
-function send_people_present_list (list) {
+/* @desc : Send the list of people present in the space to the pebble.
+ *
+ * @param {list} : List of people present.
+ */
+var send_people_present_list = function (list) {
+    if (!list) {
+        console.log("No people info to send.");
+        return; 
+    }
+
     var index = 0;
-    sendNextItem(list, index);
+
+    for (var index = 0; index < list.length; ++i) {
+        // Build message
+        var item = {
+            "KEY_ELEMENT" : list[index],
+            "KEY_INDEX" : index,
+            "KEY_SIZE" : list.length,
+            "KEY_TYPE" : 1,
+        };
+
+        sendListItem(item, index);
+    }
 }
 
-function getAPIResult() {
+var getAPIResult = function () {
     var url = "http://urlab.be/spaceapi.json";
 
     console.log("Requesting " + url);
@@ -120,7 +132,7 @@ function getAPIResult() {
 
                 "KEY_OPEN_STATE" : openstate,
                 "KEY_NUMBER_OF_PEOPLE_PRESENT" : number_of_peoples,
-                "KEY_LIST_OF_PEOPLE_PRESENT" : people_presents,
+                // "KEY_LIST_OF_PEOPLE_PRESENT" : people_presents,
 
                 "KEY_TYPE" : 0,
             };
