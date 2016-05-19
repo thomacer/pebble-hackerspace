@@ -21,7 +21,7 @@ static void inbox_dropped_callback(AppMessageResult reason, void *context) {
 
 static void inbox_connected_person_callback(DictionaryIterator *iterator, void *context) {
   switch ((int) dict_find(iterator, KEY_TYPE)->value->int32) {
-      case SPACE_INFO:
+      case SPACE_INFO_TYPE:
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Received space info in pebble.");
         /* Get the name of the hackerspace. */
         t_space = dict_find(iterator, KEY_SPACE);
@@ -42,7 +42,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
 
         win_main_update();
         break;
-      case LIST:;
+      case PEOPLE_PRESENT_LIST_ELEMENT_TYPE:;
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Received list in pebble.");
         int32_t index = dict_find(iterator, KEY_INDEX)->value->int32;
         int32_t size = dict_find(iterator, KEY_SIZE)->value->int32;
@@ -53,6 +53,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
 
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Element is %s.", dict_find(iterator, KEY_ELEMENT)->value->cstring);
         t_present_person[index] = dict_find(iterator, KEY_ELEMENT);
+        // TODO Also update the "state" page.
         break;
   }
 }
@@ -66,7 +67,8 @@ int main(void) {
   app_message_register_outbox_failed(outbox_failed_callback);
   app_message_register_outbox_sent(outbox_sent_callback);
 
-  app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+  /* app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum()); */
+  app_message_open(1024, 1024);
 
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Done initializing, pushed main window");
 
