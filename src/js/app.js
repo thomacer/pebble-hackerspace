@@ -35,8 +35,6 @@ function sendNextItem(items, index) {
 
 function send_people_present_list (list) {
     var index = 0;
-
-    console.log(list);
     if (list.length > 0){
         sendNextItem(list, index);
     }
