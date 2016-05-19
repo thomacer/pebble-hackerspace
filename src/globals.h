@@ -3,8 +3,8 @@
 #include "pebble.h"
 
 /* Type used for communication */
-#define SPACE_INFO 0
-#define LIST 1
+#define SPACE_INFO_TYPE 0
+#define PEOPLE_PRESENT_LIST_ELEMENT_TYPE 1
 
 #define KEY_TYPE 99
 
@@ -36,7 +36,7 @@
 extern Tuple* t_space;
 
 extern Tuple* t_contact_phone_number;
-extern Tuple* t_contact_sip_adress;
+extern Tuple* t_contact_sip_address;
 extern Tuple* t_contact_irc;
 extern Tuple* t_contact_twitter;
 extern Tuple* t_contact_facebook;

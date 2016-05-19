@@ -27,7 +27,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         t_space = dict_find(iterator, KEY_SPACE);
 
         t_contact_phone_number = dict_find(iterator, KEY_CONTACT_PHONE_NUMBER);
-        t_contact_sip_adress = dict_find(iterator, KEY_CONTACT_SIP_ADDRESS);
+        t_contact_sip_address = dict_find(iterator, KEY_CONTACT_SIP_ADDRESS);
         t_contact_irc = dict_find(iterator, KEY_CONTACT_IRC);
         t_contact_twitter = dict_find(iterator, KEY_CONTACT_TWITTER);
         t_contact_facebook = dict_find(iterator, KEY_CONTACT_FACEBOOK);

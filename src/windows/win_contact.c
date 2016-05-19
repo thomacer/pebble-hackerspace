@@ -27,6 +27,24 @@ static void window_load (Window *window) {
 
   space_contact_current_number = 0;
 
+  if (t_contact_phone_number) {
+    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
+        .title = "Phone number",
+        .subtitle = t_contact_phone_number->value->cstring,
+        .callback = action_callback,
+    };
+    DEBUG("Added phone number: %i", space_contact_current_number);
+  }
+
+  if (t_contact_sip_address) {
+    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
+        .title = "SIP Address",
+        .subtitle = t_contact_sip_address->value->cstring,
+        .callback = action_callback,
+    };
+    DEBUG("Added sip address: %i", space_contact_current_number);
+  }
+
   if (t_contact_irc) {
     s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
         .title = "IRC",
@@ -54,6 +72,24 @@ static void window_load (Window *window) {
     DEBUG("Added facebook : %i", space_contact_current_number);
   }
 
+  if (t_contact_identica) {
+    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
+        .title = "Identica",
+        .subtitle = t_contact_identica->value->cstring,
+        .callback = action_callback,
+    };
+    DEBUG("Added Identica : %i", space_contact_current_number);
+  }
+
+  if (t_contact_foursquare) {
+    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
+        .title = "Foursquare",
+        .subtitle = t_contact_foursquare->value->cstring,
+        .callback = action_callback,
+    };
+    DEBUG("Added foursquare : %i", space_contact_current_number);
+  }
+
   if (t_contact_email) {
     s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
         .title = "Mail",
@@ -63,7 +99,32 @@ static void window_load (Window *window) {
     DEBUG("Added mail : %i", space_contact_current_number);
   }
 
+  if (t_contact_mailing_list) {
+    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
+        .title = "Mailing list",
+        .subtitle = t_contact_mailing_list->value->cstring,
+        .callback = action_callback,
+    };
+    DEBUG("Added mailing list: %i", space_contact_current_number);
+  }
 
+  if (t_contact_jabber) {
+    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
+        .title = "Jabber",
+        .subtitle = t_contact_jabber->value->cstring,
+        .callback = action_callback,
+    };
+    DEBUG("Added jabber : %i", space_contact_current_number);
+  }
+
+  if (t_contact_issue_mail) {
+    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
+        .title = "Issue mail",
+        .subtitle = t_contact_issue_mail->value->cstring,
+        .callback = action_callback,
+    };
+    DEBUG("Added issue mail : %i", space_contact_current_number);
+  }
 
   s_menu_sections[0] = (SimpleMenuSection) {
       .title = "Contacts section",
