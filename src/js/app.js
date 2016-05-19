@@ -35,7 +35,9 @@ function sendNextItem(items, index) {
 
 function send_people_present_list (list) {
     var index = 0;
-    sendNextItem(list, index);
+    if (list.length > 0){
+        sendNextItem(list, index);
+    }
 }
 
 function getAPIResult() {
@@ -100,6 +102,9 @@ function getAPIResult() {
             console.log('There is ' + number_of_peoples + ' persons in the hackerspace');
 
             var people_presents = json['sensors']['people_now_present'][0]['names'];
+            if (!people_presents || people_presents === undefined) {
+                people_presents = [];
+            }
             console.log('Names are : ' + people_presents);
             // -----------------------------------------------------------------
 
