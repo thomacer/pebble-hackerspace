@@ -4,7 +4,7 @@ Tuple* t_space = NULL;
 Tuple* t_number = NULL;
 
 Tuple* t_contact_phone_number = NULL;
-Tuple* t_contact_sip_adress = NULL;
+Tuple* t_contact_sip_address = NULL;
 Tuple* t_contact_irc = NULL;
 Tuple* t_contact_twitter = NULL;
 Tuple* t_contact_facebook = NULL;
