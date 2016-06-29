@@ -1,8 +1,9 @@
 {
     "appKeys": {
-        "KEY_TYPE" : 99,
+        "KEY_TYPE" : 98,
+        "KEY_SUBTYPE" : 99,
 
-        "KEY_SPACE": 100,
+        "KEY_CONTACT" : 100,
         "KEY_CONTACT_PHONE_NUMBER" : 101,
         "KEY_CONTACT_SIP_ADDRESS" : 102,
         "KEY_CONTACT_IRC" : 103,                                         
@@ -16,12 +17,32 @@
         "KEY_CONTACT_ISSUE_MAIL" : 111,
 
         "KEY_OPEN_STATE": 112,
-        "KEY_NUMBER_OF_PEOPLE_PRESENT": 113,
-        "KEY_LIST_OF_PEOPLE_PRESENT": 114,
+        "KEY_SPACE": 113,
+        "KEY_SPACE_URL" : 114,
+
+        "KEY_SENSOR" : 121,
+        "KEY_SENSOR_TEMPERATURE" : 122,
+        "KEY_SENSOR_DOOR_LOCKED" : 123,
+        "KEY_SENSOR_BAROMETER" : 124,
+        "KEY_SENSOR_RADIATION" : 125,
+        "KEY_SENSOR_HUMIDITY" : 126,
+        "KEY_SENSOR_BEVERAGE_SUPPLY" : 127,
+        "KEY_SENSOR_POWER_CONSUMPTION" : 128,
+        "KEY_SENSOR_WIND" : 129,
+        "KEY_SENSOR_NETWORK_CONNECTION" : 130,
+        "KEY_SENSOR_ACCOUNT_BALANCE" : 131,
+        "KEY_SENSOR_TOTAL_MEMBER_COUNT" : 132,
+        "KEY_SENSOR_PEOPLE_NOW_PRESENT" : 133,
 
         "KEY_ELEMENT" : 200,
         "KEY_INDEX" : 201,
-        "KEY_SIZE" : 202
+        "KEY_SIZE" : 202,
+
+        "KEY_VALUE" : 203,
+        "KEY_LOCATION" : 204,
+        "KEY_NAME" : 205,
+        "KEY_NAMES" : 206,
+        "KEY_DESCRIPTION" : 207
     },
     "capabilities": [
         ""
