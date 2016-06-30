@@ -4,19 +4,6 @@ module.exports = function(grunt) {
   };
 
   grunt.initConfig({
-        jshint : {
-            files : [
-                'Gruntfile.js',
-                'src/js/**/*.js',
-                'config/js/dev/**/*.js',
-                '!src/js/**/*.tpl.js',
-                '!src/js/pebble-js-app.js',
-            ],
-            options : {
-                jshintrc : true, 
-            }
-        },
-
         config: appConfig, 
 
         copy: {
@@ -31,6 +18,19 @@ module.exports = function(grunt) {
                     'src/js/appinfo.js': ['src/js/appinfo.tpl.js'],
                 }
             },
+        },
+
+        jshint : {
+            files : [
+                'Gruntfile.js',
+                'src/js/**/*.js',
+                'config/js/dev/**/*.js',
+                '!src/js/**/*.tpl.js',
+                '!src/js/pebble-js-app.js',
+            ],
+            options : {
+                jshintrc : true, 
+            }
         },
 
         browserify: {
