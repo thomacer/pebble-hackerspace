@@ -4,11 +4,11 @@ PeopleNowPresent* PeopleNowPresent_new (uint32_t number) {
     PeopleNowPresent* p = malloc(sizeof(PeopleNowPresent));
 
     *p = (PeopleNowPresent) {
-        value = number,
-        location = NULL,
-        name = NULL,
-        names = malloc(number * sizeof(char*)),
-        description = NULL,
+        .value = number,
+        .location = NULL,
+        .name = NULL,
+        .names = malloc(number * sizeof(char*)),
+        .description = NULL,
     };
 
     return p;
