@@ -16,9 +16,10 @@
         "KEY_CONTACT_JABBER" : 110,
         "KEY_CONTACT_ISSUE_MAIL" : 111,
 
-        "KEY_OPEN_STATE": 112,
-        "KEY_SPACE": 113,
-        "KEY_SPACE_URL" : 114,
+        "KEY_BASIC" : 112,
+        "KEY_OPEN_STATE": 113,
+        "KEY_SPACE": 114,
+        "KEY_SPACE_URL" : 115,
 
         "KEY_SENSOR" : 121,
         "KEY_SENSOR_TEMPERATURE" : 122,
