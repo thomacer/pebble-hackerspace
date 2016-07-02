@@ -1,5 +1,5 @@
-let app = require('./appinfo.js');
-let async = require('async');
+const app = require('./appinfo.js');
+const async = require('async');
 
 class Sensors {
     constructor (sensors) {
@@ -26,7 +26,7 @@ class Sensors {
      * @param {callback} : Executed function when it's done.
      */
     _sendListToPebble (array, format, callback) {
-        this._sendPebbleItem(array, 0, format, callback);
+        this._sendListItemToPebble(array, 0, format, callback);
     }
 
     /* @desc : Send properly formated object to the pebble smartwatch.
@@ -101,7 +101,7 @@ class Sensors {
      *     }
      *  ],
      */
-    _people_now_present (array) {
+    _people_now_present (array, callback) {
         const self = this;
 
         const wrapped = array.map(function (value, index) {
@@ -117,15 +117,17 @@ class Sensors {
                 console.log(err);
                 return;
             }
-            async.series(results);
+            async.series(results, callback);
         });
     }
 
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
-    send () {
+    send (callback) {
         if (this.obj['people_now_present']) {
-            this._people_now_present(this.obj['people_now_present']);
+            this._people_now_present(this.obj['people_now_present'], callback);
         }
     }
 }
+
+exports.Sensors = Sensors;

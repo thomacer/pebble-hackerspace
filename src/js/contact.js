@@ -5,7 +5,7 @@ class Contact {
         this.obj = contact;
     }
 
-    send () {
+    send (callback) {
         const self = this;
 
         const formatedObject = {
@@ -26,8 +26,10 @@ class Contact {
 
         Pebble.sendAppMessage(formatedObject, () => {
             console.log('SENT : ' + JSON.stringify(formatedObject));
+            if (callback) callback(null);
         }, () => {
-            console.log('Item transmission failed ' + JSON.stringify(formatedObject));
+            console.log('Contact transmission failed ' + JSON.stringify(formatedObject));
+            if (callback) callback('Contact transmission failed ' + JSON.stringify(formatedObject));
         });
     }
 }
