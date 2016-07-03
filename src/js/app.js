@@ -1,8 +1,8 @@
-const Contact = require('contact.js');
-const Sensors = require('sensors.js');
-const utils = require('utils.js');
+const Contact = require('./contact.js').Contact;
+const Sensors = require('./sensors.js').Sensors;
+const utils = require('./utils.js');
 const async = require('async');
-const app = require('appinfo.js');
+const app = require('./appinfo.js');
 
 const xhrRequest = function (url, type, callback) {
   const xhr = new XMLHttpRequest();
