@@ -33,3 +33,5 @@ class Contact {
         });
     }
 }
+
+exports.Contact = Contact;
