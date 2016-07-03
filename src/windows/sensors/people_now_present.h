@@ -19,14 +19,27 @@ typedef struct {
     char* location;
     char* name;
     char** names;
-    char description[32];
+    char* description;
 
 } PeopleNowPresent;
 
-PeopleNowPresent* PeopleNowPresent_new ();
+PeopleNowPresent* PeopleNowPresent_new (uint32_t);
 void PeopleNowPresent_free(PeopleNowPresent*);
 
 void PeopleNowPresent_set_location (PeopleNowPresent*, uint32_t, char*);
 void PeopleNowPresent_add_person (PeopleNowPresent*, uint32_t, char*);
 
-void PeopleNowPresent_draw (PeopleNowPresent*);
+/* @desc : Function used to draw the sensor informations when the window
+ *      appear.
+ *
+ * @param {Window*} : window information.
+ * @param {PeopleNowPresent*} : Sensor informations.
+ */
+void PeopleNowPresent_draw (Window*, PeopleNowPresent*);
+
+/* @desc : Function used to destroy the window when the window disappear.
+ *
+ * @param {Window*} : window information.
+ * @param {PeopleNowPresent*} : Sensor informations.
+ */
+void PeopleNowPresent_destroy (Window*, PeopleNowPresent*);

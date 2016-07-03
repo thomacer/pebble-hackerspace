@@ -23,5 +23,10 @@ void PeopleNowPresent_add_person (PeopleNowPresent* self, uint32_t index, char* 
     self->names[index] = name;
 }
 
-void PeopleNowPresent_draw (PeopleNowPresent* self) {
+void PeopleNowPresent_draw (Window* window, PeopleNowPresent* self) {
+
+}
+
+void PeopleNowPresent_destroy (Window* window, PeopleNowPresent* self) {
+
 }
