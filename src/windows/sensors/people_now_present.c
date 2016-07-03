@@ -1,4 +1,4 @@
-#include "people_now_present.h"
+#include "./people_now_present.h"
 
 PeopleNowPresent* PeopleNowPresent_new (uint32_t number) {
     PeopleNowPresent* p = malloc(sizeof(PeopleNowPresent));
@@ -17,6 +17,10 @@ PeopleNowPresent* PeopleNowPresent_new (uint32_t number) {
 void PeopleNowPresent_free(PeopleNowPresent* self) {
     free(self->names);
     free(self);
+}
+
+void PeopleNowPresent_set_location (PeopleNowPresent* self, uint32_t index, char* location) {
+
 }
 
 void PeopleNowPresent_add_person (PeopleNowPresent* self, uint32_t index, char* name) {
