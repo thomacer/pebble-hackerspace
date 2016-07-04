@@ -24,7 +24,6 @@ module.exports = function(grunt) {
             files : [
                 'Gruntfile.js',
                 'src/js/**/*.js',
-                'config/js/dev/**/*.js',
                 '!src/js/**/*.tpl.js',
                 '!src/js/pebble-js-app.js',
             ],
@@ -45,7 +44,6 @@ module.exports = function(grunt) {
 
                 files: {                                                         
                     './src/js/pebble-js-app.js' : ['src/js/**/*.js', '!src/js/**/*.tpl.js', '!src/js/pebble-js-app.js'],
-                    './config/js/obs.js' : ['./config/js/dev/**/*'],
                 },
             },
         },
