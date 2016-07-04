@@ -29,7 +29,6 @@ const getAPIResult = function () {
                         'KEY_SPACE' : json['space'],
                         'KEY_SPACE_URL' : json['url'],
                         'KEY_OPEN_STATE' : json['state']['open'],
-                        'KEY_NUMBER_OF_PEOPLE_PRESENT' : json['sensors']['people_now_present'][0]['value'],
                     }, callback);
                 }, (callback) => {
                     let tmp = new Sensors(json['sensors']);
@@ -38,7 +37,6 @@ const getAPIResult = function () {
                     let tmp = new Contact(json['contact']);
                     tmp.send(callback);
                 }
-
             ]);
         }
     );
