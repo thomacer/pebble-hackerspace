@@ -114,7 +114,7 @@ class Sensors {
 
         async.map(wrapped, (item, callback) => {
             callback(null, (cb) => {
-                self._SendPeopleNowPresent (item.value, item.index, wrapped.length, cb);
+                self._SendPeopleNowPresentObject (item.value, item.index, wrapped.length, cb);
             });        
         }, (err, results) => {
             if (err) {
