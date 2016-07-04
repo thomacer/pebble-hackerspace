@@ -14,7 +14,7 @@ class Sensors {
             } else if (callback) {
                 callback(null);
             }
-        }, function () {
+        }, () => {
             if (callback) callback('Item transmission failed at index ' + index + ' for : ' + array);
         });
     }
@@ -63,7 +63,7 @@ class Sensors {
             (callback) => {
                 let formatedObject = {
                     'KEY_TYPE' : app.KEY_SENSOR_PEOPLE_NOW_PRESENT,
-                    'KEY_SUBTYPE' : null,
+                    'KEY_SUBTYPE' : app.KEY_SENSOR_PEOPLE_NOW_PRESENT,
                     'KEY_INDEX' : index,
                     'KEY_LENGTH' : length,
                     'KEY_VALUE' : obj['value'],
@@ -72,16 +72,21 @@ class Sensors {
                 };
                 self._sendToPebble (formatedObject, callback);
             }, (callback) => {
-                self._sendListToPebble(obj['names'], (name, arrayIndex) => {
-                    return {
-                        'KEY_TYPE' : app.KEY_SENSOR_SENSOR_PEOPLE_NOW_PRESENT,
-                        'KEY_INDEX' : index,
-                        'KEY_SUBTYPE' : app.KEY_NAMES,
-                        'KEY_LENGTH' : obj['names'].length,
-                        'KEY_SUBINDEX' : arrayIndex,
-                        'KEY_NAMES' : name,
-                    };
-                }, callback);
+                if (obj['value'] && obj['names']) {
+                    self._sendListToPebble(obj['names'], (name, arrayIndex) => {
+                        return {
+                            'KEY_TYPE' : app.KEY_SENSOR_PEOPLE_NOW_PRESENT,
+                            'KEY_SUBTYPE' : app.KEY_NAMES,
+                            'KEY_INDEX' : index,
+                            'KEY_LENGTH' : obj['names'].length,
+                            'KEY_SUBINDEX' : arrayIndex,
+                            'KEY_NAMES' : name,
+                        };
+                    }, callback);
+                } else {
+                    // If no list to send.
+                    callback(null);
+                }
             }
         ], (err, results) => {
             if (err) {

@@ -21,11 +21,13 @@ static void inbox_dropped_callback(AppMessageResult reason, void *context) {
 }
 
 static void inbox_connected_person_callback(DictionaryIterator *iterator, void *context) {
-  switch ((int32_t) dict_find(iterator, KEY_TYPE)->value->int32) {
-      case KEY_CONTACT:
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "Received space info in pebble.");
-        /* Get the name of the hackerspace. */
+  switch ((uint32_t) dict_find(iterator, KEY_TYPE)->value->uint32) {
+      case KEY_BASIC:
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_BASIC");
         t_space = dict_find(iterator, KEY_SPACE);
+        break;
+      case KEY_CONTACT:
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_CONTACT");
 
         t_contact_phone_number = dict_find(iterator, KEY_CONTACT_PHONE_NUMBER);
         t_contact_sip_address = dict_find(iterator, KEY_CONTACT_SIP_ADDRESS);
@@ -42,7 +44,8 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         win_main_update();
         break;
       case KEY_SENSOR_PEOPLE_NOW_PRESENT:;
-        switch ((int32_t) dict_find(iterator, KEY_SUBTYPE)->value->int32) {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT");
+        switch ((uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32) {
             case KEY_NAMES: {
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t subindex = (uint32_t) dict_find(iterator, KEY_SUBINDEX)->value->uint32;
@@ -77,6 +80,9 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         t_present_person[index] = dict_find(iterator, KEY_ELEMENT);
         // TODO Also update the "state" page.
         break;
+      default:
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "Default message");
+
   }
 }
 
