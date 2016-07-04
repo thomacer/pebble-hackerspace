@@ -1,6 +1,7 @@
 #include <pebble.h>
 #include "./windows/win_main.h"
 #include "./globals.h"
+#include "./appinfo.h"
 
 /* ------------------------------------------------------------------------
  *                      Partie communication avec l'API.
@@ -20,8 +21,8 @@ static void inbox_dropped_callback(AppMessageResult reason, void *context) {
 }
 
 static void inbox_connected_person_callback(DictionaryIterator *iterator, void *context) {
-  switch ((int) dict_find(iterator, KEY_TYPE)->value->int32) {
-      case SPACE_INFO_TYPE:
+  switch ((int32_t) dict_find(iterator, KEY_TYPE)->value->int32) {
+      case KEY_CONTACT:
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Received space info in pebble.");
         /* Get the name of the hackerspace. */
         t_space = dict_find(iterator, KEY_SPACE);
@@ -38,11 +39,32 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         t_contact_jabber = dict_find(iterator, KEY_CONTACT_JABBER);
         t_contact_issue_mail = dict_find(iterator, KEY_CONTACT_ISSUE_MAIL);
 
-        t_number = dict_find(iterator, KEY_NUMBER_OF_PEOPLE_PRESENT);
-
         win_main_update();
         break;
-      case PEOPLE_PRESENT_LIST_ELEMENT_TYPE:;
+      case KEY_SENSOR_PEOPLE_NOW_PRESENT:;
+        switch ((int32_t) dict_find(iterator, KEY_SUBTYPE)->value->int32) {
+            case KEY_NAMES: {
+                uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
+                uint32_t subindex = (uint32_t) dict_find(iterator, KEY_SUBINDEX)->value->uint32;
+                PeopleNowPresent_add_person(
+                        sensor_people_now_present->array[index],
+                        subindex,
+                        (char*) dict_find(iterator, KEY_INDEX)->value->cstring
+                );
+                break;
+            }
+            default: {
+                if (sensor_people_now_present == NULL) {
+                    uint32_t length = (uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32;
+                    create_people_now_present_array(&sensor_people_now_present, length);
+                }
+                uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
+                uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
+                sensor_people_now_present->array[index] = PeopleNowPresent_new (value);
+                break;
+            }
+        }
+        break;
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Received list in pebble.");
         int32_t index = dict_find(iterator, KEY_INDEX)->value->int32;
         int32_t size = dict_find(iterator, KEY_SIZE)->value->int32;

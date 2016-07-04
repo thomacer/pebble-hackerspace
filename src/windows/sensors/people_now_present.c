@@ -1,13 +1,13 @@
 #include "./people_now_present.h"
 
-PeopleNowPresent* PeopleNowPresent_new (uint32_t number) {
+PeopleNowPresent* PeopleNowPresent_new (uint32_t value) {
     PeopleNowPresent* p = malloc(sizeof(PeopleNowPresent));
 
     *p = (PeopleNowPresent) {
-        .value = number,
+        .value = value,
         .location = NULL,
         .name = NULL,
-        .names = malloc(number * sizeof(char*)),
+        .names = malloc(value * sizeof(char*)),
         .description = NULL,
     };
 

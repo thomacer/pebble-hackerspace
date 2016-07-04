@@ -57,24 +57,28 @@ class Sensors {
      * @param {index} : Index in that array.
      * @param {callback} : function called when done.
      */
-    _SendPeopleNowPresentObject (obj, index, callback) {
+    _SendPeopleNowPresentObject (obj, index, length, callback) {
         const self = this;
         async.series([
             (callback) => {
                 let formatedObject = {
-                    'KEY_TYPE' : app.KEY_SENSOR,
+                    'KEY_TYPE' : app.KEY_SENSOR_PEOPLE_NOW_PRESENT,
+                    'KEY_SUBTYPE' : null,
                     'KEY_INDEX' : index,
+                    'KEY_LENGTH' : length,
                     'KEY_VALUE' : obj['value'],
                     'KEY_LOCATION' : obj['location'],
                     'KEY_NAME' : obj['name']
                 };
                 self._sendToPebble (formatedObject, callback);
             }, (callback) => {
-                self._sendListToPebble(obj['names'], (name, index) => {
+                self._sendListToPebble(obj['names'], (name, arrayIndex) => {
                     return {
-                        'KEY_TYPE' : app.KEY_SENSOR,
-                        'KEY_SUBTYPE' : app.KEY_NAMES,
+                        'KEY_TYPE' : app.KEY_SENSOR_SENSOR_PEOPLE_NOW_PRESENT,
                         'KEY_INDEX' : index,
+                        'KEY_SUBTYPE' : app.KEY_NAMES,
+                        'KEY_LENGTH' : obj['names'].length,
+                        'KEY_SUBINDEX' : arrayIndex,
                         'KEY_NAMES' : name,
                     };
                 }, callback);
@@ -110,7 +114,7 @@ class Sensors {
 
         async.map(wrapped, (item, callback) => {
             callback(null, (cb) => {
-                self._SendPeopleNowPresent (item.value, item.index, cb);
+                self._SendPeopleNowPresent (item.value, item.index, wrapped.length, cb);
             });        
         }, (err, results) => {
             if (err) {

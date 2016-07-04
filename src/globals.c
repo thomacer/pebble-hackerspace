@@ -15,7 +15,7 @@ Tuple* t_contact_mailing_list = NULL;
 Tuple* t_contact_jabber = NULL;
 Tuple* t_contact_issue_mail = NULL;
 
-Tuple** t_present_person = NULL;
+PeopleNowPresentArray* sensor_people_now_present = NULL;
 
 char buffer[32];
 char* space_name_buffer = buffer;

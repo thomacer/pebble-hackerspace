@@ -204,16 +204,14 @@ static void window_unload(Window *window) {
 }
 
 void win_main_update(void) {
-  /* win_contact_init(); */
-  /* win_state_init(); */
-
   if (t_space) {
       snprintf(space_name_buffer, BUFFER_SIZE, "%s", t_space->value->cstring);
   }
 
   space_info_current_number = 0;
 
-  /* Drawing the second section with info about person present in the hackerspace.
+  /* Drawing the second section with info about person present
+   * in the hackerspace.
    */
   if (t_number) {
       static char number_of_people_buffer[BUFFER_SIZE];
@@ -240,6 +238,9 @@ void win_main_update(void) {
   space_info_callback[space_info_current_number] = win_contact_show;
 
   ++space_info_current_number;
+
+  win_contact_init();
+  win_state_init();
 
   layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
   menu_layer_reload_data(s_menu_layer);

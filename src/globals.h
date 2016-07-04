@@ -1,35 +1,6 @@
-#ifndef _GLOBALS_H
-#define _GLOBALS_H
+#pragma once
 #include "pebble.h"
-
-/* Type used for communication */
-#define SPACE_INFO_TYPE 0
-#define PEOPLE_PRESENT_LIST_ELEMENT_TYPE 1
-
-#define KEY_TYPE 99
-
-/* Global info used by every sections. */
-#define KEY_SPACE 100
-/* Used in the contact section */
-#define KEY_CONTACT_PHONE_NUMBER 101
-#define KEY_CONTACT_SIP_ADDRESS 102
-#define KEY_CONTACT_IRC 103
-#define KEY_CONTACT_TWITTER 104
-#define KEY_CONTACT_FACEBOOK 105
-#define KEY_CONTACT_IDENTICA 106
-#define KEY_CONTACT_FOURSQUARE 107
-#define KEY_CONTACT_EMAIL 108
-#define KEY_CONTACT_MAILLING_LIST 109
-#define KEY_CONTACT_JABBER 110
-#define KEY_CONTACT_ISSUE_MAIL 111
-/* Used in the state section. */
-#define KEY_OPEN_STATE 112
-#define KEY_NUMBER_OF_PEOPLE_PRESENT 113
-
-/* Definition to transmit list. */
-#define KEY_ELEMENT 200
-#define KEY_INDEX 201
-#define KEY_SIZE 202
+#include "./windows/sensors/people_now_present_array.h"
 
 #define BUFFER_SIZE 32
 
@@ -51,6 +22,7 @@ extern Tuple* t_number;
 
 extern Tuple** t_present_person;
 
+extern PeopleNowPresentArray* sensor_people_now_present;
+
 /* Keep track of the hackerspace name */
 extern char* space_name_buffer;
-#endif
