@@ -12,4 +12,5 @@ void free_people_now_present_array (PeopleNowPresentArray** array) {
 void create_people_now_present_array (PeopleNowPresentArray** array, uint32_t length) {
     *array = (PeopleNowPresentArray*) malloc(sizeof(PeopleNowPresentArray));
     (*array)->array = (PeopleNowPresent**) malloc(sizeof(PeopleNowPresent*) * length);
+    (*array)->length = length;
 }
