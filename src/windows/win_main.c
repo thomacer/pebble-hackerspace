@@ -1,7 +1,7 @@
 #include "win_main.h"
 #include "../globals.h"
 #include "./win_contact.h"
-#include "./win_state.h"
+/* #include "./win_state.h" */
 
 static Window* window;
 
@@ -213,16 +213,20 @@ void win_main_update(void) {
   /* Drawing the second section with info about person present
    * in the hackerspace.
    */
-  if (t_number) {
-      static char number_of_people_buffer[BUFFER_SIZE];
-      static char number_of_people_subtitle_buffer[BUFFER_SIZE];
-      snprintf(number_of_people_buffer, BUFFER_SIZE, "Persons connected.");
-      snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%d persons", (int) t_number->value->int32);
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
-      space_info_title[space_info_current_number] = number_of_people_buffer;
-      space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer;
-      space_info_callback[space_info_current_number] = win_state_show;
-      ++space_info_current_number;
+
+  for (uint32_t i = 0; i < sensor_people_now_present->length; ++i) {
+      PeopleNowPresent* current = sensor_people_now_present->array[i];
+      if (current) {
+          static char number_of_people_buffer[BUFFER_SIZE];
+          static char number_of_people_subtitle_buffer[BUFFER_SIZE];
+          snprintf(number_of_people_buffer, BUFFER_SIZE, "Persons connected.");
+          snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%ld persons", current->value);
+          APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
+          space_info_title[space_info_current_number] = number_of_people_buffer;
+          space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer;
+          space_info_callback[space_info_current_number] = NULL;
+          ++space_info_current_number;
+      }
   }
 
   /* Creating the "Contact" menu button
@@ -240,7 +244,7 @@ void win_main_update(void) {
   ++space_info_current_number;
 
   win_contact_init();
-  win_state_init();
+  /* win_state_init(); */
 
   layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
   menu_layer_reload_data(s_menu_layer);
@@ -260,5 +264,5 @@ void win_main_init(void) {
 void win_main_deinit(void) {
   window_destroy(window);
   /* win_contact_deinit(); */
-  win_state_deinit();
+  /* win_state_deinit(); */
 }
