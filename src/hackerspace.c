@@ -58,7 +58,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
             }
             default: {
                 if (sensor_people_now_present == NULL) {
-                    uint32_t length = (uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32;
+                    uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
                     create_people_now_present_array(&sensor_people_now_present, length);
                 }
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
@@ -67,18 +67,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
                 break;
             }
         }
-        break;
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "Received list in pebble.");
-        int32_t index = dict_find(iterator, KEY_INDEX)->value->int32;
-        int32_t size = dict_find(iterator, KEY_SIZE)->value->int32;
-        if (index == 0) {
-            APP_LOG(APP_LOG_LEVEL_DEBUG, "Initiating the new array list of size %ld.", size);
-            t_present_person = malloc(sizeof(Tuple*) * size);
-        }
-
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "Element is %s.", dict_find(iterator, KEY_ELEMENT)->value->cstring);
-        t_present_person[index] = dict_find(iterator, KEY_ELEMENT);
-        // TODO Also update the "state" page.
+        win_main_update();
         break;
       default:
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Default message");
