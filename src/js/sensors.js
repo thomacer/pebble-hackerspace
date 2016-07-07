@@ -7,8 +7,9 @@ class Sensors {
     }
 
     _sendListItemToPebble (array, index, format, callback) {
-        Pebble.sendAppMessage(format ? format(array[index], index) : array[index], () => {
-            console.log('SENT : ' + JSON.stringify(array[index]));
+        const toSend = format ? format(array[index], index) : array[index];
+        Pebble.sendAppMessage(toSend, () => {
+            console.log('SENT : ' + JSON.stringify(toSend));
             if (array.length < (index + 1)) {
                 this._sendPebbleItem(array, index + 1);
             } else if (callback) {
