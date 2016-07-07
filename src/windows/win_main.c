@@ -1,7 +1,4 @@
 #include "win_main.h"
-#include "../globals.h"
-#include "./win_contact.h"
-/* #include "./win_state.h" */
 
 static Window* window;
 
@@ -205,7 +202,7 @@ static void window_unload(Window *window) {
 
 void win_main_update(void) {
   if (t_space) {
-      snprintf(space_name_buffer, BUFFER_SIZE, "%s", t_space->value->cstring);
+    snprintf(space_name_buffer, BUFFER_SIZE, "%s", t_space->value->cstring);
   }
 
   space_info_current_number = 0;
@@ -213,20 +210,17 @@ void win_main_update(void) {
   /* Drawing the second section with info about person present
    * in the hackerspace.
    */
-
-  for (uint32_t i = 0; i < sensor_people_now_present->length; ++i) {
-      PeopleNowPresent* current = sensor_people_now_present->array[i];
-      if (current) {
-          static char number_of_people_buffer[BUFFER_SIZE];
-          static char number_of_people_subtitle_buffer[BUFFER_SIZE];
-          snprintf(number_of_people_buffer, BUFFER_SIZE, "Persons connected.");
-          snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%ld persons", current->value);
-          APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
-          space_info_title[space_info_current_number] = number_of_people_buffer;
-          space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer;
-          space_info_callback[space_info_current_number] = NULL;
-          ++space_info_current_number;
-      }
+  if (sensor_people_now_present->length) {
+    static char sensor_menu_buffer[BUFFER_SIZE];
+    /* static char sensor_menu_subtitle_buffer[BUFFER_SIZE]; */
+    snprintf(sensor_menu_buffer, BUFFER_SIZE, "Sensors menu.");
+    /* snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%ld persons", current->value); */
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
+    space_info_title[space_info_current_number] = sensor_menu_buffer;
+    /* space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer; */
+    space_info_subtitle[space_info_current_number] = NULL;
+    space_info_callback[space_info_current_number] = win_sensor_menu_init;
+    ++space_info_current_number;
   }
 
   /* Creating the "Contact" menu button

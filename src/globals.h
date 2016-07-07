@@ -18,9 +18,8 @@ extern Tuple* t_contact_mailing_list;
 extern Tuple* t_contact_jabber;
 extern Tuple* t_contact_issue_mail;
 
-extern Tuple* t_number;
-
-extern Tuple** t_present_person;
+/* extern Tuple* t_number; */
+/* extern Tuple** t_present_person; */
 
 extern PeopleNowPresentArray* sensor_people_now_present;
 
