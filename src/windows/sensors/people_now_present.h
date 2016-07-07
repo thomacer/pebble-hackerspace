@@ -1,5 +1,6 @@
 #pragma once
 #include <pebble.h>
+#include "./sensors.h"
 
 /* @desc : people_now_present object according to the spaceAPI specification.
  *
@@ -15,12 +16,12 @@
  *      additional information to this sensor instance.
  */
 typedef struct {
+    t_sensors type;
     uint32_t value;
     char* location;
     char* name;
-    char** names;
     char* description;
-
+    char** names;
 } PeopleNowPresent;
 
 PeopleNowPresent* PeopleNowPresent_new (uint32_t);

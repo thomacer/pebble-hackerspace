@@ -3,7 +3,8 @@
 #include "../libs/pebble-assist.h"
 #include "../appinfo.h"
 #include "./sensors/people_now_present.h"
+#include "./sensors/sensors.h"
 
-void win_sensor_show (void);
+void win_sensor_show (void*);
 void win_sensor_init (void);
 void win_sensor_deinit (void);

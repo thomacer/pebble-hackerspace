@@ -18,11 +18,13 @@ static void window_load (Window* window) {}
 static void window_unload (Window* window) {}
 
 static void window_appear (Window* window) {
-    switch (current_sensor_type) {
-        case KEY_SENSOR_PEOPLE_NOW_PRESENT:
-            window_current_sensor_struct = current_sensor_struct;
-            PeopleNowPresent_draw (window, (PeopleNowPresent*) window_current_sensor_struct);
-            break;
+    switch (((Sensor*) current_sensor_struct)->type) {
+      case people_now_present:
+        window_current_sensor_struct = current_sensor_struct;
+        PeopleNowPresent_draw (window, (PeopleNowPresent*) window_current_sensor_struct);
+        break;
+      default:
+        break;
     }
 }
 
@@ -30,19 +32,26 @@ static void window_appear (Window* window) {
  *      in the stack.
  */
 static void window_disappear (Window* window) {
-    switch (current_sensor_type) {
-        case KEY_SENSOR_PEOPLE_NOW_PRESENT:
-            PeopleNowPresent_destroy (window, (PeopleNowPresent*) current_sensor_struct);
-            window_current_sensor_struct = NULL;
-            break;
+    switch (((Sensor*) current_sensor_struct)->type) {
+      case people_now_present:
+        PeopleNowPresent_destroy (window, (PeopleNowPresent*) current_sensor_struct);
+        window_current_sensor_struct = NULL;
+        break;
+      default:
+        break;
     }
 }
 
-void win_sensor_show(void) {
+void win_sensor_show(void* sensor_struct) {
+  current_sensor_struct = sensor_struct;
   window_stack_push(s_window, true);
 }
 
 void win_sensor_init (void) {
+  if (s_window) {
+    return;
+  }
+
   s_window = window_create();
 
   window_set_window_handlers(s_window, (WindowHandlers) {
@@ -56,4 +65,5 @@ void win_sensor_init (void) {
 
 void win_sensor_deinit (void) {
     window_destroy(s_window);
+    s_window = NULL;
 }

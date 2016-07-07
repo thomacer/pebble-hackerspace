@@ -4,6 +4,7 @@ PeopleNowPresent* PeopleNowPresent_new (uint32_t value) {
     PeopleNowPresent* p = malloc(sizeof(PeopleNowPresent));
 
     *p = (PeopleNowPresent) {
+        .type = people_now_present,
         .value = value,
         .location = NULL,
         .name = NULL,
