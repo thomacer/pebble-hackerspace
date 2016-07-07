@@ -44,19 +44,20 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         win_main_update();
         break;
       case KEY_SENSOR_PEOPLE_NOW_PRESENT:;
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT");
         switch ((uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32) {
             case KEY_NAMES: {
+                APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT NAME received.");
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t subindex = (uint32_t) dict_find(iterator, KEY_SUBINDEX)->value->uint32;
                 PeopleNowPresent_add_person(
                         sensor_people_now_present->array[index],
                         subindex,
-                        (char*) dict_find(iterator, KEY_INDEX)->value->cstring
+                        (char*) dict_find(iterator, KEY_NAMES)->value->cstring
                 );
                 break;
             }
             default: {
+                APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT basic");
                 if (sensor_people_now_present == NULL) {
                     uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
                     create_people_now_present_array(&sensor_people_now_present, length);

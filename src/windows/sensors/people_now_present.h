@@ -22,6 +22,9 @@ typedef struct {
     char* name;
     char* description;
     char** names;
+    SimpleMenuSection* menu_sections;
+    SimpleMenuItem* menu_items;
+    SimpleMenuLayer* menu_layer;
 } PeopleNowPresent;
 
 PeopleNowPresent* PeopleNowPresent_new (uint32_t);
