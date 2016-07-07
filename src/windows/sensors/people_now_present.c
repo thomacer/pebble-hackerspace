@@ -43,50 +43,12 @@ void PeopleNowPresent_add_person (PeopleNowPresent* self, uint32_t index, char* 
   memcpy(self->names[index], name, length);
 }
 
-/* @desc : Format the names to be represented in a scroll_layer.
- *
- * @param {PeopleNowPresent*} : Struct to add the result to.
- */
-/* static void format_names_to_text (PeopleNowPresent* self) { */
-/*   // Finding the size for the buffer. */
-/*   size_t length = 0; */
-/*   for (uint32_t i = 0; i < self->value; ++i) { */
-/*     if (self->names[i]) { */
-/*       length += strlen(self->names[i]); */
-/*     } */
-/*   } */
-/*   self->text_displayed = malloc(length * sizeof(char)); */
-
-/*   for (uint32_t i = 0; i < self->value; ++i) { */
-/*     if (self->names[i]) { */
-/*       APP_LOG(APP_LOG_LEVEL_DEBUG, "Concat name : %s", self->names[i]); */
-/*       strcat(self->text_displayed, self->names[i]); */
-/*       strcat(self->text_displayed, "\n"); */
-/*     } */
-/*   } */
-/*   APP_LOG(APP_LOG_LEVEL_DEBUG, "Concatened names : %s", self->text_displayed); */
-/* } */
-
 void PeopleNowPresent_draw (Window* window, PeopleNowPresent* self) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Drawing people now present");
 
   Layer* window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_frame(window_layer);
 
-  /* self->scroll_layer = scroll_layer_create(bounds); */
-  /* scroll_layer_set_click_config_onto_window(self->scroll_layer, window); */
-
-  /* #ifdef PBL_ROUND */
-  /* scroll_layer_set_paging(self->scroll_layer, true); */
-  /* #endif */
-
-  /* GRect max_text_bounds = GRect(0, 0, bounds.size.w, 2000); */
-  /* self->text_layer = text_layer_create(max_text_bounds); */
-  /* format_names_to_text (self); */
-  /* text_layer_set_text(self->text_layer, self->text_displayed); */
-
-  /* scroll_layer_add_child(self->scroll_layer, text_layer_get_layer(self->text_layer)); */
-  /* layer_add_child(window_layer, scroll_layer_get_layer(self->scroll_layer)); */
   self->menu_sections = malloc(sizeof(SimpleMenuSection) * 1);
   self->menu_items = malloc(sizeof(SimpleMenuItem) * self->value);
 
