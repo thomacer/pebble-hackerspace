@@ -1,53 +1,10 @@
 const app = require('./appinfo.js');
+const utils = require('./utils.js');
 const async = require('async');
 
 class Sensors {
     constructor (sensors) {
         this.obj = sensors; 
-    }
-
-    _sendListItemToPebble (array, index, format, callback) {
-        const toSend = format ? format(array[index], index) : array[index];
-        Pebble.sendAppMessage(toSend, () => {
-            console.log('SENT : ' + JSON.stringify(toSend));
-            if (array.length < (index + 1)) {
-                this._sendPebbleItem(array, index + 1);
-            } else if (callback) {
-                callback(null);
-            }
-        }, () => {
-            if (callback) callback('Item transmission failed at index ' + index + ' for : ' + array);
-        });
-    }
-
-    /* @desc : Send a list of item to your pebble.
-     *
-     * @param {items} : List to send.
-     * @param {format} : Way items are sent.
-     * @param {callback} : Executed function when it's done.
-     */
-    _sendListToPebble (array, format, callback) {
-        this._sendListItemToPebble(array, 0, format, callback);
-    }
-
-    /* @desc : Send properly formated object to the pebble smartwatch.
-     *
-     * @param {obj} : Object sent.
-     * @param {callback} : Function called when done.
-     */
-    _sendToPebble (obj, callback) {
-         Pebble.sendAppMessage(obj, () => {
-
-            console.log('SENT : ' + JSON.stringify(obj));
-            if (callback) callback(null);
-        }, () => {
-            if (callback) {
-                callback('Item transmission failed ' + JSON.stringify(obj));
-            } else {
-                console.log('Item transmission failed ' + JSON.stringify(obj));
-            
-            }
-        });
     }
 
     /* @desc : Send an object from the "people_now_present" array,
@@ -71,10 +28,10 @@ class Sensors {
                     'KEY_LOCATION' : obj['location'],
                     'KEY_NAME' : obj['name']
                 };
-                self._sendToPebble (formatedObject, callback);
+                utils.sendToPebble (formatedObject, callback);
             }, (callback) => {
                 if (obj['value'] && obj['names']) {
-                    self._sendListToPebble(obj['names'], (name, arrayIndex) => {
+                    utils.sendListToPebble(obj['names'], (name, arrayIndex) => {
                         return {
                             'KEY_TYPE' : app.KEY_SENSOR_PEOPLE_NOW_PRESENT,
                             'KEY_SUBTYPE' : app.KEY_NAMES,
@@ -114,11 +71,13 @@ class Sensors {
     _people_now_present (array, callback) {
         const self = this;
 
+        // Associating the index to the value.
         const wrapped = array.map(function (value, index) {
           return {index: index, value: value};
         });
 
         async.map(wrapped, (item, callback) => {
+            // Creating the series of function.
             callback(null, (cb) => {
                 self._SendPeopleNowPresentObject (item.value, item.index, wrapped.length, cb);
             });        
