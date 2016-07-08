@@ -1,6 +1,6 @@
 #pragma once
 #include <pebble.h>
-#include "./windows/sensors/people_now_present_array.h"
+#include "./libs/sensors/people_now_present_array.h"
 #include "./libs/contacts.h"
 
 #define BUFFER_SIZE 32
