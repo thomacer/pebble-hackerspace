@@ -1,4 +1,5 @@
 #include <pebble.h>
+
 #include "./windows/win_main.h"
 #include "./globals.h"
 #include "./appinfo.h"
@@ -121,7 +122,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
                 APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT basic");
                 if (sensor_people_now_present == NULL) {
                     uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-                    create_people_now_present_array(&sensor_people_now_present, length);
+                    sensor_people_now_present = SensorsArray_new(length);
                 }
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;

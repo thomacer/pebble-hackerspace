@@ -1,13 +1,13 @@
 #pragma once
 #include <pebble.h>
-#include "./libs/sensors/people_now_present_array.h"
+#include "./libs/sensors/sensors_array.h"
 #include "./libs/contacts.h"
 
 #define BUFFER_SIZE 32
 
 extern Tuple* t_space;
 
-extern PeopleNowPresentArray* sensor_people_now_present;
+extern SensorsArray* sensors_array;
 extern Contacts* contacts_section;
 
 typedef enum {

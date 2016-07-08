@@ -12,14 +12,14 @@ static void window_load (Window* window) {}
 static void window_unload (Window* window) {}
 
 static void window_appear (Window* window) {
-  ((Sensor*) current_sensor_struct)->Sensor_draw(window, current_sensor_struct);
+  ((Sensor*) current_sensor_struct)->win_draw(window, current_sensor_struct);
 }
 
 /* @note : Can be problematic when the window disappear but it's still
  *      in the stack.
  */
 static void window_disappear (Window* window) {
-  ((Sensor*) current_sensor_struct)->Sensor_destroy(current_sensor_struct);
+  ((Sensor*) current_sensor_struct)->win_destroy(current_sensor_struct);
   current_sensor_struct = NULL;
 }
 

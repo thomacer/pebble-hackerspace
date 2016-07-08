@@ -11,21 +11,21 @@ static char** s_title_array = NULL;
 static char** s_subtitle_array = NULL;
 
 static void draw_sensor (int index, void* context) {
-  win_sensor_show((void*) sensor_people_now_present->array[index]);
+  win_sensor_show((void*) sensors_array->array[index]);
 }
 
 static void window_load (Window* window) {}
 static void window_unload (Window* window) {}
 
 static void window_appear (Window* window) {
-  number_of_sensors = sensor_people_now_present->length;
+  number_of_sensors = sensors_array->length;
   s_sensors_menu = malloc(sizeof(SimpleMenuItem) * number_of_sensors);
   s_title_array = malloc(sizeof(char*) * number_of_sensors);
   s_subtitle_array = malloc(sizeof(char*) * number_of_sensors);
 
 
   for (uint32_t i = 0; i < number_of_sensors; ++i) {
-    PeopleNowPresent* current = sensor_people_now_present->array[i];
+    PeopleNowPresent* current = sensors_array->array[i];
     if (current->name) {
       s_title_array[i] = current->name;
     } else {

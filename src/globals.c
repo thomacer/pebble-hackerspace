@@ -2,7 +2,7 @@
 
 Tuple* t_space = NULL;
 
-PeopleNowPresentArray* sensor_people_now_present = NULL;
+SensorsArray* sensors_array = NULL;
 Contacts* contacts_section = NULL;
 
 SpaceState open_state = Undefined;

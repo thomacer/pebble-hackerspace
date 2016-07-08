@@ -23,7 +23,7 @@ typedef struct {
     char* location;
     char* name;
     char* description;
-    void (*Sensor_free)(void*);
-    void (*Sensor_draw)(Window*, void*);
-    void (*Sensor_destroy)(void*);
+    void (*free)(void*);
+    void (*win_draw)(Window*, void*);
+    void (*win_destroy)(void*);
 } Sensor;
