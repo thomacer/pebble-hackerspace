@@ -22,10 +22,15 @@ static void inbox_dropped_callback(AppMessageResult reason, void *context) {
 
 static void inbox_connected_person_callback(DictionaryIterator *iterator, void *context) {
   switch ((uint32_t) dict_find(iterator, KEY_TYPE)->value->uint32) {
-      case KEY_BASIC:
+      case KEY_BASIC: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_BASIC");
         snprintf(space_name_buffer, BUFFER_SIZE, "%s", dict_find(iterator, KEY_SPACE)->value->cstring);
+        Tuple* tmp = dict_find(iterator, KEY_OPEN_STATE)
+        if (tmp) {
+          open_state = tmp->value->uint32;
+        }
         break;
+      }
       case KEY_CONTACT: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_CONTACT");
 

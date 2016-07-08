@@ -92,9 +92,17 @@ static int16_t menu_get_cell_height_callback(MenuLayer *menu_layer, MenuIndex *c
  * @param {data} :
  */
 static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, uint16_t section_index, void* data) {
+    static char space_state[32];
     switch (section_index) {
         case 0:
-            menu_cell_basic_header_draw(ctx, cell_layer, space_name_buffer);
+            if (open_state == Open) {
+              snprintf(space_state, 32, "%s is open", space_name_buffer);
+            } else if (open_state == Closed){
+              snprintf(space_state, 32, "%s is closed", space_name_buffer);
+            } else if (open_state == Undefined) {
+              snprintf(space_state, 32, "%s", space_name_buffer);
+            }
+            menu_cell_basic_header_draw(ctx, cell_layer, space_state);
             break;
         case 1:
             if (space_info_current_number == 1) {
