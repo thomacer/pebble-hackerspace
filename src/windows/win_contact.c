@@ -1,21 +1,18 @@
 #include "./win_contact.h"
-#include "../libs/pebble-assist.h"
 
 static Window* s_window = NULL;
 
 static SimpleMenuLayer* s_menu_layer = NULL;
 
-static uint16_t space_contact_current_number = 0;
-
 #define NUMBER_OF_SECTIONS 1
 static SimpleMenuSection s_menu_sections[NUMBER_OF_SECTIONS];
-#define NUMBER_OF_CONTACT_ITEMS 4
+#define NUMBER_OF_CONTACT_ITEMS 13
 static SimpleMenuItem s_contact_menu_items[NUMBER_OF_CONTACT_ITEMS];
 
-
-static void action_callback (int index, void *ctx) {
-
-}
+/* @TODO
+ * Open links, etc .. On the phone.
+ * static void action_callback (int index, void *ctx) { }
+ */
 
 
 /* ------------------------------------------------------------------------
@@ -25,110 +22,17 @@ static void action_callback (int index, void *ctx) {
 static void window_load (Window *window) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Launching window loading.");
 
-  space_contact_current_number = 0;
-
-  if (t_contact_phone_number) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Phone number",
-        .subtitle = t_contact_phone_number->value->cstring,
-        .callback = action_callback,
+  for (uint32_t i = 0; i < contacts_section->current; ++i) {
+    s_contact_menu_items[i] = (SimpleMenuItem) {
+      .title = contacts_section->array[i]->type,
+      .subtitle = contacts_section->array[i]->value,
+      .callback = NULL,
     };
-    DEBUG("Added phone number: %i", space_contact_current_number);
-  }
-
-  if (t_contact_sip_address) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "SIP Address",
-        .subtitle = t_contact_sip_address->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added sip address: %i", space_contact_current_number);
-  }
-
-  if (t_contact_irc) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "IRC",
-        .subtitle = t_contact_irc->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added irc : %i", space_contact_current_number);
-  }
-
-  if (t_contact_twitter) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Twitter",
-        .subtitle = t_contact_twitter->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added twitter in position : %i", space_contact_current_number);
-  }
-
-  if (t_contact_facebook) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Facebook",
-        .subtitle = t_contact_facebook->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added facebook : %i", space_contact_current_number);
-  }
-
-  if (t_contact_identica) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Identica",
-        .subtitle = t_contact_identica->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added Identica : %i", space_contact_current_number);
-  }
-
-  if (t_contact_foursquare) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Foursquare",
-        .subtitle = t_contact_foursquare->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added foursquare : %i", space_contact_current_number);
-  }
-
-  if (t_contact_email) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Mail",
-        .subtitle = t_contact_email->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added mail : %i", space_contact_current_number);
-  }
-
-  if (t_contact_mailing_list) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Mailing list",
-        .subtitle = t_contact_mailing_list->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added mailing list: %i", space_contact_current_number);
-  }
-
-  if (t_contact_jabber) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Jabber",
-        .subtitle = t_contact_jabber->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added jabber : %i", space_contact_current_number);
-  }
-
-  if (t_contact_issue_mail) {
-    s_contact_menu_items[space_contact_current_number++] = (SimpleMenuItem) {
-        .title = "Issue mail",
-        .subtitle = t_contact_issue_mail->value->cstring,
-        .callback = action_callback,
-    };
-    DEBUG("Added issue mail : %i", space_contact_current_number);
   }
 
   s_menu_sections[0] = (SimpleMenuSection) {
       .title = "Contacts section",
-      .num_items = space_contact_current_number,
+      .num_items = contacts_section->current,
       .items = s_contact_menu_items,
   };
 

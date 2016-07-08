@@ -24,25 +24,81 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
   switch ((uint32_t) dict_find(iterator, KEY_TYPE)->value->uint32) {
       case KEY_BASIC:
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_BASIC");
-        t_space = dict_find(iterator, KEY_SPACE);
+        snprintf(space_name_buffer, BUFFER_SIZE, "%s", dict_find(iterator, KEY_SPACE)->value->cstring);
         break;
-      case KEY_CONTACT:
+      case KEY_CONTACT: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_CONTACT");
 
-        t_contact_phone_number = dict_find(iterator, KEY_CONTACT_PHONE_NUMBER);
-        t_contact_sip_address = dict_find(iterator, KEY_CONTACT_SIP_ADDRESS);
-        t_contact_irc = dict_find(iterator, KEY_CONTACT_IRC);
-        t_contact_twitter = dict_find(iterator, KEY_CONTACT_TWITTER);
-        t_contact_facebook = dict_find(iterator, KEY_CONTACT_FACEBOOK);
-        t_contact_identica = dict_find(iterator, KEY_CONTACT_IDENTICA);
-        t_contact_foursquare = dict_find(iterator, KEY_CONTACT_FOURSQUARE);
-        t_contact_email = dict_find(iterator, KEY_CONTACT_EMAIL);
-        t_contact_mailing_list = dict_find(iterator, KEY_CONTACT_MAILLING_LIST);
-        t_contact_jabber = dict_find(iterator, KEY_CONTACT_JABBER);
-        t_contact_issue_mail = dict_find(iterator, KEY_CONTACT_ISSUE_MAIL);
+        if (contacts_section) {
+          Contacts_free(contacts_section);
+        }
+
+        Tuple* tmp = dict_find(iterator, KEY_LENGTH);
+        if (tmp == NULL) {
+          APP_LOG(APP_LOG_LEVEL_DEBUG, "Poorly formated contact section response.");
+          return;
+        }
+
+        contacts_section = Contacts_new(tmp->value->uint32);
+
+        tmp = dict_find(iterator, KEY_CONTACT_PHONE_NUMBER);
+        if (tmp) {
+          Contacts_add(contacts_section, "Phone number", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_SIP_ADDRESS);
+        if (tmp) {
+          Contacts_add(contacts_section, "SIP address", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_IRC);
+        if (tmp) {
+          Contacts_add(contacts_section, "Irc", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_TWITTER);
+        if (tmp) {
+          Contacts_add(contacts_section, "Twitter", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_FACEBOOK);
+        if (tmp) {
+          Contacts_add(contacts_section, "Facebook", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_IDENTICA);
+        if (tmp) {
+          Contacts_add(contacts_section, "Identica", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_FOURSQUARE);
+        if (tmp) {
+          Contacts_add(contacts_section, "Foursquare", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_EMAIL);
+        if (tmp) {
+          Contacts_add(contacts_section, "Email", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_MAILLING_LIST);
+        if (tmp) {
+          Contacts_add(contacts_section, "Mailling list", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_JABBER);
+        if (tmp) {
+          Contacts_add(contacts_section, "Jabber", tmp->value->cstring);
+        }
+
+        tmp = dict_find(iterator, KEY_CONTACT_ISSUE_MAIL);
+        if (tmp) {
+          Contacts_add(contacts_section, "Issue mail", tmp->value->cstring);
+        }
 
         win_main_update();
         break;
+      }
       case KEY_SENSOR_PEOPLE_NOW_PRESENT:;
         switch ((uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32) {
             case KEY_NAMES: {

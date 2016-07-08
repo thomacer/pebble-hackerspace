@@ -201,10 +201,6 @@ static void window_unload(Window *window) {
 }
 
 void win_main_update(void) {
-  if (t_space) {
-    snprintf(space_name_buffer, BUFFER_SIZE, "%s", t_space->value->cstring);
-  }
-
   space_info_current_number = 0;
 
   /* Drawing the second section with info about person present
@@ -223,22 +219,24 @@ void win_main_update(void) {
     ++space_info_current_number;
   }
 
-  /* Creating the "Contact" menu button
-   * It will acces to another window.
-   */
-  static char contact_window_buffer[BUFFER_SIZE];
-  static char contact_window_subtitle_buffer[BUFFER_SIZE];
-  snprintf(contact_window_buffer, BUFFER_SIZE, "Contact.");
-  snprintf(contact_window_subtitle_buffer, BUFFER_SIZE, "Contact info about %s", t_space->value->cstring);
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Contact section added : %i", space_info_current_number);
-  space_info_title[space_info_current_number] = contact_window_buffer;
-  space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
-  space_info_callback[space_info_current_number] = win_contact_show;
+  if (contacts_section) {
+    /* Creating the "Contact" menu button
+     * It will acces to another window.
+     */
+    win_contact_init();
 
-  ++space_info_current_number;
+    static char contact_window_buffer[BUFFER_SIZE];
+    static char contact_window_subtitle_buffer[BUFFER_SIZE];
+    snprintf(contact_window_buffer, BUFFER_SIZE, "Contact.");
+    snprintf(contact_window_subtitle_buffer, BUFFER_SIZE, "Contact info about %s", space_name_buffer);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Contact section added : %i", space_info_current_number);
+    space_info_title[space_info_current_number] = contact_window_buffer;
+    space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
+    space_info_callback[space_info_current_number] = win_contact_show;
 
-  win_contact_init();
-  /* win_state_init(); */
+    ++space_info_current_number;
+  }
+
 
   layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
   menu_layer_reload_data(s_menu_layer);
@@ -257,6 +255,6 @@ void win_main_init(void) {
 
 void win_main_deinit(void) {
   window_destroy(window);
-  /* win_contact_deinit(); */
-  /* win_state_deinit(); */
+  win_contact_deinit();
+  Contacts_free(contacts_section);
 }

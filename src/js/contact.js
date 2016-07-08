@@ -6,11 +6,24 @@ class Contact {
     }
 
     send (callback) {
+        // List of the currently supported part of the SpaceAPI contact section.
+        const supported = ['phone', 'sip', 'irc', 'twitter', 'facebook',
+            'identica', 'foursquare', 'email', 'ml', 'jabber', 'issue_mail'
+        ];
+
         const self = this;
+
+        let number = 0; // Number of present contact section sent to your pebble
+        for (let i = 0; i < supported.length; ++i) {
+            if (self.obj[supported[i]]) {
+                ++number;
+            }
+        }
 
         if (this.obj) {
             const formatedObject = {
                 'KEY_TYPE' : app.KEY_CONTACT,
+                'KEY_LENGTH' : number,
 
                 'KEY_CONTACT_PHONE_NUMBER' : self.obj['phone'],
                 'KEY_CONTACT_SIP_ADDRESS' : self.obj['sip'],
