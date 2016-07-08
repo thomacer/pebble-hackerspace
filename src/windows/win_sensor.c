@@ -2,13 +2,7 @@
 
 static Window* s_window = NULL;
 
-static int current_sensor_type = 0;
 static void* current_sensor_struct = NULL;
-
-/* Used to keep in memory the information about
- * the current window showed
- */
-static void* window_current_sensor_struct = NULL;
 
 /* Those two functions are empty because a sensor window depend on the sensor
  * you select to show so there is no real design to be constructed at the
@@ -18,28 +12,15 @@ static void window_load (Window* window) {}
 static void window_unload (Window* window) {}
 
 static void window_appear (Window* window) {
-    switch (((Sensor*) current_sensor_struct)->type) {
-      case people_now_present:
-        window_current_sensor_struct = current_sensor_struct;
-        PeopleNowPresent_draw (window, (PeopleNowPresent*) window_current_sensor_struct);
-        break;
-      default:
-        break;
-    }
+  ((Sensor*) current_sensor_struct)->Sensor_draw(window, current_sensor_struct);
 }
 
 /* @note : Can be problematic when the window disappear but it's still
  *      in the stack.
  */
 static void window_disappear (Window* window) {
-    switch (((Sensor*) current_sensor_struct)->type) {
-      case people_now_present:
-        PeopleNowPresent_destroy (window, (PeopleNowPresent*) current_sensor_struct);
-        window_current_sensor_struct = NULL;
-        break;
-      default:
-        break;
-    }
+  ((Sensor*) current_sensor_struct)->Sensor_destroy(current_sensor_struct);
+  current_sensor_struct = NULL;
 }
 
 void win_sensor_show(void* sensor_struct) {

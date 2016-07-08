@@ -1,5 +1,7 @@
 #pragma once
 
+#include <pebble.h>
+
 typedef enum {
     temperature,
     door_locked,
@@ -21,4 +23,7 @@ typedef struct {
     char* location;
     char* name;
     char* description;
+    void (*Sensor_free)(void*);
+    void (*Sensor_draw)(Window*, void*);
+    void (*Sensor_destroy)(void*);
 } Sensor;

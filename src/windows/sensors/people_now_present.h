@@ -16,11 +16,17 @@
  *      additional information to this sensor instance.
  */
 typedef struct {
+    // Basic Sensor template.
     t_sensors type;
     uint32_t value;
     char* location;
     char* name;
     char* description;
+    void (*PeopleNowPresent_free)(void*);
+    void (*PeopleNowPresent_draw)(Window*, void*);
+    void (*PeopleNowPresent_destroy)(void*);
+
+    // Additional info.
     char** names;
     SimpleMenuSection* menu_sections;
     SimpleMenuItem* menu_items;
@@ -28,7 +34,7 @@ typedef struct {
 } PeopleNowPresent;
 
 PeopleNowPresent* PeopleNowPresent_new (uint32_t);
-void PeopleNowPresent_free(PeopleNowPresent*);
+void PeopleNowPresent_free(void*);
 
 void PeopleNowPresent_set_location (PeopleNowPresent*, uint32_t, char*);
 void PeopleNowPresent_add_person (PeopleNowPresent*, uint32_t, char*);
@@ -37,13 +43,13 @@ void PeopleNowPresent_add_person (PeopleNowPresent*, uint32_t, char*);
  *      appear.
  *
  * @param {Window*} : window information.
- * @param {PeopleNowPresent*} : Sensor informations.
+ * @param {PeopleNowPresent*} : Sensor informations (defined as a void*
+ *      to be polymorphic).
  */
-void PeopleNowPresent_draw (Window*, PeopleNowPresent*);
+void PeopleNowPresent_draw (Window*, void*);
 
 /* @desc : Function used to destroy the window when the window disappear.
  *
- * @param {Window*} : window information.
  * @param {PeopleNowPresent*} : Sensor informations.
  */
-void PeopleNowPresent_destroy (Window*, PeopleNowPresent*);
+void PeopleNowPresent_destroy (void*);

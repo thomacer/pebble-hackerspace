@@ -10,6 +10,9 @@ PeopleNowPresent* PeopleNowPresent_new (uint32_t value) {
     .name = NULL,
     .names = malloc(value * sizeof(char*)),
     .description = NULL,
+    .PeopleNowPresent_free = PeopleNowPresent_free,
+    .PeopleNowPresent_draw = PeopleNowPresent_draw,
+    .PeopleNowPresent_destroy = PeopleNowPresent_destroy,
     .menu_sections = NULL,
     .menu_items = NULL,
     .menu_layer = NULL,
@@ -22,7 +25,8 @@ PeopleNowPresent* PeopleNowPresent_new (uint32_t value) {
   return p;
 }
 
-void PeopleNowPresent_free(PeopleNowPresent* self) {
+void PeopleNowPresent_free(void* s) {
+  PeopleNowPresent* self = (PeopleNowPresent*) s;
   for (uint32_t i = 0; i < self->value; ++i) {
     if (self->names[i]) {
       free(self->names[i]);
@@ -43,7 +47,8 @@ void PeopleNowPresent_add_person (PeopleNowPresent* self, uint32_t index, char* 
   memcpy(self->names[index], name, length);
 }
 
-void PeopleNowPresent_draw (Window* window, PeopleNowPresent* self) {
+void PeopleNowPresent_draw (Window* window, void* s) {
+  PeopleNowPresent* self = (PeopleNowPresent*) s;
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Drawing people now present");
 
   Layer* window_layer = window_get_root_layer(window);
@@ -68,7 +73,8 @@ void PeopleNowPresent_draw (Window* window, PeopleNowPresent* self) {
   layer_add_child(window_layer, simple_menu_layer_get_layer(self->menu_layer));
 }
 
-void PeopleNowPresent_destroy (Window* window, PeopleNowPresent* self) {
+void PeopleNowPresent_destroy (void* s) {
+  PeopleNowPresent* self = (PeopleNowPresent*) s;
   if (self->menu_sections != NULL) {
     free(self->menu_sections);
   }
