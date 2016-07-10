@@ -265,4 +265,5 @@ void win_main_deinit(void) {
   window_destroy(window);
   win_contact_deinit();
   Contacts_free(contacts_section);
+  sensors_array->free(sensors_array);
 }

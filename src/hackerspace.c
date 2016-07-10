@@ -1,6 +1,7 @@
 #include <pebble.h>
 
 #include "./windows/win_main.h"
+#include "./windows/win_sensor_menu.h"
 #include "./globals.h"
 #include "./appinfo.h"
 
@@ -112,7 +113,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t subindex = (uint32_t) dict_find(iterator, KEY_SUBINDEX)->value->uint32;
                 PeopleNowPresent_add_person(
-                        sensor_people_now_present->array[index],
+                        sensors_array->array[index],
                         subindex,
                         (char*) dict_find(iterator, KEY_NAMES)->value->cstring
                 );
@@ -120,13 +121,14 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
             }
             default: {
                 APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT basic");
-                if (sensor_people_now_present == NULL) {
+                if (sensors_array == NULL) {
                     uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-                    sensor_people_now_present = SensorsArray_new(length);
+                    sensors_array= SensorsArray_new(length);
                 }
+
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
-                sensor_people_now_present->array[index] = PeopleNowPresent_new (value);
+                sensors_array->array[index] = PeopleNowPresent_new (value);
                 break;
             }
         }

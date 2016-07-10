@@ -1,5 +1,7 @@
 #include "./win_sensor_menu.h"
 
+SensorsArray* sensors_array = NULL;
+
 static Window* s_window = NULL;
 static SimpleMenuLayer* s_menu_layer = NULL;
 

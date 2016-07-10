@@ -1,5 +1,7 @@
 #include "./win_contact.h"
 
+Contacts* contacts_section = NULL;
+
 static Window* s_window = NULL;
 
 static SimpleMenuLayer* s_menu_layer = NULL;

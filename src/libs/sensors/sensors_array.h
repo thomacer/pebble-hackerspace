@@ -2,10 +2,10 @@
 
 #include "./sensors.h"
 
-typedef struct {
+typedef struct SensorsArray {
     void** array;
     uint32_t length;
-    void (*free);
+    void (*free)(struct SensorsArray*);
 } SensorsArray;
 
 void free_sensors_array (SensorsArray*);
