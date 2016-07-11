@@ -33,10 +33,9 @@ typedef struct {
     SimpleMenuLayer* menu_layer;
 } PeopleNowPresent;
 
-PeopleNowPresent* PeopleNowPresent_new (uint32_t);
+PeopleNowPresent* PeopleNowPresent_new (uint32_t, char*, char*, char*);
 void PeopleNowPresent_free(void*);
 
-void PeopleNowPresent_set_location (PeopleNowPresent*, uint32_t, char*);
 void PeopleNowPresent_add_person (PeopleNowPresent*, uint32_t, char*);
 
 /* @desc : Function used to draw the sensor informations when the window

@@ -1,6 +1,10 @@
 #include "./people_now_present.h"
 
-PeopleNowPresent* PeopleNowPresent_new (uint32_t value) {
+PeopleNowPresent* PeopleNowPresent_new (uint32_t value,
+    char* location,
+    char* name,
+    char* description)
+{
   PeopleNowPresent* p = malloc(sizeof(PeopleNowPresent));
 
   *p = (PeopleNowPresent) {
@@ -22,6 +26,24 @@ PeopleNowPresent* PeopleNowPresent_new (uint32_t value) {
     p->names[i] = NULL;
   }
 
+  if (location) {
+    size_t length = strlen(location);
+    p->location = malloc(sizeof(char) * length);
+    memcpy(p->location, location, length);
+  }
+
+  if (name) {
+    size_t length = strlen(name);
+    p->name = malloc(sizeof(char) * length);
+    memcpy(p->name, name, length);
+  }
+
+  if (description) {
+    size_t length = strlen(description);
+    p->description = malloc(sizeof(char) * length);
+    memcpy(p->description, description, length);
+  }
+
   return p;
 }
 
@@ -33,11 +55,20 @@ void PeopleNowPresent_free(void* s) {
     }
   }
   free(self->names);
+
+  if (self->location) {
+    free(self->location);
+  }
+
+  if (self->name) {
+    free(self->name);
+  }
+
+  if (self->description) {
+    free(self->description);
+  }
+
   free(self);
-}
-
-void PeopleNowPresent_set_location (PeopleNowPresent* self, uint32_t index, char* location) {
-
 }
 
 void PeopleNowPresent_add_person (PeopleNowPresent* self, uint32_t index, char* name) {

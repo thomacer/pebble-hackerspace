@@ -128,7 +128,11 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
 
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
-                sensors_array->array[index] = PeopleNowPresent_new (value);
+                sensors_array->array[index] = PeopleNowPresent_new (value,
+                    NULL,
+                    NULL,
+                    NULL
+                );
                 break;
             }
         }
