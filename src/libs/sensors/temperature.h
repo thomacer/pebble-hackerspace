@@ -2,16 +2,15 @@
 #include <pebble.h>
 #include "./sensors.h"
 
-/* @desc : people_now_present object according to the spaceAPI specification.
+/* @desc : temperature object according to the spaceAPI specification.
  *
- * @param {value} : The amount of present people.
+ * @param {value} : tmeperature in the "unit" unit.
+ * @param {unit} : unit of the sensor value.
  * @param {location} : If you use multiple sensor instances for different rooms,
  *      use this field to indicate the location.
  * @param {name} : Give this sensor a name if necessary at all. Use the location
  *      field for the rooms. This field is not intended to be used for names
  *      of hackerspace members. Use the field 'names' instead.
- * @param {names} : List of hackerspace members that are currently
- *      occupying the space.
  * @param {description} : An extra field that you can use to attach some
  *      additional information to this sensor instance.
  */
@@ -38,11 +37,12 @@ typedef struct {
 Temperature* Temperature_new (uint32_t, char*, char*, char*, char*);
 void Temperature_free(void*);
 
-void Temperature_set_location (Temperature*, uint32_t, char*);
-
-/* @desc : Draw in a menu format.
+/* @desc : Return a simple menu item object formated from a Temperature
+ *      object.
+ *
+ * @param {void*} : A temperature object to format.
  */
-SimpleMenuItem Temperature_menu (void* s);
+SimpleMenuItem Temperature_menu (void*);
 
 /* @desc : Function used to draw the sensor informations when the window
  *      appear.
