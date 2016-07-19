@@ -15,6 +15,7 @@ PeopleNowPresent* PeopleNowPresent_new (uint32_t value,
     .names = malloc(value * sizeof(char*)),
     .description = NULL,
     .PeopleNowPresent_free = PeopleNowPresent_free,
+    .PeopleNowPresent_menu = PeopleNowPresent_menu,
     .PeopleNowPresent_draw = PeopleNowPresent_draw,
     .PeopleNowPresent_destroy = PeopleNowPresent_destroy,
     .menu_sections = NULL,
@@ -69,6 +70,25 @@ void PeopleNowPresent_free(void* s) {
   }
 
   free(self);
+}
+
+SimpleMenuItem PeopleNowPresent_menu (void* s) {
+  SimpleMenuItem result = {};
+  PeopleNowPresent* current = (PeopleNowPresent*) s;
+
+  if (current->name) {
+    result.title = current->name;
+  } else {
+    result.title = "People now present.";
+  }
+
+  if (current->location) {
+    result.subtitle = current->location;
+  } else {
+    result.subtitle = NULL;
+  }
+
+  return result;
 }
 
 void PeopleNowPresent_add_person (PeopleNowPresent* self, uint32_t index, char* name) {

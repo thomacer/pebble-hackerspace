@@ -22,36 +22,39 @@ typedef struct {
     char* location;
     char* name;
     char* description;
-    void (*PeopleNowPresent_free)(void*);
-    SimpleMenuItem (*PeopleNowPresent_menu)(void*);
-    void (*PeopleNowPresent_draw)(Window*, void*);
-    void (*PeopleNowPresent_destroy)(void*);
+    void (*Temperature_free)(void*);
+    SimpleMenuItem (*Temperature_menu)(void*);
+    void (*Temperature_draw)(Window*, void*);
+    void (*Temperature_destroy)(void*);
 
     // Additional info.
-    char** names;
+    char* unit;
+    char formated_value[32];
     SimpleMenuSection* menu_sections;
     SimpleMenuItem* menu_items;
     SimpleMenuLayer* menu_layer;
-} PeopleNowPresent;
+} Temperature;
 
-PeopleNowPresent* PeopleNowPresent_new (uint32_t, char*, char*, char*);
-void PeopleNowPresent_free(void*);
+Temperature* Temperature_new (uint32_t, char*, char*, char*, char*);
+void Temperature_free(void*);
 
-SimpleMenuItem PeopleNowPresent_menu (void*);
+void Temperature_set_location (Temperature*, uint32_t, char*);
 
-void PeopleNowPresent_add_person (PeopleNowPresent*, uint32_t, char*);
+/* @desc : Draw in a menu format.
+ */
+SimpleMenuItem Temperature_menu (void* s);
 
 /* @desc : Function used to draw the sensor informations when the window
  *      appear.
  *
  * @param {Window*} : window information.
- * @param {PeopleNowPresent*} : Sensor informations (defined as a void*
+ * @param {Temperature*} : Sensor informations (defined as a void*
  *      to be polymorphic).
  */
-void PeopleNowPresent_draw (Window*, void*);
+void Temperature_draw (Window*, void*);
 
 /* @desc : Function used to destroy the window when the window disappear.
  *
- * @param {PeopleNowPresent*} : Sensor informations.
+ * @param {Temperature*} : Sensor informations.
  */
-void PeopleNowPresent_destroy (void*);
+void Temperature_destroy (void*);

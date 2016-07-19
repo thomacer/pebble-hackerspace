@@ -26,9 +26,10 @@ class Sensors {
                     'KEY_LENGTH' : length,
                     'KEY_VALUE' : obj['value'],
                     'KEY_LOCATION' : obj['location'],
-                    'KEY_NAME' : obj['name']
+                    'KEY_NAME' : obj['name'],
+                    'KEY_DESCRIPTION' : obj['description'],
                 };
-                utils.sendToPebble (formatedObject, callback);
+                utils.sendToPebble(formatedObject, callback);
             }, (callback) => {
                 if (obj['value'] && obj['names']) {
                     utils.sendListToPebble(obj['names'], (name, arrayIndex) => {
@@ -56,7 +57,7 @@ class Sensors {
         });
     }
 
-    /* @desc : Send to the pebble the people now present object form the spaceAPI.
+    /* @desc : Send to the pebble the people now present object from the spaceAPI.
      *
      * @param {array} : Contain object with nested elements of type :
      * @example "people_now_present": [ 
@@ -80,7 +81,42 @@ class Sensors {
             // Creating the series of function.
             callback(null, (cb) => {
                 self._SendPeopleNowPresentObject (item.value, item.index, wrapped.length, cb);
-            });        
+            });
+        }, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            async.series(results, callback);
+        });
+    }
+
+    /* @desc : Send to the pebble the temperature object from the spaceAPI.
+     *
+     * @param {array} : Contain temperature objects.
+     */
+    _temperature (array, callback) {
+        const self = this; 
+
+        // Associating the index to the value.
+        const wrapped = array.map(function (value, index) {
+          return {index: index, value: value};
+        });
+
+        async.map(wrapped, (item, callback) => {
+            // Creating the series of function.
+            callback(null, (cb) => {
+                utils.sendToPebble({
+                    'KEY_TYPE' : app.KEY_SENSOR_TEMPERATURE,
+                    'KEY_INDEX' : item.index,
+                    'KEY_LENGTH' : wrapped.length,
+                    'KEY_VALUE' : item.value['value'],
+                    'KEY_LOCATION' : item.value['location'],
+                    'KEY_NAME' : item.value['name'],
+                    'KEY_DESCRIPTION' : item.value['description'],
+                    'KEY_UNIT' : item.value['unit'],
+                }, cb);
+            });
         }, (err, results) => {
             if (err) {
                 console.log(err);
@@ -93,9 +129,32 @@ class Sensors {
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
     send (callback) {
-        if (this.obj['people_now_present']) {
-            this._people_now_present(this.obj['people_now_present'], callback);
+        const self = this;
+
+        const supported_sensors = [{
+            name : 'people_now_present', 
+            func : this._people_now_present,
+        }, {
+            name : 'temperature', 
+            func : this._temperature,
+        }];
+
+        let functions = [];
+        if (self.obj['people_now_present']) {
+            functions.push((cb) => {
+                this._people_now_present(self.obj['people_now_present']);
+                cb();
+            });
         }
+
+        if (self.obj['temperature']) {
+            functions.push((cb) => {
+                self._temperature(self.obj['temperature']);
+                cb();
+            });
+        }
+
+        async.series(functions, callback);
     }
 }
 

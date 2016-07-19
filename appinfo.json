@@ -45,7 +45,8 @@
         "KEY_LOCATION" : 205,
         "KEY_NAME" : 206,
         "KEY_NAMES" : 207,
-        "KEY_DESCRIPTION" : 208
+        "KEY_DESCRIPTION" : 208,
+        "KEY_UNIT" : 209 
     },
     "capabilities": [
         ""

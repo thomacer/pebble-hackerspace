@@ -27,25 +27,9 @@ static void window_appear (Window* window) {
 
 
   for (uint32_t i = 0; i < number_of_sensors; ++i) {
-    PeopleNowPresent* current = sensors_array->array[i];
-    if (current->name) {
-      s_title_array[i] = current->name;
-    } else {
-      // TODO : Change to something generic
-      s_title_array[i] = "People now present.";
-    }
-
-    if (current->location) {
-      s_subtitle_array[i] = current->location;
-    } else {
-      s_subtitle_array[i] = NULL;
-    }
-
-    s_sensors_menu[i] = (SimpleMenuItem) {
-      .title = s_title_array[i],
-      .subtitle = s_subtitle_array[i],
-      .callback = draw_sensor,
-    };
+    Sensor* tmp = (Sensor*) sensors_array->array[i];
+    s_sensors_menu[i] = tmp->menu(sensors_array->array[i]);
+    s_sensors_menu[i].callback = draw_sensor;
   }
 
   s_sensors_menu_section[0] = (SimpleMenuSection) {
