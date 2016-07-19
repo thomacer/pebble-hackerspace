@@ -214,7 +214,7 @@ void win_main_update(void) {
   /* Drawing the second section with info about person present
    * in the hackerspace.
    */
-  if (sensors_array->length) {
+  if (sensors_array && sensors_array->length) {
     static char sensor_menu_buffer[BUFFER_SIZE];
     /* static char sensor_menu_subtitle_buffer[BUFFER_SIZE]; */
     snprintf(sensor_menu_buffer, BUFFER_SIZE, "Sensors menu.");
