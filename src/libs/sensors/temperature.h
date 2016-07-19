@@ -29,9 +29,6 @@ typedef struct {
     // Additional info.
     char* unit;
     char formated_value[32];
-    SimpleMenuSection* menu_sections;
-    SimpleMenuItem* menu_items;
-    SimpleMenuLayer* menu_layer;
 } Temperature;
 
 Temperature* Temperature_new (uint32_t, char*, char*, char*, char*);

@@ -19,9 +19,6 @@ Temperature* Temperature_new (uint32_t value,
     .Temperature_menu = Temperature_menu,
     .Temperature_draw = Temperature_draw,
     .Temperature_destroy = Temperature_destroy,
-    .menu_sections = NULL,
-    .menu_items = NULL,
-    .menu_layer = NULL,
   };
 
   if (unit) {
