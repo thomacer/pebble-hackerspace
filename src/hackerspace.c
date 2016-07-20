@@ -6,6 +6,7 @@
 #include "./libs/sensors/temperature.h"
 #include "./libs/sensors/door_locked.h"
 #include "./libs/sensors/barometer.h"
+#include "./libs/sensors/humidity.h"
 #include "./globals.h"
 #include "./appinfo.h"
 
@@ -170,6 +171,29 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
 
         sensors_array->array[index] = Barometer_new (value,
+            unit ? unit->value->cstring : NULL,
+            location ? location->value->cstring : NULL,
+            name ? name->value->cstring : NULL,
+            description ? description->value->cstring : NULL
+        );
+        break;
+      }
+      case KEY_SENSOR_HUMIDITY: {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_HUMIDITY");
+        if (sensors_array == NULL) {
+            uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
+            sensors_array= SensorsArray_new(length);
+        }
+
+        uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
+        uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
+
+        Tuple* unit = dict_find(iterator, KEY_UNIT);
+        Tuple* location = dict_find(iterator, KEY_LOCATION);
+        Tuple* name = dict_find(iterator, KEY_NAME);
+        Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
+
+        sensors_array->array[index] = Humidity_new (value,
             unit ? unit->value->cstring : NULL,
             location ? location->value->cstring : NULL,
             name ? name->value->cstring : NULL,
