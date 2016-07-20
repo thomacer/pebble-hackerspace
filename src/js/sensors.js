@@ -142,7 +142,7 @@ class Sensors {
             // Creating the series of function.
             callback(null, (cb) => {
                 utils.sendToPebble({
-                    'KEY_TYPE' : app.KEY_SENSOR_TEMPERATURE,
+                    'KEY_TYPE' : app.KEY_SENSOR_DOOR_LOCKED,
                     'KEY_INDEX' : item.index,
                     'KEY_LENGTH' : wrapped.length,
                     'KEY_VALUE' : item.value['value'],
@@ -160,18 +160,55 @@ class Sensors {
         });
     }
 
+    /* @desc : Send to the pebble the barometer object from the spaceAPI.
+     *
+     * @param {array} : Contain temperature objects.
+     */
+    _barometer (array, callback) {
+        const self = this; 
+
+        // Associating the index to the value.
+        const wrapped = array.map(function (value, index) {
+          return {index: index, value: value};
+        });
+
+        async.map(wrapped, (item, callback) => {
+            // Creating the series of function.
+            callback(null, (cb) => {
+                utils.sendToPebble({
+                    'KEY_TYPE' : app.KEY_SENSOR_BAROMETER,
+                    'KEY_INDEX' : item.index,
+                    'KEY_LENGTH' : wrapped.length,
+                    'KEY_VALUE' : item.value['value'],
+                    'KEY_LOCATION' : item.value['location'],
+                    'KEY_NAME' : item.value['name'],
+                    'KEY_DESCRIPTION' : item.value['description'],
+                    'KEY_UNIT' : item.value['unit'],
+                }, cb);
+            });
+        }, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            async.series(results, callback);
+        });
+    }
+
+
+
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
     send (callback) {
         const self = this;
 
-        const supported_sensors = [{
-            name : 'people_now_present', 
-            func : this._people_now_present,
-        }, {
-            name : 'temperature', 
-            func : this._temperature,
-        }];
+        // const supported_sensors = [{
+        //     name : 'people_now_present', 
+        //     func : this._people_now_present,
+        // }, {
+        //     name : 'temperature', 
+        //     func : this._temperature,
+        // }];
 
         let functions = [];
         if (self.obj['people_now_present']) {
@@ -190,7 +227,14 @@ class Sensors {
 
         if (self.obj['door_locked']) {
             functions.push((cb) => {
-                self._temperature(self.obj['door_locked']);
+                self._door_locked(self.obj['door_locked']);
+                cb();
+            });
+        }
+
+        if (self.obj['barometer']) {
+            functions.push((cb) => {
+                self._barometer(self.obj['barometer']);
                 cb();
             });
         }
