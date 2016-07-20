@@ -7,6 +7,18 @@ class Sensors {
         this.obj = sensors; 
     }
 
+    /* @desc : Count the number of sensors object fetched from the spaceAPI.
+     */
+    _count () {
+        const self = this;
+        let count = 0;
+        for (let obj in self.obj) {
+            count += self.obj[obj].length;
+        }
+
+        return count;
+    }
+
     /* @desc : Send an object from the "people_now_present" array,
      *      "people_now_present" is more complex because it contain an array 
      *      of Strings itself.
@@ -280,10 +292,20 @@ class Sensors {
         //     func : this._temperature,
         // }];
 
+
         let functions = [];
+
+        const count = self._count();
+        functions.push((cb) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR,
+                'KEY_LENGTH' : count,
+            }, cb);
+        });
+
         if (self.obj['people_now_present']) {
             functions.push((cb) => {
-                this._people_now_present(self.obj['people_now_present']);
+                self._people_now_present(self.obj['people_now_present']);
                 cb();
             });
         }

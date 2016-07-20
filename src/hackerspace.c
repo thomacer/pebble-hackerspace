@@ -112,6 +112,17 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         win_main_update();
         break;
       }
+      case KEY_SENSOR: {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR, creating new array.");
+        if (sensors_array) {
+          sensors_array->free(sensors_array);
+        }
+
+        uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
+        sensors_array= SensorsArray_new(length);
+
+        break;
+      }
       case KEY_SENSOR_TEMPERATURE: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_TEMPERATURE");
         if (sensors_array == NULL) {
