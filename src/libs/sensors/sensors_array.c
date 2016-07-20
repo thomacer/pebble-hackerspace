@@ -17,5 +17,9 @@ SensorsArray* SensorsArray_new (uint32_t length) {
       .free = free_sensors_array,
     };
 
+    for (uint32_t i = 0; i < length; ++i) {
+        obj->array[i] = NULL;
+    }
+
     return obj;
 }

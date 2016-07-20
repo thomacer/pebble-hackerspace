@@ -26,15 +26,22 @@ static void window_appear (Window* window) {
   s_subtitle_array = malloc(sizeof(char*) * number_of_sensors);
 
 
+
+  uint32_t count = 0;
   for (uint32_t i = 0; i < number_of_sensors; ++i) {
+    if (sensors_array->array[i] == NULL) {
+      continue;
+    }
+
     Sensor* tmp = (Sensor*) sensors_array->array[i];
     s_sensors_menu[i] = tmp->menu(sensors_array->array[i]);
     s_sensors_menu[i].callback = draw_sensor;
+    ++count;
   }
 
   s_sensors_menu_section[0] = (SimpleMenuSection) {
     .title = "Sensors",
-    .num_items = number_of_sensors,
+    .num_items = count,
     .items = s_sensors_menu,
   };
 
