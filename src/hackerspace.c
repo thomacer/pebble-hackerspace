@@ -5,6 +5,7 @@
 #include "./libs/sensors/people_now_present.h"
 #include "./libs/sensors/temperature.h"
 #include "./libs/sensors/door_locked.h"
+#include "./libs/sensors/barometer.h"
 #include "./globals.h"
 #include "./appinfo.h"
 
@@ -168,7 +169,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         Tuple* name = dict_find(iterator, KEY_NAME);
         Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
 
-        sensors_array->array[index] = Temperature_new (value,
+        sensors_array->array[index] = Barometer_new (value,
             unit ? unit->value->cstring : NULL,
             location ? location->value->cstring : NULL,
             name ? name->value->cstring : NULL,
