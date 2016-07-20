@@ -2,9 +2,9 @@
 #include <pebble.h>
 #include "./sensors.h"
 
-/* @desc : Barometer object according to the spaceAPI specification.
+/* @desc : PowerConsumption object according to the spaceAPI specification.
  *
- * @param {value} : Barometer unit.
+ * @param {value} : PowerConsumption unit.
  * @param {unit} : unit of the sensor value.
  * @param {location} : If you use multiple sensor instances for different rooms,
  *      use this field to indicate the location.
@@ -21,37 +21,37 @@ typedef struct {
     char* location;
     char* name;
     char* description;
-    void (*Barometer_free)(void*);
-    SimpleMenuItem (*Barometer_menu)(void*);
-    void (*Barometer_draw)(Window*, void*);
-    void (*Barometer_destroy)(void*);
+    void (*PowerConsumption_free)(void*);
+    SimpleMenuItem (*PowerConsumption_menu)(void*);
+    void (*PowerConsumption_draw)(Window*, void*);
+    void (*PowerConsumption_destroy)(void*);
 
     // Additional info.
     char* unit;
     char formated_value[32];
-} Barometer;
+} PowerConsumption;
 
-Barometer* Barometer_new (uint32_t, char*, char*, char*, char*);
-void Barometer_free(void*);
+PowerConsumption* PowerConsumption_new (uint32_t, char*, char*, char*, char*);
+void PowerConsumption_free(void*);
 
-/* @desc : Return a simple menu item object formated from a Barometer
+/* @desc : Return a simple menu item object formated from a PowerConsumption
  *      object.
  *
- * @param {void*} : A Barometer object to format.
+ * @param {void*} : A PowerConsumption object to format.
  */
-SimpleMenuItem Barometer_menu (void*);
+SimpleMenuItem PowerConsumption_menu (void*);
 
 /* @desc : Function used to draw the sensor informations when the window
  *      appear.
  *
  * @param {Window*} : window information.
- * @param {Barometer*} : Sensor informations (defined as a void*
+ * @param {PowerConsumption*} : Sensor informations (defined as a void*
  *      to be polymorphic).
  */
-void Barometer_draw (Window*, void*);
+void PowerConsumption_draw (Window*, void*);
 
 /* @desc : Function used to destroy the window when the window disappear.
  *
- * @param {Barometer*} : Sensor informations.
+ * @param {PowerConsumption*} : Sensor informations.
  */
-void Barometer_destroy (void*);
+void PowerConsumption_destroy (void*);

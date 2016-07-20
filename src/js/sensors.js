@@ -230,6 +230,41 @@ class Sensors {
         });
     }
 
+    /* @desc : Send to the pebble the power_consumption object from the spaceAPI.
+     *
+     * @param {array} : Contain power_consumption objects.
+     */
+    _power_consumption (array, callback) {
+        const self = this; 
+
+        // Associating the index to the value.
+        const wrapped = array.map(function (value, index) {
+          return {index: index, value: value};
+        });
+
+        async.map(wrapped, (item, callback) => {
+            // Creating the series of function.
+            callback(null, (cb) => {
+                utils.sendToPebble({
+                    'KEY_TYPE' : app.KEY_SENSOR_POWER_CONSUMPTION,
+                    'KEY_INDEX' : item.index,
+                    'KEY_LENGTH' : wrapped.length,
+                    'KEY_VALUE' : item.value['value'],
+                    'KEY_LOCATION' : item.value['location'],
+                    'KEY_NAME' : item.value['name'],
+                    'KEY_DESCRIPTION' : item.value['description'],
+                    'KEY_UNIT' : item.value['unit'],
+                }, cb);
+            });
+        }, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            async.series(results, callback);
+        });
+    }
+
 
 
     /* @desc : Send the sensors spaceAPI object to the pebble.
@@ -277,6 +312,13 @@ class Sensors {
         if (self.obj['humidity']) {
             functions.push((cb) => {
                 self._humidity(self.obj['humidity']);
+                cb();
+            });
+        }
+
+        if (self.obj['power_consumption']) {
+            functions.push((cb) => {
+                self._power_consumption(self.obj['power_consumption']);
                 cb();
             });
         }
