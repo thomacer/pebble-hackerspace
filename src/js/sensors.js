@@ -126,6 +126,40 @@ class Sensors {
         });
     }
 
+    /* @desc : Send to the pebble the "door_locked" object from the spaceAPI.
+     *
+     * @param {array} : Contain temperature objects.
+     */
+    _door_locked(array, callback) {
+        const self = this; 
+
+        // Associating the index to the value.
+        const wrapped = array.map(function (value, index) {
+          return {index: index, value: value};
+        });
+
+        async.map(wrapped, (item, callback) => {
+            // Creating the series of function.
+            callback(null, (cb) => {
+                utils.sendToPebble({
+                    'KEY_TYPE' : app.KEY_SENSOR_TEMPERATURE,
+                    'KEY_INDEX' : item.index,
+                    'KEY_LENGTH' : wrapped.length,
+                    'KEY_VALUE' : item.value['value'],
+                    'KEY_LOCATION' : item.value['location'],
+                    'KEY_NAME' : item.value['name'],
+                    'KEY_DESCRIPTION' : item.value['description'],
+                }, cb);
+            });
+        }, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            async.series(results, callback);
+        });
+    }
+
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
     send (callback) {
@@ -150,6 +184,13 @@ class Sensors {
         if (self.obj['temperature']) {
             functions.push((cb) => {
                 self._temperature(self.obj['temperature']);
+                cb();
+            });
+        }
+
+        if (self.obj['door_locked']) {
+            functions.push((cb) => {
+                self._temperature(self.obj['door_locked']);
                 cb();
             });
         }

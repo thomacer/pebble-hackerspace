@@ -4,6 +4,7 @@
 #include "./windows/win_sensor_menu.h"
 #include "./libs/sensors/people_now_present.h"
 #include "./libs/sensors/temperature.h"
+#include "./libs/sensors/door_locked.h"
 #include "./globals.h"
 #include "./appinfo.h"
 
@@ -132,8 +133,28 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
 
         break;
       }
+      case KEY_SENSOR_DOOR_LOCKED: {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_DOOR_LOCKED");
+        if (sensors_array == NULL) {
+            uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
+            sensors_array= SensorsArray_new(length);
+        }
 
-      case KEY_SENSOR_PEOPLE_NOW_PRESENT:;
+        uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
+        uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
+
+        Tuple* location = dict_find(iterator, KEY_LOCATION);
+        Tuple* name = dict_find(iterator, KEY_NAME);
+        Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
+
+        sensors_array->array[index] = DoorLocked_new (value,
+            location ? location->value->cstring : NULL,
+            name ? name->value->cstring : NULL,
+            description ? description->value->cstring : NULL
+        );
+        break;
+      }
+      case KEY_SENSOR_PEOPLE_NOW_PRESENT: {
         switch ((uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32) {
             case KEY_NAMES: {
                 APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT NAME received.");
@@ -165,9 +186,9 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         }
         win_main_update();
         break;
+      }
       default:
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Default message");
-
   }
 }
 
