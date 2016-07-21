@@ -264,6 +264,8 @@ void win_main_update(void) {
 void win_main_init(void) {
   strcpy(space_name_buffer, "Hackerspace");
 
+  load_icons();
+
   // Section 0 : SpaceAPI basic info
   win_basic_init();
   // Section 1 : SpaceAPI info
@@ -285,6 +287,8 @@ void win_main_deinit(void) {
   win_contact_deinit();
   win_sensor_menu_deinit();
   win_about_deinit();
+
+  free_icons();
 
   window_destroy(window);
 

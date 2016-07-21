@@ -76,6 +76,8 @@ SimpleMenuItem PeopleNowPresent_menu (void* s) {
   SimpleMenuItem result = {};
   PeopleNowPresent* current = (PeopleNowPresent*) s;
 
+  result.icon = person_icon;
+
   if (current->name) {
     result.title = current->name;
   } else {

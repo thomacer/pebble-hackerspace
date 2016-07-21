@@ -2,22 +2,20 @@
 
 static Window* window;
 
-static GBitmap* s_logo_bitmap;
 static Layer* image_layer;
 
 static TextLayer* text_layer;
 static char* about_text = "Built at the UrLab hackerspace in Brussels.";
 
 static void image_layer_update (Layer* layer, GContext* ctx) {
-  graphics_draw_bitmap_in_rect(ctx, s_logo_bitmap, gbitmap_get_bounds(s_logo_bitmap));
+  graphics_draw_bitmap_in_rect(ctx, urlab_logo, gbitmap_get_bounds(urlab_logo));
 }
 
 static void window_load(Window *window) {
   Layer* window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-  s_logo_bitmap = gbitmap_create_with_resource(RESOURCE_ID_URLAB_LOGO);
-  GRect image_bound = gbitmap_get_bounds(s_logo_bitmap);
+  GRect image_bound = gbitmap_get_bounds(urlab_logo);
   image_layer = layer_create(image_bound);
   layer_add_child(window_layer, image_layer);
   layer_set_update_proc(image_layer, image_layer_update);

@@ -6,6 +6,7 @@
 #include "./win_contact.h"
 #include "./win_about.h"
 #include "../globals.h"
+#include "../icons.h"
 
 void win_main_update(void);
 void win_main_init(void);

@@ -62,7 +62,7 @@ SimpleMenuItem DoorLocked_menu (void* s) {
   DoorLocked* self = (DoorLocked*) s;
   SimpleMenuItem result = {};
 
-  /* TODO result.icon = */
+  result.icon = door_icon;
 
   if (self->name) {
     result.title = self->name;

@@ -1,6 +1,7 @@
 #pragma once
 #include <pebble.h>
 #include "./sensors.h"
+#include "../../icons.h"
 
 /* @desc : people_now_present object according to the spaceAPI specification.
  *

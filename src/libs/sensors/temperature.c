@@ -77,7 +77,7 @@ SimpleMenuItem Temperature_menu (void* s) {
   Temperature* t = (Temperature*) s;
   SimpleMenuItem result = {};
 
-  /* TODO result.icon = */
+  result.icon = thermometer_icon;
 
   if (t->name) {
     result.title = t->name;
