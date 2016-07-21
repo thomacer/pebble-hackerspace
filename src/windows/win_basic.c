@@ -27,5 +27,5 @@ void win_basic_init(void) {
 }
 
 void win_basic_deinit(void) {
-
+  window_destroy(window);
 }

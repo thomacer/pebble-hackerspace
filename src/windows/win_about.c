@@ -45,5 +45,7 @@ void win_about_init(void) {
 }
 
 void win_about_deinit(void) {
+  layer_destroy(image_layer);
+  text_layer_destroy(text_layer);
   window_destroy(window);
 }

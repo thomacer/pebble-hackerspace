@@ -63,6 +63,10 @@ static void window_disappear (Window* window) {
   s_subtitle_array = NULL;
 }
 
+void win_sensor_menu_show(void) {
+  window_stack_push(s_window, true);
+}
+
 void win_sensor_menu_init(void) {
   s_window = window_create();
   window_set_window_handlers(s_window, (WindowHandlers) {
@@ -72,10 +76,14 @@ void win_sensor_menu_init(void) {
     .unload = window_unload,
   });
   win_sensor_init();
-  window_stack_push(s_window, true);
 }
 
 void win_sensor_menu_deinit(void) {
   win_sensor_deinit();
+
+  if (sensors_array) {
+    sensors_array->free(sensors_array);
+  }
+
   window_destroy(s_window);
 }

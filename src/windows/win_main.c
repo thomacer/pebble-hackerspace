@@ -237,7 +237,7 @@ void win_main_update(void) {
     space_info_title[space_info_current_number] = sensor_menu_buffer;
     /* space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer; */
     space_info_subtitle[space_info_current_number] = NULL;
-    space_info_callback[space_info_current_number] = win_sensor_menu_init;
+    space_info_callback[space_info_current_number] = win_sensor_menu_show;
     ++space_info_current_number;
   }
 
@@ -245,8 +245,6 @@ void win_main_update(void) {
     /* Creating the "Contact" menu button
      * It will acces to another window.
      */
-    win_contact_init();
-
     static char contact_window_buffer[BUFFER_SIZE];
     static char contact_window_subtitle_buffer[BUFFER_SIZE];
     snprintf(contact_window_buffer, BUFFER_SIZE, "Contact.");
@@ -259,15 +257,18 @@ void win_main_update(void) {
     ++space_info_current_number;
   }
 
-  // Section 2 : About.
-  win_about_init();
-
   layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
   menu_layer_reload_data(s_menu_layer);
 }
 
 void win_main_init(void) {
   strcpy(space_name_buffer, "Hackerspace");
+
+  // Section 1 : SpaceAPI info
+  win_contact_init();
+  win_sensor_menu_init();
+  // Section 2 : About.
+  win_about_init();
 
   window = window_create();
   window_set_window_handlers(window, (WindowHandlers) {
@@ -278,8 +279,13 @@ void win_main_init(void) {
 }
 
 void win_main_deinit(void) {
-  window_destroy(window);
+  win_basic_deinit();
   win_contact_deinit();
+  win_sensor_menu_deinit();
+  win_about_deinit();
+
+  window_destroy(window);
+
   Contacts_free(contacts_section);
   sensors_array->free(sensors_array);
 }

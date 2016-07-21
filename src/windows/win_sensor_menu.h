@@ -5,5 +5,6 @@
 
 extern SensorsArray* sensors_array;
 
+void win_sensor_menu_show(void);
 void win_sensor_menu_init(void);
 void win_sensor_menu_deinit(void);
