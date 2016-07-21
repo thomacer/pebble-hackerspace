@@ -21,6 +21,7 @@
         "KEY_OPEN_STATE": 113,
         "KEY_SPACE": 114,
         "KEY_SPACE_URL" : 115,
+        "KEY_LAST_CHANGE" : 116,
 
         "KEY_SENSOR" : 121,
         "KEY_SENSOR_TEMPERATURE" : 122,
