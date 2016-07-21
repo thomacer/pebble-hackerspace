@@ -84,23 +84,7 @@ class Sensors {
     _people_now_present (array, callback) {
         const self = this;
 
-        // Associating the index to the value.
-        const wrapped = array.map(function (value, index) {
-          return {index: index, value: value};
-        });
-
-        async.map(wrapped, (item, callback) => {
-            // Creating the series of function.
-            callback(null, (cb) => {
-                self._SendPeopleNowPresentObject (item.value, item.index, wrapped.length, cb);
-            });
-        }, (err, results) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            async.series(results, callback);
-        });
+        utils.mapSerie (array, self._SendPeopleNowPresentObject, callback);
     }
 
     /* @desc : Send to the pebble the temperature object from the spaceAPI.
@@ -110,32 +94,18 @@ class Sensors {
     _temperature (array, callback) {
         const self = this; 
 
-        // Associating the index to the value.
-        const wrapped = array.map(function (value, index) {
-          return {index: index, value: value};
-        });
-
-        async.map(wrapped, (item, callback) => {
-            // Creating the series of function.
-            callback(null, (cb) => {
-                utils.sendToPebble({
-                    'KEY_TYPE' : app.KEY_SENSOR_TEMPERATURE,
-                    'KEY_INDEX' : item.index,
-                    'KEY_LENGTH' : wrapped.length,
-                    'KEY_VALUE' : item.value['value'],
-                    'KEY_LOCATION' : item.value['location'],
-                    'KEY_NAME' : item.value['name'],
-                    'KEY_DESCRIPTION' : item.value['description'],
-                    'KEY_UNIT' : item.value['unit'],
-                }, cb);
-            });
-        }, (err, results) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            async.series(results, callback);
-        });
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_TEMPERATURE,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+                'KEY_UNIT' : value['unit'],
+            }, callback);
+        }, callback);
     }
 
     /* @desc : Send to the pebble the "door_locked" object from the spaceAPI.
@@ -145,31 +115,17 @@ class Sensors {
     _door_locked(array, callback) {
         const self = this; 
 
-        // Associating the index to the value.
-        const wrapped = array.map(function (value, index) {
-          return {index: index, value: value};
-        });
-
-        async.map(wrapped, (item, callback) => {
-            // Creating the series of function.
-            callback(null, (cb) => {
-                utils.sendToPebble({
-                    'KEY_TYPE' : app.KEY_SENSOR_DOOR_LOCKED,
-                    'KEY_INDEX' : item.index,
-                    'KEY_LENGTH' : wrapped.length,
-                    'KEY_VALUE' : item.value['value'],
-                    'KEY_LOCATION' : item.value['location'],
-                    'KEY_NAME' : item.value['name'],
-                    'KEY_DESCRIPTION' : item.value['description'],
-                }, cb);
-            });
-        }, (err, results) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            async.series(results, callback);
-        });
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_DOOR_LOCKED,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+            }, callback);
+        }, callback);
     }
 
     /* @desc : Send to the pebble the barometer object from the spaceAPI.
@@ -179,32 +135,18 @@ class Sensors {
     _barometer (array, callback) {
         const self = this; 
 
-        // Associating the index to the value.
-        const wrapped = array.map(function (value, index) {
-          return {index: index, value: value};
-        });
-
-        async.map(wrapped, (item, callback) => {
-            // Creating the series of function.
-            callback(null, (cb) => {
-                utils.sendToPebble({
-                    'KEY_TYPE' : app.KEY_SENSOR_BAROMETER,
-                    'KEY_INDEX' : item.index,
-                    'KEY_LENGTH' : wrapped.length,
-                    'KEY_VALUE' : item.value['value'],
-                    'KEY_LOCATION' : item.value['location'],
-                    'KEY_NAME' : item.value['name'],
-                    'KEY_DESCRIPTION' : item.value['description'],
-                    'KEY_UNIT' : item.value['unit'],
-                }, cb);
-            });
-        }, (err, results) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            async.series(results, callback);
-        });
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_BAROMETER,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+                'KEY_UNIT' : value['unit'],
+            }, callback);
+        }, callback);
     }
 
     /* @desc : Send to the pebble the humidity object from the spaceAPI.
@@ -214,32 +156,18 @@ class Sensors {
     _humidity (array, callback) {
         const self = this; 
 
-        // Associating the index to the value.
-        const wrapped = array.map(function (value, index) {
-          return {index: index, value: value};
-        });
-
-        async.map(wrapped, (item, callback) => {
-            // Creating the series of function.
-            callback(null, (cb) => {
-                utils.sendToPebble({
-                    'KEY_TYPE' : app.KEY_SENSOR_HUMIDITY,
-                    'KEY_INDEX' : item.index,
-                    'KEY_LENGTH' : wrapped.length,
-                    'KEY_VALUE' : item.value['value'],
-                    'KEY_LOCATION' : item.value['location'],
-                    'KEY_NAME' : item.value['name'],
-                    'KEY_DESCRIPTION' : item.value['description'],
-                    'KEY_UNIT' : item.value['unit'],
-                }, cb);
-            });
-        }, (err, results) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            async.series(results, callback);
-        });
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_HUMIDITY,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+                'KEY_UNIT' : value['unit'],
+            }, callback);
+        }, callback);
     }
 
     /* @desc : Send to the pebble the power_consumption object from the spaceAPI.
@@ -249,35 +177,19 @@ class Sensors {
     _power_consumption (array, callback) {
         const self = this; 
 
-        // Associating the index to the value.
-        const wrapped = array.map(function (value, index) {
-          return {index: index, value: value};
-        });
-
-        async.map(wrapped, (item, callback) => {
-            // Creating the series of function.
-            callback(null, (cb) => {
-                utils.sendToPebble({
-                    'KEY_TYPE' : app.KEY_SENSOR_POWER_CONSUMPTION,
-                    'KEY_INDEX' : item.index,
-                    'KEY_LENGTH' : wrapped.length,
-                    'KEY_VALUE' : item.value['value'],
-                    'KEY_LOCATION' : item.value['location'],
-                    'KEY_NAME' : item.value['name'],
-                    'KEY_DESCRIPTION' : item.value['description'],
-                    'KEY_UNIT' : item.value['unit'],
-                }, cb);
-            });
-        }, (err, results) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            async.series(results, callback);
-        });
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_POWER_CONSUMPTION,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+                'KEY_UNIT' : value['unit'],
+            }, callback);
+        }, callback);
     }
-
-
 
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
