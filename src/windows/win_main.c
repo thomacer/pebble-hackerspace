@@ -33,7 +33,7 @@ static void (*space_info_callback[MAX_NUMBER_OF_MENU]) () = {};
 /* - Header.
  * - Navigation.
  */
-#define NUMBER_OF_SECTIONS 2
+#define NUMBER_OF_SECTIONS 3
 static uint16_t menu_get_num_sections_callback(MenuLayer* menu_layer, void* data) {
     return NUMBER_OF_SECTIONS;
 }
@@ -45,13 +45,16 @@ static uint16_t menu_get_num_sections_callback(MenuLayer* menu_layer, void* data
  * @param {data} :
  */
 /* Only 1 image is shown. */
-#define NUMBER_OF_ITEM_IN_HEADER 1
+#define NUMBER_OF_ITEM_IN_HEADER 0
+#define NUMBER_OF_ITEM_IN_OTHER 1
 static uint16_t menu_get_num_rows_callback(MenuLayer* menu_layer, uint16_t section_index, void* data) {
     switch (section_index) {
         case 0:
             return NUMBER_OF_ITEM_IN_HEADER;
         case 1:
             return space_info_current_number;
+        case 2:
+            return NUMBER_OF_ITEM_IN_OTHER;
         default:
             return 0;
     }
@@ -75,7 +78,7 @@ static int16_t menu_get_cell_height_callback(MenuLayer *menu_layer, MenuIndex *c
             switch (cell_index->row) {
                 case 0:
                     /* To let the image fit the square. */
-                    return gbitmap_get_bounds(s_logo_bitmap).size.h;
+                    /* return gbitmap_get_bounds(s_logo_bitmap).size.h; */
                 default:
                     return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
             }
@@ -105,12 +108,10 @@ static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, ui
             menu_cell_basic_header_draw(ctx, cell_layer, space_state);
             break;
         case 1:
-            if (space_info_current_number == 1) {
-                menu_cell_basic_header_draw(ctx, cell_layer, "Navigation command");
-            } else if (space_info_current_number) {
-                menu_cell_basic_header_draw(ctx, cell_layer, "Navigation commands");
-            }
+            menu_cell_basic_header_draw(ctx, cell_layer, "SpaceAPI content");
             break;
+        case 2:
+            menu_cell_basic_header_draw(ctx, cell_layer, "Other");
     }
 }
 
@@ -119,14 +120,17 @@ static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, ui
 static void menu_draw_row_callback(GContext* ctx, const Layer* cell_layer, MenuIndex* cell_index, void* data) {
     switch (cell_index->section) {
         case 0: ;
-            GSize size = layer_get_frame(cell_layer).size;
-            const uint8_t x_offset = (size.w - gbitmap_get_bounds(s_logo_bitmap).size.w) / 2;
-            const uint8_t y_offset = (size.h - gbitmap_get_bounds(s_logo_bitmap).size.h) / 2;
-            graphics_draw_bitmap_in_rect(ctx, s_logo_bitmap, GRect(x_offset, y_offset, size.w, size.h));
-            break;
+          /* GSize size = layer_get_frame(cell_layer).size; */
+          /* const uint8_t x_offset = (size.w - gbitmap_get_bounds(s_logo_bitmap).size.w) / 2; */
+          /* const uint8_t y_offset = (size.h - gbitmap_get_bounds(s_logo_bitmap).size.h) / 2; */
+          /* graphics_draw_bitmap_in_rect(ctx, s_logo_bitmap, GRect(x_offset, y_offset, size.w, size.h)); */
+          break;
         case 1:
-            menu_cell_basic_draw(ctx, cell_layer, space_info_title[cell_index->row], space_info_subtitle[cell_index->row],NULL);
-            break;
+          menu_cell_basic_draw(ctx, cell_layer, space_info_title[cell_index->row], space_info_subtitle[cell_index->row],NULL);
+          break;
+        case 2:
+          menu_cell_basic_draw(ctx, cell_layer, "About", "About the app.", NULL);
+          break;
     }
 }
 
@@ -138,6 +142,9 @@ static void menu_select_callback(MenuLayer* menu_layer, MenuIndex* cell_index, v
             if (space_info_callback[cell_index->row] != NULL) {
                 (*space_info_callback[cell_index->row]) ();
             }
+            break;
+        case 2:
+            win_about_show();
             break;
         default:
             break;
@@ -209,6 +216,8 @@ static void window_unload(Window *window) {
 }
 
 void win_main_update(void) {
+  // Section 1 : SpaceAPI content.
+
   space_info_current_number = 0;
 
   /* Drawing the second section with info about person present
@@ -245,6 +254,8 @@ void win_main_update(void) {
     ++space_info_current_number;
   }
 
+  // Section 2 : About.
+  win_about_init();
 
   layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
   menu_layer_reload_data(s_menu_layer);
