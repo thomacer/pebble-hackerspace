@@ -2,6 +2,7 @@
 
 #include "./windows/win_main.h"
 #include "./windows/win_sensor_menu.h"
+#include "./libs/basic/basic.h"
 #include "./libs/sensors/people_now_present.h"
 #include "./libs/sensors/temperature.h"
 #include "./libs/sensors/door_locked.h"
@@ -32,11 +33,41 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
   switch ((uint32_t) dict_find(iterator, KEY_TYPE)->value->uint32) {
       case KEY_BASIC: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_BASIC");
-        snprintf(space_name_buffer, BUFFER_SIZE, "%s", dict_find(iterator, KEY_SPACE)->value->cstring);
-        Tuple* tmp = dict_find(iterator, KEY_OPEN_STATE);
+
+        if (basic_info) {
+          basic_info->free(basic_info);
+        }
+
+        Tuple* tmp = dict_find(iterator, KEY_SPACE);
+        char* space = NULL;
+        if (tmp) {
+          snprintf(space_name_buffer, BUFFER_SIZE, "%s", tmp->value->cstring);
+          space = tmp->value->cstring;
+        }
+
+        tmp = dict_find(iterator, KEY_SPACE_URL);
+        char* space_url = NULL;
+        if (tmp) {
+          space_url = tmp->value->cstring;
+        }
+
+        tmp = dict_find(iterator, KEY_OPEN_STATE);
         if (tmp) {
           open_state = tmp->value->uint32;
+        } else {
+          open_state = Undefined;
         }
+
+        tmp = dict_find(iterator, KEY_LAST_CHANGE);
+        uint32_t last_change = 0;
+        if (tmp) {
+          last_change = tmp->value->uint32;
+        }
+
+        basic_info = BasicInfo_new(space, space_url, last_change, open_state);
+
+        win_main_update();
+
         break;
       }
       case KEY_CONTACT: {

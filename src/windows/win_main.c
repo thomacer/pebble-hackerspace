@@ -45,7 +45,7 @@ static uint16_t menu_get_num_sections_callback(MenuLayer* menu_layer, void* data
  * @param {data} :
  */
 /* Only 1 image is shown. */
-#define NUMBER_OF_ITEM_IN_HEADER 0
+#define NUMBER_OF_ITEM_IN_HEADER 1
 #define NUMBER_OF_ITEM_IN_OTHER 1
 static uint16_t menu_get_num_rows_callback(MenuLayer* menu_layer, uint16_t section_index, void* data) {
     switch (section_index) {
@@ -73,18 +73,7 @@ static int16_t menu_get_header_height_callback(MenuLayer* menu_layer, uint16_t s
 /* @desc Get cell size.
  */
 static int16_t menu_get_cell_height_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *callback_context) {
-    switch (cell_index->section) {
-        case 0:
-            switch (cell_index->row) {
-                case 0:
-                    /* To let the image fit the square. */
-                    /* return gbitmap_get_bounds(s_logo_bitmap).size.h; */
-                default:
-                    return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
-            }
-        default:
-            return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
-    }
+    return MENU_CELL_ROUND_FOCUSED_SHORT_CELL_HEIGHT;
 }
 
 /* @desc Draw the headers sections.
@@ -98,20 +87,25 @@ static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, ui
     static char space_state[32];
     switch (section_index) {
         case 0:
-            if (open_state == Open) {
+          if (basic_info) {
+            if (basic_info->state == Open) {
               snprintf(space_state, 32, "%s is open", space_name_buffer);
-            } else if (open_state == Closed){
+            } else if (basic_info->state == Closed){
               snprintf(space_state, 32, "%s is closed", space_name_buffer);
-            } else if (open_state == Undefined) {
+            } else if (basic_info->state == Undefined) {
               snprintf(space_state, 32, "%s", space_name_buffer);
             }
-            menu_cell_basic_header_draw(ctx, cell_layer, space_state);
-            break;
+          } else {
+            snprintf(space_state, 32, "%s", space_name_buffer);
+          }
+
+          menu_cell_basic_header_draw(ctx, cell_layer, space_state);
+          break;
         case 1:
-            menu_cell_basic_header_draw(ctx, cell_layer, "SpaceAPI content");
-            break;
+          menu_cell_basic_header_draw(ctx, cell_layer, "SpaceAPI content");
+          break;
         case 2:
-            menu_cell_basic_header_draw(ctx, cell_layer, "Other");
+          menu_cell_basic_header_draw(ctx, cell_layer, "Other");
     }
 }
 
@@ -120,13 +114,21 @@ static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, ui
 static void menu_draw_row_callback(GContext* ctx, const Layer* cell_layer, MenuIndex* cell_index, void* data) {
     switch (cell_index->section) {
         case 0: ;
-          /* GSize size = layer_get_frame(cell_layer).size; */
-          /* const uint8_t x_offset = (size.w - gbitmap_get_bounds(s_logo_bitmap).size.w) / 2; */
-          /* const uint8_t y_offset = (size.h - gbitmap_get_bounds(s_logo_bitmap).size.h) / 2; */
-          /* graphics_draw_bitmap_in_rect(ctx, s_logo_bitmap, GRect(x_offset, y_offset, size.w, size.h)); */
+          if (basic_info) {
+            if (basic_info->state == Open) {
+              menu_cell_basic_draw(ctx, cell_layer, space_name_buffer, "is open", NULL);
+            } else if (basic_info->state == Closed) {
+              menu_cell_basic_draw(ctx, cell_layer, space_name_buffer, "is closed", NULL);
+            } else {
+              menu_cell_basic_draw(ctx, cell_layer, space_name_buffer, NULL, NULL);
+            }
+          } else {
+            // If basic_info is not initialized there is still no data received from the API.
+            menu_cell_basic_draw(ctx, cell_layer, space_name_buffer, "Loading ...", NULL);
+          }
           break;
         case 1:
-          menu_cell_basic_draw(ctx, cell_layer, space_info_title[cell_index->row], space_info_subtitle[cell_index->row],NULL);
+          menu_cell_basic_draw(ctx, cell_layer, space_info_title[cell_index->row], space_info_subtitle[cell_index->row], NULL);
           break;
         case 2:
           menu_cell_basic_draw(ctx, cell_layer, "About", "About the app.", NULL);
@@ -138,16 +140,19 @@ static void menu_draw_row_callback(GContext* ctx, const Layer* cell_layer, MenuI
  */
 static void menu_select_callback(MenuLayer* menu_layer, MenuIndex* cell_index, void* data) {
     switch (cell_index->section) {
+        case 0:
+          win_basic_show();
+          break;
         case 1:
-            if (space_info_callback[cell_index->row] != NULL) {
-                (*space_info_callback[cell_index->row]) ();
-            }
-            break;
+          if (space_info_callback[cell_index->row] != NULL) {
+              (*space_info_callback[cell_index->row]) ();
+          }
+          break;
         case 2:
-            win_about_show();
-            break;
+          win_about_show();
+          break;
         default:
-            break;
+          break;
     }
 }
 
