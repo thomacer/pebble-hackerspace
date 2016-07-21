@@ -64,6 +64,22 @@
                 "type": "bitmap"
             },
             {
+                "file": "images/thermometer.pbl.png",
+                "name": "THERMOMETER_ICON",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/key.pbl.png",
+                "name": "KEY_ICON",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/person.pbl.png",
+                "name": "PERSON_ICON",
+                "type": "bitmap"
+            },
+
+            {
                 "compatibility": "2.7",
                 "file": "fonts/perfect-dos-vga.ttf",
                 "name": "FONT_PERFECT_DOS_48",
