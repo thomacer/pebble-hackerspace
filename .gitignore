@@ -36,3 +36,8 @@ build
 
 # Debug files
 *.dSYM/
+
+# Generated file
+src/appinfo.h
+src/js/appinfo.js
+src/js/pebble-js-app.js
