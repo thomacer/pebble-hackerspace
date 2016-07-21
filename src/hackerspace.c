@@ -125,10 +125,6 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
       }
       case KEY_SENSOR_TEMPERATURE: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_TEMPERATURE");
-        if (sensors_array == NULL) {
-            uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-            sensors_array= SensorsArray_new(length);
-        }
 
         uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
         uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
@@ -138,20 +134,16 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         Tuple* name = dict_find(iterator, KEY_NAME);
         Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
 
-        sensors_array->array[index] = Temperature_new (value,
+        sensors_array->add(sensors_array, Temperature_new (value,
             unit ? unit->value->cstring : NULL,
             location ? location->value->cstring : NULL,
             name ? name->value->cstring : NULL,
             description ? description->value->cstring : NULL
-        );
+        ));
         break;
       }
       case KEY_SENSOR_DOOR_LOCKED: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_DOOR_LOCKED");
-        if (sensors_array == NULL) {
-            uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-            sensors_array= SensorsArray_new(length);
-        }
 
         uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
         uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
@@ -160,19 +152,15 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         Tuple* name = dict_find(iterator, KEY_NAME);
         Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
 
-        sensors_array->array[index] = DoorLocked_new (value,
+        sensors_array->add(sensors_array, DoorLocked_new (value,
             location ? location->value->cstring : NULL,
             name ? name->value->cstring : NULL,
             description ? description->value->cstring : NULL
-        );
+        ));
         break;
       }
       case KEY_SENSOR_BAROMETER: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_BAROMETER");
-        if (sensors_array == NULL) {
-            uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-            sensors_array= SensorsArray_new(length);
-        }
 
         uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
         uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
@@ -182,20 +170,16 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         Tuple* name = dict_find(iterator, KEY_NAME);
         Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
 
-        sensors_array->array[index] = Barometer_new (value,
+        sensors_array->add(sensors_array, Barometer_new (value,
             unit ? unit->value->cstring : NULL,
             location ? location->value->cstring : NULL,
             name ? name->value->cstring : NULL,
             description ? description->value->cstring : NULL
-        );
+        ));
         break;
       }
       case KEY_SENSOR_HUMIDITY: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_HUMIDITY");
-        if (sensors_array == NULL) {
-            uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-            sensors_array= SensorsArray_new(length);
-        }
 
         uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
         uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
@@ -205,20 +189,16 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         Tuple* name = dict_find(iterator, KEY_NAME);
         Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
 
-        sensors_array->array[index] = Humidity_new (value,
+        sensors_array->add(sensors_array, Humidity_new (value,
             unit ? unit->value->cstring : NULL,
             location ? location->value->cstring : NULL,
             name ? name->value->cstring : NULL,
             description ? description->value->cstring : NULL
-        );
+        ));
         break;
       }
       case KEY_SENSOR_POWER_CONSUMPTION: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_POWER_CONSUMPTION");
-        if (sensors_array == NULL) {
-            uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-            sensors_array= SensorsArray_new(length);
-        }
 
         uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
         uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
@@ -228,12 +208,12 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         Tuple* name = dict_find(iterator, KEY_NAME);
         Tuple* description = dict_find(iterator, KEY_DESCRIPTION);
 
-        sensors_array->array[index] = PowerConsumption_new (value,
+        sensors_array->add(sensors_array, PowerConsumption_new (value,
             unit ? unit->value->cstring : NULL,
             location ? location->value->cstring : NULL,
             name ? name->value->cstring : NULL,
             description ? description->value->cstring : NULL
-        );
+        ));
         break;
       }
       case KEY_SENSOR_PEOPLE_NOW_PRESENT: {
@@ -251,18 +231,14 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
             }
             default: {
                 APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT basic");
-                if (sensors_array == NULL) {
-                    uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-                    sensors_array= SensorsArray_new(length);
-                }
 
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
-                sensors_array->array[index] = PeopleNowPresent_new (value,
+                sensors_array->add(sensors_array, PeopleNowPresent_new (value,
                     NULL,
                     NULL,
                     NULL
-                );
+                ));
                 break;
             }
         }
