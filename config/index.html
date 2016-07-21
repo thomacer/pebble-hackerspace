@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Hackerspace configuration for Pebble</title>
+  <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
+  <script src='js/slate.min.js'></script>
+  <style>
+  .title {
+    padding: 15px 10px;
+    text-transform: uppercase;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #888888;
+    text-align: center;
+  }
+  </style>
+  </head>
+
+  <body>
+    <h1 class='title'>Hackerspace</h1>
+
+    <div class='item-container'>
+      <div class='item-container-content'>
+        <div class='item'>
+          Enter the api address of your hackerspace.
+        </div>
+      </div>
+    </div>
+
+    <div class='item-container'>
+      <div class='item-container-header'>API address.</div>
+      <div class='item-container-content'>
+        <label class="item">
+          <div class="item-input-wrapper">
+            <input type="text" class="item-input" name="api_address" id='api_address' placeholder="API address">
+          </div>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Go to "http://spaceapi.net/directory" to find your API address.
+      </div>
+    </div>
+
+    <div class='item-container'>
+      <div class='button-container'>
+        <input id='submit_button' type='button' class='item-button' value='SUBMIT'>
+      </div>
+    </div>
+  </body>
+  <script>
+  function getConfigData() {
+    var apiAddress = document.getElementById('api_address');
+
+    var options = {
+      'api_address': apiAddress.value,
+    };
+
+    // Save for next launch
+    localStorage['api_address'] = options['api_address'];
+
+    //console.log('Got options: ' + JSON.stringify(options));
+    return options;
+  }
+
+  function getQueryParam(variable, defaultValue) {
+    var query = location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      if (pair[0] === variable) {
+        return decodeURIComponent(pair[1]);
+      }
+    }
+    return defaultValue || false;
+  }
+
+  var submitButton = document.getElementById('submit_button');
+  submitButton.addEventListener('click', function() {
+    console.log('Submit');
+
+    // Set the return URL depending on the runtime environment
+    var return_to = getQueryParam('return_to', 'pebblejs://close#');
+    document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
+  });
+
+  (function() {
+    var apiAddress = document.getElementById('api_address');
+
+    // Load any previously saved configuration, if available
+    if(localStorage['api_address']) {
+      apiAddress.value = localStorage['api_address'];
+    }
+  })();
+  </script>
+</html>
+

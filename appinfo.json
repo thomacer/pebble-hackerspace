@@ -50,7 +50,7 @@
         "KEY_UNIT" : 209 
     },
     "capabilities": [
-        ""
+        "configurable"
     ],
     "companyName": "thomacer",
     "enableMultiJS": true,

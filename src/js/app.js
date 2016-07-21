@@ -13,12 +13,12 @@ const xhrRequest = function (url, type, callback) {
   xhr.send();
 };
 
+let api_address = localStorage.getItem('api_address');
+
 const getAPIResult = function () {
-    const url = 'http://urlab.be/spaceapi.json';
+    console.log('Requesting ' + api_address);
 
-    console.log('Requesting ' + url);
-
-    xhrRequest(url, 'GET', 
+    xhrRequest(api_address ? api_address : 'http://urlab.be/spaceapi.json', 'GET', 
         function(responseText) {
             const json = JSON.parse(responseText);
 
@@ -29,6 +29,7 @@ const getAPIResult = function () {
                         'KEY_SPACE' : json['space'],
                         'KEY_SPACE_URL' : json['url'],
                         'KEY_OPEN_STATE' : json['state']['open'],
+                        'KEY_LAST_CHANGE' : json['state']['lastchange'],
                     }, callback);
                 }, (callback) => {
                     let tmp = new Sensors(json['sensors']);
@@ -56,3 +57,19 @@ Pebble.addEventListener('appmessage',
         getAPIResult();
     }                     
 );
+
+Pebble.addEventListener('showConfiguration', () => {
+  const url = 'https://rawgit.com/thomacer/pebble-hackerspace/master/config/index.html';
+
+  Pebble.openURL(url);
+});
+
+Pebble.addEventListener('webviewclosed', (e) => {
+  // Decode the user's preferences
+  if (e.response) {
+    api_address = JSON.parse(decodeURIComponent(e.response)).api_address;
+    console.log('Received : ' + api_address);
+    localStorage.setItem('api_address', api_address);
+  }
+});
+
