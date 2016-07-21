@@ -77,7 +77,7 @@ SimpleMenuItem Humidity_menu (void* s) {
   Humidity* t = (Humidity*) s;
   SimpleMenuItem result = {};
 
-  /* TODO result.icon = */
+  result.icon = humidity_icon;
 
   if (t->name) {
     result.title = t->name;

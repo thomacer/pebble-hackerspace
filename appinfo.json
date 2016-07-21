@@ -78,7 +78,16 @@
                 "name": "PERSON_ICON",
                 "type": "bitmap"
             },
-
+            {
+                "file": "images/humidity.pbl.png",
+                "name": "HUMIDITY_ICON",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/lightning.pbl.png",
+                "name": "LIGHTNING_ICON",
+                "type": "bitmap"
+            },
             {
                 "compatibility": "2.7",
                 "file": "fonts/perfect-dos-vga.ttf",

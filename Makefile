@@ -8,3 +8,5 @@ aplite:
 basalt:
 	pebble install --emulator basalt --logs
 
+chalk:
+	pebble install --emulator chalk --logs

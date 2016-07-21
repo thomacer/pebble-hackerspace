@@ -77,7 +77,7 @@ SimpleMenuItem PowerConsumption_menu (void* s) {
   PowerConsumption* t = (PowerConsumption*) s;
   SimpleMenuItem result = {};
 
-  /* TODO result.icon = */
+  result.icon = lightning_icon;
 
   if (t->name) {
     result.title = t->name;

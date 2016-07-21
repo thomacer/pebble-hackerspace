@@ -1,6 +1,7 @@
 #pragma once
 #include <pebble.h>
 #include "./sensors.h"
+#include "./../../icons.h"
 
 /* @desc : Humidity object according to the spaceAPI specification.
  *
