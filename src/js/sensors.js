@@ -191,6 +191,27 @@ class Sensors {
         }, callback);
     }
 
+    /* @desc : Send to the pebble the account_balance object from the spaceAPI.
+     *
+     * @param {array} : Contain account_balance objects.
+     */
+    _account_balance (array, callback) {
+        const self = this; 
+
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_ACCOUNT_BALANCE,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+                'KEY_UNIT' : value['unit'],
+            }, callback);
+        }, callback);
+    }
+
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
     send (callback) {
@@ -253,6 +274,13 @@ class Sensors {
         if (self.obj['power_consumption']) {
             functions.push((cb) => {
                 self._power_consumption(self.obj['power_consumption']);
+                cb();
+            });
+        }
+
+        if (self.obj['account_balance']) {
+            functions.push((cb) => {
+                self._account_balance(self.obj['account_balance']);
                 cb();
             });
         }

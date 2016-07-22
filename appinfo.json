@@ -89,6 +89,11 @@
                 "type": "bitmap"
             },
             {
+                "file": "images/money.pbl.png",
+                "name": "MONEY_ICON",
+                "type": "bitmap"
+            },
+            {
                 "compatibility": "2.7",
                 "file": "fonts/perfect-dos-vga.ttf",
                 "name": "FONT_PERFECT_DOS_48",
