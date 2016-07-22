@@ -30,6 +30,13 @@ typedef struct {
     // Additional info.
     char* unit;
     char formated_value[32];
+
+    TextLayer* title_layer;
+    TextLayer* power_layer;
+    TextLayer* info_name_layer;
+    TextLayer* name_layer;
+    TextLayer* info_location_layer;
+    TextLayer* location_layer;
 } PowerConsumption;
 
 PowerConsumption* PowerConsumption_new (uint32_t, char*, char*, char*, char*);
