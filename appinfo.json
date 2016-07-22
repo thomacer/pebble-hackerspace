@@ -94,6 +94,11 @@
                 "type": "bitmap"
             },
             {
+                "file": "images/drink.pbl.png",
+                "name": "DRINK_ICON",
+                "type": "bitmap"
+            },
+            {
                 "compatibility": "2.7",
                 "file": "fonts/perfect-dos-vga.ttf",
                 "name": "FONT_PERFECT_DOS_48",

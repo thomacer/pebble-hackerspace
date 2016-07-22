@@ -9,6 +9,8 @@
 #include "./libs/sensors/barometer.h"
 #include "./libs/sensors/humidity.h"
 #include "./libs/sensors/power_consumption.h"
+#include "./libs/sensors/account_balance.h"
+#include "./libs/sensors/beverage_supply.h"
 #include "./globals.h"
 #include "./appinfo.h"
 
@@ -225,7 +227,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_ACCOUNT_BALANCE");
         /* uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32; */
 
-        sensors_array->add(sensors_array, PowerConsumption_new (GET_UINT32(iterator, KEY_VALUE),
+        sensors_array->add(sensors_array, AccountBalance_new (GET_UINT32(iterator, KEY_VALUE),
             GET_CSTRING(iterator, KEY_UNIT),
             GET_CSTRING(iterator, KEY_LOCATION),
             GET_CSTRING(iterator, KEY_NAME),
@@ -233,6 +235,19 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         ));
         break;
       }
+      case KEY_SENSOR_BEVERAGE_SUPPLY: {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_BEVERAGE_SUPPLY");
+        /* uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32; */
+
+        sensors_array->add(sensors_array, BeverageSupply_new (GET_UINT32(iterator, KEY_VALUE),
+            GET_CSTRING(iterator, KEY_UNIT),
+            GET_CSTRING(iterator, KEY_LOCATION),
+            GET_CSTRING(iterator, KEY_NAME),
+            GET_CSTRING(iterator, KEY_DESCRIPTION)
+        ));
+        break;
+      }
+
       case KEY_SENSOR_PEOPLE_NOW_PRESENT: {
         switch ((uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32) {
             case KEY_NAMES: {

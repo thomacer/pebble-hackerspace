@@ -9,6 +9,7 @@ extern GBitmap* person_icon;
 extern GBitmap* humidity_icon;
 extern GBitmap* lightning_icon;
 extern GBitmap* money_icon;
+extern GBitmap* drink_icon;
 
 void load_icons ();
 void free_icons ();

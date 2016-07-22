@@ -212,6 +212,27 @@ class Sensors {
         }, callback);
     }
 
+    /* @desc : Send to the pebble the beverage_supply object from the spaceAPI.
+     *
+     * @param {array} : Contain beverage_supply objects.
+     */
+    _beverage_supply (array, callback) {
+        const self = this; 
+
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_BEVERAGE_SUPPLY,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+                'KEY_UNIT' : value['unit'],
+            }, callback);
+        }, callback);
+    }
+
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
     send (callback) {
@@ -281,6 +302,13 @@ class Sensors {
         if (self.obj['account_balance']) {
             functions.push((cb) => {
                 self._account_balance(self.obj['account_balance']);
+                cb();
+            });
+        }
+
+        if (self.obj['beverage_supply']) {
+            functions.push((cb) => {
+                self._beverage_supply(self.obj['beverage_supply']);
                 cb();
             });
         }
