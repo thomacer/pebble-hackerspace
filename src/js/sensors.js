@@ -279,64 +279,55 @@ class Sensors {
 
         if (self.obj['people_now_present']) {
             functions.push((cb) => {
-                self._people_now_present(self.obj['people_now_present']);
-                cb();
+                self._people_now_present(self.obj['people_now_present'], cb);
             });
         }
 
         if (self.obj['temperature']) {
             functions.push((cb) => {
-                self._temperature(self.obj['temperature']);
-                cb();
+                self._temperature(self.obj['temperature'], cb);
             });
         }
 
         if (self.obj['door_locked']) {
             functions.push((cb) => {
-                self._door_locked(self.obj['door_locked']);
-                cb();
+                self._door_locked(self.obj['door_locked'], cb);
             });
         }
 
         if (self.obj['barometer']) {
             functions.push((cb) => {
-                self._barometer(self.obj['barometer']);
-                cb();
+                self._barometer(self.obj['barometer'], cb);
             });
         }
 
         if (self.obj['humidity']) {
             functions.push((cb) => {
-                self._humidity(self.obj['humidity']);
-                cb();
+                self._humidity(self.obj['humidity'], cb);
             });
         }
 
         if (self.obj['power_consumption']) {
             functions.push((cb) => {
-                self._power_consumption(self.obj['power_consumption']);
-                cb();
+                self._power_consumption(self.obj['power_consumption'], cb);
             });
         }
 
         if (self.obj['account_balance']) {
             functions.push((cb) => {
-                self._account_balance(self.obj['account_balance']);
-                cb();
+                self._account_balance(self.obj['account_balance'], cb);
             });
         }
 
         if (self.obj['beverage_supply']) {
             functions.push((cb) => {
-                self._beverage_supply(self.obj['beverage_supply']);
-                cb();
+                self._beverage_supply(self.obj['beverage_supply'], cb);
             });
         }
 
         if (self.obj['total_member_count']) {
             functions.push((cb) => {
-                self._total_member_count(self.obj['total_member_count']);
-                cb();
+                self._total_member_count(self.obj['total_member_count'], cb);
             });
         }
 
