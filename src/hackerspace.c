@@ -77,8 +77,6 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
             GET_UINT32(iterator, KEY_LAST_CHANGE),
             open_state);
 
-        win_main_update();
-
         break;
       }
       case KEY_CONTACT: {
@@ -151,7 +149,6 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
           Contacts_add(contacts_section, "Issue mail", tmp->value->cstring);
         }
 
-        win_main_update();
         break;
       }
       case KEY_SENSOR: {
@@ -286,12 +283,12 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
                 break;
             }
         }
-        win_main_update();
         break;
       }
       default:
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Default message");
   }
+  win_main_update();
 }
 
 int main(void) {
