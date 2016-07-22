@@ -50,6 +50,7 @@ static void window_load(Window* window) {
 static void window_unload(Window *window) {
   layer_destroy(image_layer);
   text_layer_destroy(text_layer);
+  scroll_layer_destroy(scroll_layer);
 }
 
 void win_about_show(void) {
