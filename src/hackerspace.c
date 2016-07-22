@@ -11,6 +11,7 @@
 #include "./libs/sensors/power_consumption.h"
 #include "./libs/sensors/account_balance.h"
 #include "./libs/sensors/beverage_supply.h"
+#include "./libs/sensors/total_member_count.h"
 #include "./globals.h"
 #include "./appinfo.h"
 
@@ -181,6 +182,17 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         /* uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32; */
 
         sensors_array->add(sensors_array, DoorLocked_new (GET_UINT32(iterator, KEY_VALUE),
+            GET_CSTRING(iterator, KEY_LOCATION),
+            GET_CSTRING(iterator, KEY_NAME),
+            GET_CSTRING(iterator, KEY_DESCRIPTION)
+        ));
+        break;
+      }
+      case KEY_SENSOR_TOTAL_MEMBER_COUNT: {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_TOTAL_MEMBER_COUNT");
+        /* uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32; */
+
+        sensors_array->add(sensors_array, TotalMemberCount_new (GET_UINT32(iterator, KEY_VALUE),
             GET_CSTRING(iterator, KEY_LOCATION),
             GET_CSTRING(iterator, KEY_NAME),
             GET_CSTRING(iterator, KEY_DESCRIPTION)

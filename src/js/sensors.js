@@ -233,6 +233,26 @@ class Sensors {
         }, callback);
     }
 
+    /* @desc : Send to the pebble the "total_member_count" object from the spaceAPI.
+     *
+     * @param {array} : Contain "total_member_count" objects.
+     */
+    _total_member_count(array, callback) {
+        const self = this; 
+
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_DOOR_LOCKED,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+            }, callback);
+        }, callback);
+    }
+
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
     send (callback) {
@@ -309,6 +329,13 @@ class Sensors {
         if (self.obj['beverage_supply']) {
             functions.push((cb) => {
                 self._beverage_supply(self.obj['beverage_supply']);
+                cb();
+            });
+        }
+
+        if (self.obj['total_member_count']) {
+            functions.push((cb) => {
+                self._total_member_count(self.obj['total_member_count']);
                 cb();
             });
         }
