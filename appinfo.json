@@ -16,12 +16,13 @@
         "KEY_CONTACT_MAILLING_LIST" : 109,
         "KEY_CONTACT_JABBER" : 110,
         "KEY_CONTACT_ISSUE_MAIL" : 111,
+        "KEY_CONTACT_KEYMASTER" : 112,
 
-        "KEY_BASIC" : 112,
-        "KEY_OPEN_STATE": 113,
-        "KEY_SPACE": 114,
-        "KEY_SPACE_URL" : 115,
-        "KEY_LAST_CHANGE" : 116,
+        "KEY_BASIC" : 113,
+        "KEY_OPEN_STATE": 114,
+        "KEY_SPACE": 115,
+        "KEY_SPACE_URL" : 116,
+        "KEY_LAST_CHANGE" : 117,
 
         "KEY_SENSOR" : 121,
         "KEY_SENSOR_TEMPERATURE" : 122,
@@ -47,7 +48,11 @@
         "KEY_NAME" : 206,
         "KEY_NAMES" : 207,
         "KEY_DESCRIPTION" : 208,
-        "KEY_UNIT" : 209 
+        "KEY_UNIT" : 209,
+        "KEY_NICK" : 210,
+        "KEY_PHONE" : 211,
+        "KEY_EMAIL" : 212,
+        "KEY_TWITTER" : 213
     },
     "capabilities": [
         "configurable"
