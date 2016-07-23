@@ -5,6 +5,7 @@
 #include "./win_sensor_menu.h"
 #include "./win_contact.h"
 #include "./win_about.h"
+#include "./win_keymasters.h"
 #include "../globals.h"
 #include "../icons.h"
 

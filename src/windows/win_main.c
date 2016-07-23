@@ -247,12 +247,26 @@ void win_main_update(void) {
      */
     static char contact_window_buffer[BUFFER_SIZE];
     static char contact_window_subtitle_buffer[BUFFER_SIZE];
-    snprintf(contact_window_buffer, BUFFER_SIZE, "Contact.");
+    snprintf(contact_window_buffer, BUFFER_SIZE, contacts_section->number > 1 ?  "Contacts" : "Contact");
     snprintf(contact_window_subtitle_buffer, BUFFER_SIZE, "Contact info about %s", space_name_buffer);
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Contact section added : %i", space_info_current_number);
     space_info_title[space_info_current_number] = contact_window_buffer;
     space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
     space_info_callback[space_info_current_number] = win_contact_show;
+
+    ++space_info_current_number;
+  }
+
+  if (key_masters) {
+    static char keymaster_window_buffer[BUFFER_SIZE];
+    /* static char keymaster_window_subtitle_buffer[BUFFER_SIZE]; */
+    snprintf(keymaster_window_buffer, BUFFER_SIZE,
+        key_masters->length > 1 ? "Keymasters list" : "Keymaster");
+    /* snprintf(keymaster_window_subtitle_buffer, BUFFER_SIZE, "keymaster info about %s", space_name_buffer); */
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Keymaster section added : %i", space_info_current_number);
+    space_info_title[space_info_current_number] = keymaster_window_buffer;
+    /* space_info_subtitle[space_info_current_number] = keymaster_window_subtitle_buffer; */
+    space_info_callback[space_info_current_number] = win_keymasters_show;
 
     ++space_info_current_number;
   }
