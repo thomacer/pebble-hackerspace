@@ -13,7 +13,14 @@ class Sensors {
         const self = this;
         let count = 0;
         for (let obj in self.obj) {
-            count += self.obj[obj].length;
+            if (obj == 'radiation') {
+                // Radiation is an abject.
+                for (let rad in self.obj[obj]) {
+                    count += self.obj[obj][rad].length;
+                }
+            } else {
+                count += self.obj[obj].length;
+            }
         }
 
         return count;
@@ -253,6 +260,31 @@ class Sensors {
         }, callback);
     }
 
+    /* @desc : Send to the pebble one of the "radiation" object.
+     *
+     * @param {array} :
+     * @param {type} : Alpha, beta, gamma, beta gamma.
+     */
+    _radiation(array, type, callback) {
+        const self = this;
+    
+        utils.mapSerie (array, (value, index, array, callback) => {
+            utils.sendToPebble({
+                'KEY_TYPE' : app.KEY_SENSOR_RADIATION,
+                'KEY_SUBTYPE' : type,
+                'KEY_INDEX' : index,
+                'KEY_LENGTH' : array.length,
+                'KEY_VALUE' : value['value'],
+                'KEY_LOCATION' : value['location'],
+                'KEY_NAME' : value['name'],
+                'KEY_DESCRIPTION' : value['description'],
+                'KEY_UNIT' : value['unit'],
+                'KEY_DEAD_TIME' : value['dead_time'],
+                'KEY_CONVERSION_FACTOR' : value['conversion_factor'],
+            }, callback);
+        }, callback);
+    }
+
     /* @desc : Send the sensors spaceAPI object to the pebble.
      */
     send (callback) {
@@ -329,6 +361,35 @@ class Sensors {
             functions.push((cb) => {
                 self._total_member_count(self.obj['total_member_count'], cb);
             });
+        }
+
+        if (self.obj['radiation']) {
+            if (self.obj['radiation']['alpha']) { 
+                functions.push((cb) => {
+                    self._radiation(self.obj['total_member_count'], app.KEY_SENSOR_RADIATION_ALPHA, cb);
+                });
+            } 
+
+            if (self.obj['radiation']['beta']) { 
+                functions.push((cb) => {
+                    self._radiation(self.obj['total_member_count'], app.KEY_SENSOR_RADIATION_BETA, cb);
+                });
+
+            }
+
+            if (self.obj['radiation']['gamma']) { 
+                functions.push((cb) => {
+                    self._radiation(self.obj['total_member_count'], app.KEY_SENSOR_RADIATION_GAMMA, cb);
+                });
+
+            }
+
+            if (self.obj['radiation']['beta_gamma']) { 
+                functions.push((cb) => {
+                    self._radiation(self.obj['total_member_count'], app.KEY_SENSOR_RADIATION_BETAGAMMA, cb);
+                });
+
+            }
         }
 
         async.series(functions, callback);

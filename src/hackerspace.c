@@ -12,6 +12,7 @@
 #include "./libs/sensors/account_balance.h"
 #include "./libs/sensors/beverage_supply.h"
 #include "./libs/sensors/total_member_count.h"
+#include "./libs/sensors/radiation.h"
 #include "./globals.h"
 #include "./appinfo.h"
 
@@ -250,7 +251,19 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
         ));
         break;
       }
-
+      case KEY_SENSOR_RADIATION: {
+        uint32_t type = ((uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32);
+        sensors_array->add(sensors_array, Radiation_new (type,
+            GET_UINT32(iterator, KEY_VALUE),
+            GET_CSTRING(iterator, KEY_UNIT),
+            GET_CSTRING(iterator, KEY_LOCATION),
+            GET_CSTRING(iterator, KEY_NAME),
+            GET_CSTRING(iterator, KEY_DESCRIPTION),
+            GET_UINT32(iterator, KEY_DEAD_TIME),
+            GET_UINT32(iterator, KEY_CONVERSION_FACTOR)
+        ));
+        break;
+      }
       case KEY_SENSOR_PEOPLE_NOW_PRESENT: {
         switch ((uint32_t) dict_find(iterator, KEY_SUBTYPE)->value->uint32) {
             case KEY_NAMES: {
