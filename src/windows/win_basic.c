@@ -1,5 +1,7 @@
 #include "win_basic.h"
 
+BasicInfo* basic_info = NULL;
+
 static Window* window;
 
 static TextLayer* last_change_text_layer = NULL;

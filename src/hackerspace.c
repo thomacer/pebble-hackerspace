@@ -65,17 +65,11 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
           snprintf(space_name_buffer, BUFFER_SIZE, "%s", space);
         }
 
-        Tuple* tmp = dict_find(iterator, KEY_OPEN_STATE);
-        if (tmp) {
-          open_state = tmp->value->uint32;
-        } else {
-          open_state = Undefined;
-        }
-
         basic_info = BasicInfo_new(space,
             GET_CSTRING(iterator, KEY_SPACE_URL),
             GET_UINT32(iterator, KEY_LAST_CHANGE),
-            open_state);
+            GET_UINT32(iterator, KEY_OPEN_STATE)
+        );
 
         break;
       }

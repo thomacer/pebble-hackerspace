@@ -7,13 +7,13 @@
 
 #define BUFFER_SIZE 32
 
-extern Tuple* t_space;
-
+/* Defined in the win_sensor_menu file.  */
 extern SensorsArray* sensors_array;
+
+/* Defined in the win_contact file.  */
 extern Contacts* contacts_section;
 
-extern SpaceState open_state;
-
+/* Defined in the win_basic file.  */
 extern BasicInfo* basic_info;
 
 /* Keep track of the hackerspace name */
