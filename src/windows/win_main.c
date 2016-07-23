@@ -291,7 +291,4 @@ void win_main_deinit(void) {
   free_icons();
 
   window_destroy(window);
-
-  Contacts_free(contacts_section);
-  sensors_array->free(sensors_array);
 }

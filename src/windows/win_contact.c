@@ -67,6 +67,6 @@ void win_contact_init(void) {
 }
 
 void win_contact_deinit(void) {
-    /* window_unload(s_window); */
-    window_destroy(s_window);
+  window_destroy(s_window);
+  Contacts_free(contacts_section);
 }
