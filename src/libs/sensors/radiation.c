@@ -79,20 +79,33 @@ void Radiation_free(void* s) {
 }
 
 SimpleMenuItem Radiation_menu (void* s) {
-  Radiation* t = (Radiation*) s;
+  Radiation* self = (Radiation*) s;
   SimpleMenuItem result = {};
 
-  /* result.icon = humidity_icon; */
+  switch (self->type) {
+    case KEY_SENSOR_RADIATION_ALPHA:
+      result.icon = alpha_icon;
+      break;
+    case KEY_SENSOR_RADIATION_BETA:
+      result.icon = beta_icon;
+      break;
+    case KEY_SENSOR_RADIATION_GAMMA:
+      result.icon = gamma_icon;
+      break;
+    case KEY_SENSOR_RADIATION_BETAGAMMA:
+      result.icon = betagamma_icon;
+      break;
+  }
 
-  if (t->name) {
-    result.title = t->name;
-  } else if (t->location) {
-    result.title = t->location;
+  if (self->name) {
+    result.title = self->name;
+  } else if (self->location) {
+    result.title = self->location;
   } else {
     result.title = "Radiation";
   }
 
-  result.subtitle = t->formated_value;
+  result.subtitle = self->formated_value;
 
   return result;
 }

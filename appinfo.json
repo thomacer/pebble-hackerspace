@@ -110,6 +110,26 @@
                 "type": "bitmap"
             },
             {
+                "file": "images/alpha.pbl.png",
+                "name": "ALPHA_ICON",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/beta.pbl.png",
+                "name": "BETA_ICON",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/gamma.pbl.png",
+                "name": "GAMMA_ICON",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/betagamma.pbl.png",
+                "name": "BETAGAMMA_ICON",
+                "type": "bitmap"
+            },
+            {
                 "compatibility": "2.7",
                 "file": "fonts/perfect-dos-vga.ttf",
                 "name": "FONT_PERFECT_DOS_48",
