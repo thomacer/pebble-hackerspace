@@ -12,7 +12,8 @@ Radiation* Radiation_new (uint32_t type,
   Radiation* t = malloc(sizeof(Radiation));
 
   *t = (Radiation) {
-    .type = type,
+    .type = radiation,
+    .subtype = type,
     .value = value,
     .unit = NULL,
     .location = NULL,
@@ -82,7 +83,7 @@ SimpleMenuItem Radiation_menu (void* s) {
   Radiation* self = (Radiation*) s;
   SimpleMenuItem result = {};
 
-  switch (self->type) {
+  switch (self->subtype) {
     case KEY_SENSOR_RADIATION_ALPHA:
       result.icon = alpha_icon;
       break;
@@ -94,6 +95,8 @@ SimpleMenuItem Radiation_menu (void* s) {
       break;
     case KEY_SENSOR_RADIATION_BETAGAMMA:
       result.icon = betagamma_icon;
+      break;
+    default:
       break;
   }
 

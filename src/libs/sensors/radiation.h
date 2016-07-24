@@ -3,6 +3,7 @@
 #include <pebble.h>
 #include "./sensors.h"
 #include "./../../icons.h"
+#include "../../appinfo.h"
 
 /* @desc : Radiation object according to the spaceAPI specification.
  *
@@ -25,6 +26,7 @@
 typedef struct {
     // Basic Sensor template.
     t_sensors type;
+    uint32_t subtype;
     uint32_t value;
     char* location;
     char* name;
