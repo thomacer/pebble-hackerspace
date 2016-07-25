@@ -271,7 +271,7 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t subindex = (uint32_t) dict_find(iterator, KEY_SUBINDEX)->value->uint32;
                 PeopleNowPresent_add_person(
-                        sensors_array->array[index],
+                        sensors_array->array[index], // TODO bug
                         subindex,
                         (char*) dict_find(iterator, KEY_NAMES)->value->cstring
                 );
@@ -283,9 +283,9 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
 
                 uint32_t value = (uint32_t) dict_find(iterator, KEY_VALUE)->value->uint32;
                 sensors_array->add(sensors_array, PeopleNowPresent_new (value,
-                    NULL,
-                    NULL,
-                    NULL
+                      GET_CSTRING(iterator, KEY_LOCATION),
+                      GET_CSTRING(iterator, KEY_NAME),
+                      GET_CSTRING(iterator, KEY_DESCRIPTION)
                 ));
                 break;
             }

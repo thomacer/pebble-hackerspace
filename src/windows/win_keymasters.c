@@ -1,6 +1,6 @@
 #include "./win_keymasters.h"
 
-KeyMasters* key_masters = NULL;
+SecureArray* key_masters = NULL;
 
 static Window* s_window = NULL;
 static SimpleMenuLayer* s_menu_layer = NULL;
@@ -17,7 +17,7 @@ static void window_load (Window* window) {}
 static void window_unload (Window* window) {}
 
 static void window_appear (Window* window) {
-  key_item = malloc(sizeof(SimpleMenuItem) * key_masters->length);
+  key_item = malloc(sizeof(SimpleMenuItem) * key_masters->current);
 
   uint32_t count = 0;
   for (uint32_t i = 0; i < number_of_keymasters; ++i) {

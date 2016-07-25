@@ -1,6 +1,6 @@
 #include "./win_sensor_menu.h"
 
-SensorsArray* sensors_array = NULL;
+SecureArray* sensors_array = NULL;
 
 static Window* s_window = NULL;
 static SimpleMenuLayer* s_menu_layer = NULL;
@@ -20,7 +20,7 @@ static void window_load (Window* window) {}
 static void window_unload (Window* window) {}
 
 static void window_appear (Window* window) {
-  number_of_sensors = sensors_array->length;
+  number_of_sensors = sensors_array->current;
   s_sensors_menu = malloc(sizeof(SimpleMenuItem) * number_of_sensors);
   s_title_array = malloc(sizeof(char*) * number_of_sensors);
   s_subtitle_array = malloc(sizeof(char*) * number_of_sensors);
@@ -29,10 +29,6 @@ static void window_appear (Window* window) {
 
   uint32_t count = 0;
   for (uint32_t i = 0; i < number_of_sensors; ++i) {
-    if (sensors_array->array[i] == NULL) {
-      continue;
-    }
-
     Sensor* tmp = (Sensor*) sensors_array->array[i];
     s_sensors_menu[i] = tmp->menu(sensors_array->array[i]);
     s_sensors_menu[i].callback = draw_sensor;

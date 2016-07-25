@@ -1,14 +1,14 @@
 #pragma once
 
 #include <pebble.h>
-#include "./libs/sensors/sensors_array.h"
+#include "./libs/secure_array.h"
 #include "./libs/contacts.h"
 #include "./libs/basic/basic.h"
 
 #define BUFFER_SIZE 32
 
 /* Defined in the win_sensor_menu file.  */
-extern SensorsArray* sensors_array;
+extern SecureArray* sensors_array;
 
 /* Defined in the win_contact file.  */
 extern Contacts* contacts_section;

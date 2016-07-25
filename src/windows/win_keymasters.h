@@ -3,9 +3,9 @@
 #include <pebble.h>
 #include "../globals.h"
 #include "../libs/keymaster/keymaster.h"
-#include "../libs/keymaster/keymasters.h"
+#include "../libs/secure_array.h"
 
-extern KeyMasters* key_masters;
+extern SecureArray* key_masters;
 
 void win_keymasters_show(void);
 void win_keymasters_init(void);
