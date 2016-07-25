@@ -67,7 +67,10 @@ void win_keymasters_init(void) {
 
 void win_keymasters_deinit(void) {
   if (key_masters) {
-    key_masters->free(key_masters);
+    key_masters->free(key_masters, lambda(void, (void* s) {
+      KeyMaster* self = (KeyMaster*) s;
+      self->free(self);
+    }));
   }
 
   window_destroy(s_window);

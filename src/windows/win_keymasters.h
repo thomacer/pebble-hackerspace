@@ -3,6 +3,7 @@
 #include <pebble.h>
 #include "../globals.h"
 #include "../libs/keymaster/keymaster.h"
+#include "../libs/functionnal.h"
 #include "../libs/secure_array.h"
 
 extern SecureArray* key_masters;

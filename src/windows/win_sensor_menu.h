@@ -1,7 +1,11 @@
 #pragma once
+
 #include <pebble.h>
+
 #include "../globals.h"
 #include "./win_sensor.h"
+#include "../libs/functionnal.h"
+#include "../libs/sensors/sensors.h"
 
 extern SecureArray* sensors_array;
 

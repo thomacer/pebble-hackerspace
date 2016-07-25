@@ -78,7 +78,10 @@ void win_sensor_menu_deinit(void) {
   win_sensor_deinit();
 
   if (sensors_array) {
-    sensors_array->free(sensors_array);
+    sensors_array->free(sensors_array, lambda(void, (void* s) {
+      Sensor* self = (Sensor*) s;
+      self->free(self);
+    }));
   }
 
   window_destroy(s_window);

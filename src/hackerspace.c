@@ -149,11 +149,13 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
       case KEY_SENSOR: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR, creating new array.");
         if (sensors_array) {
-          sensors_array->free(sensors_array);
+          APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR : An array already exist.");
+          /* sensors_array->free(sensors_array); */
+          return; // TODO Change when update will be allowed.
         }
 
         uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
-        sensors_array= SensorsArray_new(length);
+        sensors_array= SecureArray_new(length);
 
         break;
       }
