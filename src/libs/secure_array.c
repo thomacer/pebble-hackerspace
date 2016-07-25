@@ -6,9 +6,9 @@
  * @param {SecureArray*} : The array of sensor to get the object from.
  * @param {func} : Function to verify the data.
  */
-static void* SecureArray_get (SecureArray* self, int (*func)(void*)) {
+static void* SecureArray_get (SecureArray* self, int (*func)(void*, int)) {
     for (uint32_t i = 0; i < self->current; ++i) {
-        if (func(self->array[i])) {
+        if (func(self->array[i], i)) {
             return self->array[i];
         }
     }

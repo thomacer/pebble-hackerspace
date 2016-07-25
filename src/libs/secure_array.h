@@ -10,7 +10,7 @@ typedef struct SecureArray {
     uint32_t current;
     uint32_t length;
     void (*add)(struct SecureArray*, void*);
-    void* (*get)(struct SecureArray*, int (*)(void*));
+    void* (*get)(struct SecureArray*, int (*)(void*, int));
     void (*free)(struct SecureArray*, void (*)(void*));
 } SecureArray;
 

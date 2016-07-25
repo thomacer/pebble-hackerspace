@@ -3,7 +3,8 @@
 PeopleNowPresent* PeopleNowPresent_new (uint32_t value,
     char* location,
     char* name,
-    char* description)
+    char* description,
+    uint32_t index)
 {
   PeopleNowPresent* p = malloc(sizeof(PeopleNowPresent));
 
@@ -14,6 +15,7 @@ PeopleNowPresent* PeopleNowPresent_new (uint32_t value,
     .name = NULL,
     .names = malloc(value * sizeof(char*)),
     .description = NULL,
+    .index = index,
     .PeopleNowPresent_free = PeopleNowPresent_free,
     .PeopleNowPresent_menu = PeopleNowPresent_menu,
     .PeopleNowPresent_draw = PeopleNowPresent_draw,

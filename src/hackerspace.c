@@ -272,6 +272,15 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
                 APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_SENSOR_PEOPLE_NOW_PRESENT NAME received.");
                 uint32_t index = (uint32_t) dict_find(iterator, KEY_INDEX)->value->uint32;
                 uint32_t subindex = (uint32_t) dict_find(iterator, KEY_SUBINDEX)->value->uint32;
+
+                PeopleNowPresent* sensor = sensors_array->get(sensors_array, lambda(int, (void* s, int i) {
+                  PeopleNowPresent* self = (PeopleNowPresent*) s;
+                  if (self->type == people_now_present && self->index == index) {
+                    return 1;
+                  }
+                  return 0;
+                }));
+
                 PeopleNowPresent_add_person(
                         sensors_array->array[index], // TODO bug
                         subindex,
@@ -287,7 +296,8 @@ static void inbox_connected_person_callback(DictionaryIterator *iterator, void *
                 sensors_array->add(sensors_array, PeopleNowPresent_new (value,
                       GET_CSTRING(iterator, KEY_LOCATION),
                       GET_CSTRING(iterator, KEY_NAME),
-                      GET_CSTRING(iterator, KEY_DESCRIPTION)
+                      GET_CSTRING(iterator, KEY_DESCRIPTION),
+                      GET_UINT32(iterator, KEY_INDEX)
                 ));
                 break;
             }

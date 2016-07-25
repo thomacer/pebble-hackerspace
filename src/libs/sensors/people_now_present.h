@@ -30,12 +30,13 @@ typedef struct {
 
     // Additional info.
     char** names;
+    uint32_t index;
     SimpleMenuSection* menu_sections;
     SimpleMenuItem* menu_items;
     SimpleMenuLayer* menu_layer;
 } PeopleNowPresent;
 
-PeopleNowPresent* PeopleNowPresent_new (uint32_t, char*, char*, char*);
+PeopleNowPresent* PeopleNowPresent_new (uint32_t, char*, char*, char*, uint32_t);
 void PeopleNowPresent_free(void*);
 
 SimpleMenuItem PeopleNowPresent_menu (void*);
