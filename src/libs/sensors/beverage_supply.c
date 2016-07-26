@@ -75,19 +75,18 @@ void BeverageSupply_free(void* s) {
 
 SimpleMenuItem BeverageSupply_menu (void* s) {
   BeverageSupply* t = (BeverageSupply*) s;
-  SimpleMenuItem result = {};
-
-  result.icon = drink_icon;
+  SimpleMenuItem result = {
+    .title = "Beverage Supply",
+    .subtitle = t->formated_value,
+    .icon = drink_icon,
+    .callback = NULL,
+  };
 
   if (t->name) {
     result.title = t->name;
   } else if (t->location) {
     result.title = t->location;
-  } else {
-    result.title = "BeverageSupply";
   }
-
-  result.subtitle = t->formated_value;
 
   return result;
 }

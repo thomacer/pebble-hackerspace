@@ -75,19 +75,18 @@ void Humidity_free(void* s) {
 
 SimpleMenuItem Humidity_menu (void* s) {
   Humidity* t = (Humidity*) s;
-  SimpleMenuItem result = {};
-
-  result.icon = humidity_icon;
+  SimpleMenuItem result = {
+    .title = "Humidity",
+    .subtitle = t->formated_value,
+    .icon = humidity_icon,
+    .callback = NULL,
+  };
 
   if (t->name) {
     result.title = t->name;
   } else if (t->location) {
     result.title = t->location;
-  } else {
-    result.title = "Humidity";
   }
-
-  result.subtitle = t->formated_value;
 
   return result;
 }

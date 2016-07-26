@@ -81,7 +81,12 @@ void Radiation_free(void* s) {
 
 SimpleMenuItem Radiation_menu (void* s) {
   Radiation* self = (Radiation*) s;
-  SimpleMenuItem result = {};
+  SimpleMenuItem result = {
+    .title = "Radiation",
+    .subtitle = self->formated_value,
+    .icon = NULL,
+    .callback = NULL,
+  };
 
   switch (self->subtype) {
     case KEY_SENSOR_RADIATION_ALPHA:
@@ -104,11 +109,7 @@ SimpleMenuItem Radiation_menu (void* s) {
     result.title = self->name;
   } else if (self->location) {
     result.title = self->location;
-  } else {
-    result.title = "Radiation";
   }
-
-  result.subtitle = self->formated_value;
 
   return result;
 }

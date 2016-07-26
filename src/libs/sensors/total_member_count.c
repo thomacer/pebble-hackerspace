@@ -60,20 +60,18 @@ void TotalMemberCount_free(void* s) {
 
 SimpleMenuItem TotalMemberCount_menu (void* s) {
   TotalMemberCount* self = (TotalMemberCount*) s;
-  SimpleMenuItem result = {};
-
-  result.icon = person_icon;
+  SimpleMenuItem result = {
+    .title = "Total member count",
+    .subtitle = self->formated_value,
+    .icon = person_icon,
+    .callback = NULL,
+  };
 
   if (self->name) {
     result.title = self->name;
-
   } else if (self->location) {
     result.title = self->location;
-  } else {
-    result.title = "Door locked";
   }
-
-  result.subtitle = self->formated_value;
 
   return result;
 }

@@ -75,21 +75,20 @@ void PeopleNowPresent_free(void* s) {
 }
 
 SimpleMenuItem PeopleNowPresent_menu (void* s) {
-  SimpleMenuItem result = {};
   PeopleNowPresent* current = (PeopleNowPresent*) s;
-
-  result.icon = person_icon;
+  SimpleMenuItem result = {
+    .title = "People now present",
+    .subtitle = NULL,
+    .icon = person_icon,
+    .callback = NULL,
+  };
 
   if (current->name) {
     result.title = current->name;
-  } else {
-    result.title = "People now present.";
   }
 
   if (current->location) {
     result.subtitle = current->location;
-  } else {
-    result.subtitle = NULL;
   }
 
   return result;

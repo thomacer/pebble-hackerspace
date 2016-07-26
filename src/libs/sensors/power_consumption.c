@@ -75,19 +75,18 @@ void PowerConsumption_free(void* s) {
 
 SimpleMenuItem PowerConsumption_menu (void* s) {
   PowerConsumption* t = (PowerConsumption*) s;
-  SimpleMenuItem result = {};
-
-  result.icon = lightning_icon;
+  SimpleMenuItem result = {
+    .title = "Power Consumption",
+    .subtitle = t->formated_value,
+    .icon = lightning_icon,
+    .callback = NULL,
+  };
 
   if (t->name) {
     result.title = t->name;
   } else if (t->location) {
     result.title = t->location;
-  } else {
-    result.title = "PowerConsumption";
   }
-
-  result.subtitle = t->formated_value;
 
   return result;
 }

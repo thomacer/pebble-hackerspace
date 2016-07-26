@@ -75,19 +75,18 @@ void Temperature_free(void* s) {
 
 SimpleMenuItem Temperature_menu (void* s) {
   Temperature* t = (Temperature*) s;
-  SimpleMenuItem result = {};
-
-  result.icon = thermometer_icon;
+  SimpleMenuItem result = {
+    .title = "Temperature",
+    .subtitle = t->formated_value,
+    .icon = thermometer_icon,
+    .callback = NULL,
+  };
 
   if (t->name) {
     result.title = t->name;
   } else if (t->location) {
     result.title = t->location;
-  } else {
-    result.title = "Temperature";
   }
-
-  result.subtitle = t->formated_value;
 
   return result;
 }

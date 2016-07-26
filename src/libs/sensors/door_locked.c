@@ -60,20 +60,18 @@ void DoorLocked_free(void* s) {
 
 SimpleMenuItem DoorLocked_menu (void* s) {
   DoorLocked* self = (DoorLocked*) s;
-  SimpleMenuItem result = {};
-
-  result.icon = door_icon;
+  SimpleMenuItem result = {
+    .title = "Door locked",
+    .subtitle = self->formated_value,
+    .icon = door_icon,
+    .callback = NULL,
+  };
 
   if (self->name) {
     result.title = self->name;
-
   } else if (self->location) {
     result.title = self->location;
-  } else {
-    result.title = "Door locked";
   }
-
-  result.subtitle = self->formated_value;
 
   return result;
 }

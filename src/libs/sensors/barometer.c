@@ -75,19 +75,18 @@ void Barometer_free(void* s) {
 
 SimpleMenuItem Barometer_menu (void* s) {
   Barometer* t = (Barometer*) s;
-  SimpleMenuItem result = {};
-
-  /* TODO result.icon = */
+  SimpleMenuItem result = {
+    .title = "Barometer",
+    .subtitle = t->formated_value,
+    .icon = NULL,
+    .callback = NULL,
+  };
 
   if (t->name) {
     result.title = t->name;
   } else if (t->location) {
     result.title = t->location;
-  } else {
-    result.title = "Barometer";
   }
-
-  result.subtitle = t->formated_value;
 
   return result;
 }

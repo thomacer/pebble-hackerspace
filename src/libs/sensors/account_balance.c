@@ -75,19 +75,18 @@ void AccountBalance_free(void* s) {
 
 SimpleMenuItem AccountBalance_menu (void* s) {
   AccountBalance* t = (AccountBalance*) s;
-  SimpleMenuItem result = {};
-
-  result.icon = money_icon;
+  SimpleMenuItem result = {
+    .title = "Account Balance",
+    .subtitle = t->formated_value,
+    .icon = money_icon,
+    .callback = NULL,
+  };
 
   if (t->name) {
     result.title = t->name;
   } else if (t->location) {
     result.title = t->location;
-  } else {
-    result.title = "AccountBalance";
   }
-
-  result.subtitle = t->formated_value;
 
   return result;
 }
