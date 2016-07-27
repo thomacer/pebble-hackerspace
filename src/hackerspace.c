@@ -35,7 +35,6 @@ static uint32_t GET_UINT32 (DictionaryIterator* it, int key) {
 }
 
 
-
 /* ------------------------------------------------------------------------
  *                      Partie communication avec l'API.
  * ------------------------------------------------------------------------
@@ -52,7 +51,7 @@ static void inbox_dropped_callback(AppMessageResult reason, void *context) {
   APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
 }
 
-static void inbox_connected_person_callback(DictionaryIterator *iterator, void *context) {
+static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
   switch ((uint32_t) dict_find(iterator, KEY_TYPE)->value->uint32) {
       case KEY_BASIC: {
         APP_LOG(APP_LOG_LEVEL_DEBUG, "KEY_BASIC");
@@ -314,7 +313,7 @@ int main(void) {
   win_main_init();
 
   // Register callbacks
-  app_message_register_inbox_received(inbox_connected_person_callback);
+  app_message_register_inbox_received(inbox_received_callback);
   app_message_register_inbox_dropped(inbox_dropped_callback);
   app_message_register_outbox_failed(outbox_failed_callback);
   app_message_register_outbox_sent(outbox_sent_callback);
