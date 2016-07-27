@@ -1,4 +1,4 @@
-// Shorthand App Logging
+#pragma once
 
 #define DISABLE_LOGGING false
 
