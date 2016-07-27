@@ -4,9 +4,6 @@ static Window* window;
 
 static MenuLayer* s_menu_layer;
 
-/* Logo in the first section. */
-static GBitmap* s_logo_bitmap;
-
 /* This variable will be set when we get the JSON from SpaceAPI, it keep
  * track of the number of items in the second section.
  */
@@ -84,9 +81,9 @@ static int16_t menu_get_cell_height_callback(MenuLayer *menu_layer, MenuIndex *c
  * @param {data} :
  */
 static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, uint16_t section_index, void* data) {
-    static char space_state[32];
     switch (section_index) {
-        case 0:
+        case 0: {
+          static char space_state[32];
           if (basic_info) {
             if (basic_info->state == Open) {
               snprintf(space_state, 32, "%s is open", space_name_buffer);
@@ -101,11 +98,15 @@ static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, ui
 
           menu_cell_basic_header_draw(ctx, cell_layer, space_state);
           break;
-        case 1:
+        }
+        case 1: {
           menu_cell_basic_header_draw(ctx, cell_layer, "SpaceAPI content");
           break;
-        case 2:
+        }
+        case 2: {
           menu_cell_basic_header_draw(ctx, cell_layer, "Other");
+          break;
+        }
     }
 }
 
@@ -156,45 +157,9 @@ static void menu_select_callback(MenuLayer* menu_layer, MenuIndex* cell_index, v
     }
 }
 
-/* ------------------------------------------------------------------------
- *                      Partie création des layers.
- * ------------------------------------------------------------------------
- *
- * +-------------------------
- * | Section
- * | +--------------------
- * | | +---------------
- * | | | HackerSpace Name (header)
- * | | +---------------
- * | | +---------------
- * | | | HackerSpace logo (item)
- * | | +---------------
- * | +--------------------
- * |
- * | Section
- * | +--------------------
- * | | +---------------
- * | | | Navigation Commands (header)
- * | | +---------------
- * | | +---------------
- * | | | Contact (item)
- * | | +---------------
- * | | +---------------
- * | | | HackerSpace is open (item)
- * | | +---------------
- * | |
- * | +--------------------
- * |
- * +------------------------
- *
- * ------------------------------------------------------------------------
- */
 static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
-
-  // Create GBitmap
-  s_logo_bitmap = gbitmap_create_with_resource(RESOURCE_ID_URLAB_LOGO);
 
   s_menu_layer = menu_layer_create(bounds);
   menu_layer_set_callbacks(s_menu_layer, NULL, (MenuLayerCallbacks) {
@@ -214,9 +179,6 @@ static void window_load(Window *window) {
 }
 
 static void window_unload(Window *window) {
-  // Destroy GBitmap
-  gbitmap_destroy(s_logo_bitmap);
-
   menu_layer_destroy(s_menu_layer);
 }
 
@@ -228,14 +190,13 @@ void win_main_update(void) {
   /* Drawing the second section with info about person present
    * in the hackerspace.
    */
-  if (sensors_array && sensors_array->length) {
+  if (sensors_array && sensors_array->current) {
     static char sensor_menu_buffer[BUFFER_SIZE];
     /* static char sensor_menu_subtitle_buffer[BUFFER_SIZE]; */
     snprintf(sensor_menu_buffer, BUFFER_SIZE, "Sensors menu.");
     /* snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%ld persons", current->value); */
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added number of person connected in position : %i", space_info_current_number);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added sensors menu position : %i", space_info_current_number);
     space_info_title[space_info_current_number] = sensor_menu_buffer;
-    /* space_info_subtitle[space_info_current_number] = number_of_people_subtitle_buffer; */
     space_info_subtitle[space_info_current_number] = NULL;
     space_info_callback[space_info_current_number] = win_sensor_menu_show;
     ++space_info_current_number;
@@ -265,14 +226,14 @@ void win_main_update(void) {
     /* snprintf(keymaster_window_subtitle_buffer, BUFFER_SIZE, "keymaster info about %s", space_name_buffer); */
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Keymaster section added : %i", space_info_current_number);
     space_info_title[space_info_current_number] = keymaster_window_buffer;
-    /* space_info_subtitle[space_info_current_number] = keymaster_window_subtitle_buffer; */
+    space_info_subtitle[space_info_current_number] = NULL;
     space_info_callback[space_info_current_number] = win_keymasters_show;
 
     ++space_info_current_number;
   }
 
-  layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
   menu_layer_reload_data(s_menu_layer);
+  layer_mark_dirty(menu_layer_get_layer(s_menu_layer));
 }
 
 void win_main_init(void) {
