@@ -1,6 +1,7 @@
 #pragma once
 
 #include <pebble.h>
+#include "../libs/log.h"
 #include "./win_basic.h"
 #include "./win_sensor_menu.h"
 #include "./win_contact.h"

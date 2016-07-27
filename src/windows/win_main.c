@@ -195,7 +195,7 @@ void win_main_update(void) {
     /* static char sensor_menu_subtitle_buffer[BUFFER_SIZE]; */
     snprintf(sensor_menu_buffer, BUFFER_SIZE, "Sensors menu.");
     /* snprintf(number_of_people_subtitle_buffer, BUFFER_SIZE, "%ld persons", current->value); */
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Added sensors menu position : %i", space_info_current_number);
+    DEBUG("Added sensors menu position : %i", space_info_current_number);
     space_info_title[space_info_current_number] = sensor_menu_buffer;
     space_info_subtitle[space_info_current_number] = NULL;
     space_info_callback[space_info_current_number] = win_sensor_menu_show;
@@ -210,7 +210,7 @@ void win_main_update(void) {
     static char contact_window_subtitle_buffer[BUFFER_SIZE];
     snprintf(contact_window_buffer, BUFFER_SIZE, contacts_section->number > 1 ?  "Contacts" : "Contact");
     snprintf(contact_window_subtitle_buffer, BUFFER_SIZE, "Contact info about %s", space_name_buffer);
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Contact section added : %i", space_info_current_number);
+    DEBUG("Contact section added : %i", space_info_current_number);
     space_info_title[space_info_current_number] = contact_window_buffer;
     space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
     space_info_callback[space_info_current_number] = win_contact_show;
@@ -224,7 +224,7 @@ void win_main_update(void) {
     snprintf(keymaster_window_buffer, BUFFER_SIZE,
         key_masters->length > 1 ? "Keymasters list" : "Keymaster");
     /* snprintf(keymaster_window_subtitle_buffer, BUFFER_SIZE, "keymaster info about %s", space_name_buffer); */
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Keymaster section added : %i", space_info_current_number);
+    DEBUG("Keymaster section added : %i", space_info_current_number);
     space_info_title[space_info_current_number] = keymaster_window_buffer;
     space_info_subtitle[space_info_current_number] = NULL;
     space_info_callback[space_info_current_number] = win_keymasters_show;

@@ -22,7 +22,7 @@ static SimpleMenuItem s_contact_menu_items[NUMBER_OF_CONTACT_ITEMS];
  * ------------------------------------------------------------------------
  */
 static void window_load (Window *window) {
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Launching window loading.");
+  DEBUG("Launching window loading.");
 
   for (uint32_t i = 0; i < contacts_section->current; ++i) {
     s_contact_menu_items[i] = (SimpleMenuItem) {
@@ -57,7 +57,7 @@ void win_contact_show(void) {
 }
 
 void win_contact_init(void) {
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "CREATING NEW WINDOW : contact_window");
+  DEBUG("CREATING NEW WINDOW : contact_window");
   s_window = window_create();
 
   window_set_window_handlers(s_window, (WindowHandlers) {

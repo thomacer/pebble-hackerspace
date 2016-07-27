@@ -1,6 +1,7 @@
 #pragma once
 #include <pebble.h>
 #include "../libs/pebble-assist.h"
+#include "../libs/log.h"
 #include "../globals.h"
 
 extern Contacts* contacts_section;
