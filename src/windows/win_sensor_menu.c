@@ -16,16 +16,11 @@ static void draw_sensor (int index, void* context) {
   win_sensor_show((void*) sensors_array->array[index]);
 }
 
-static void window_load (Window* window) {}
-static void window_unload (Window* window) {}
-
 static void window_appear (Window* window) {
   number_of_sensors = sensors_array->current;
   s_sensors_menu = malloc(sizeof(SimpleMenuItem) * number_of_sensors);
   s_title_array = malloc(sizeof(char*) * number_of_sensors);
   s_subtitle_array = malloc(sizeof(char*) * number_of_sensors);
-
-
 
   uint32_t count = 0;
   for (uint32_t i = 0; i < number_of_sensors; ++i) {
@@ -66,10 +61,8 @@ void win_sensor_menu_show(void) {
 void win_sensor_menu_init(void) {
   s_window = window_create();
   window_set_window_handlers(s_window, (WindowHandlers) {
-    .load = window_load,
     .appear = window_appear,
     .disappear = window_disappear,
-    .unload = window_unload,
   });
   win_sensor_init();
 }
