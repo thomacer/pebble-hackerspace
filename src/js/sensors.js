@@ -34,7 +34,7 @@ class Sensors {
      * @param {index} : Index in that array.
      * @param {callback} : function called when done.
      */
-    _SendPeopleNowPresentObject (obj, index, length, callback) {
+    _SendPeopleNowPresentObject (obj, index, array, callback) {
         const self = this;
         async.series([
             (callback) => {
@@ -42,12 +42,13 @@ class Sensors {
                     'KEY_TYPE' : app.KEY_SENSOR_PEOPLE_NOW_PRESENT,
                     'KEY_SUBTYPE' : app.KEY_SENSOR_PEOPLE_NOW_PRESENT,
                     'KEY_INDEX' : index,
-                    'KEY_LENGTH' : length,
+                    'KEY_LENGTH' : array.length,
                     'KEY_VALUE' : obj['value'],
                     'KEY_LOCATION' : obj['location'],
                     'KEY_NAME' : obj['name'],
                     'KEY_DESCRIPTION' : obj['description'],
                 };
+                console.log('log : ' + JSON.stringify(formatedObject));
                 utils.sendToPebble(formatedObject, callback);
             }, (callback) => {
                 if (obj['value'] && obj['names']) {
