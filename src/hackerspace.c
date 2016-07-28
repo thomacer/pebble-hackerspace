@@ -146,6 +146,21 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
 
         break;
       }
+      case KEY_CONTACT_KEYMASTER: {
+        if (!key_masters) {
+          uint32_t length = (uint32_t) dict_find(iterator, KEY_LENGTH)->value->uint32;
+          key_masters = SecureArray_new(length);
+        }
+
+        key_masters->add(key_masters, KeyMaster_new(
+          GET_CSTRING(iterator, KEY_NAME),
+          GET_CSTRING(iterator, KEY_NICK),
+          GET_CSTRING(iterator, KEY_PHONE),
+          GET_CSTRING(iterator, KEY_EMAIL),
+          GET_CSTRING(iterator, KEY_TWITTER)
+        ));
+        break;
+      }
       case KEY_SENSOR: {
         LOG("KEY_SENSOR, creating new array.");
         if (sensors_array) {
