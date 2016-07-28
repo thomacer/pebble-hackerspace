@@ -1,0 +1,70 @@
+{
+    "api": "0.13",
+    "space": "Urlab",
+    "contact": {
+        "irc": "irc://chat.freenode.net#urlab",
+        "email": "contact@urlab.be",
+        "facebook": "https://www.facebook.com/urlabbxl",
+        "twitter": "@UrLabBxl",
+        "ml": "hackulb@cerkinfo.be",
+        "issue_mail": "contact@urlab.be"
+    },
+    "url": "https://urlab.be",
+    "location": {
+        "lat": 50.812915,
+        "address": "131, avenue Buyl, 1050, Bruxelles, Belgium",
+        "lon": 4.384396
+    },
+    "state": {
+        "lastchange": 1467273002.674091,
+        "open": false,
+        "icon": {
+            "open": "https://urlab.be/static/img/space-invaders-open.png",
+            "closed": "https://urlab.be/static/img/space-invaders.png"
+        }
+    },
+    "sensors" : {
+        "people_now_present" : [
+            {
+                "value": 4,
+                "name": "Main",
+                "location": "Inside",
+                "description": "Name of the people present in the space.",
+                "names": ["xx:xx:xx:40:24", "xx:xx:xx:a2:32", "xx:xx:xx:b1:3a", "xx:xx:xx:55:75"]
+            }
+        ], "account_balance": [
+            {
+                "value": 440,
+                "unit": "€"
+            } 
+        ], "temperature": [
+            {
+                "value": 24,
+                "unit": "C",
+                "location": "Inside"
+            },
+            {
+                "value": 22,
+                "unit": "C",
+                "location": "Outside"
+            }
+        ], "beverage_supply": [
+            {
+                "value": 16,
+                "unit": "crt",
+                "name": "Mate",
+                "location": "Kitchen"
+            } 
+        ],
+        "power_consumption": [
+            {
+                "value": 574.8,
+                "unit": "W",
+                "location": "Space"
+            }
+        ]
+    }, "contact": {
+        "irc": "#test",
+        "ml": "test@test.com"
+    }
+}
