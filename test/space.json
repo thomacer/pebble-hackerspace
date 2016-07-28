@@ -7,7 +7,19 @@
         "facebook": "https://www.facebook.com/urlabbxl",
         "twitter": "@UrLabBxl",
         "ml": "hackulb@cerkinfo.be",
-        "issue_mail": "contact@urlab.be"
+        "issue_mail": "contact@urlab.be",
+        "keymasters": [
+        {
+            "name": "Test",
+            "irc_nick": "the_test"
+        },
+        {
+            "name": "Testify",
+            "irc_nick": "testify",
+            "email": "testify@urlab.be"
+        }
+
+        ]
     },
     "url": "https://urlab.be",
     "location": {
@@ -63,8 +75,5 @@
                 "location": "Space"
             }
         ]
-    }, "contact": {
-        "irc": "#test",
-        "ml": "test@test.com"
     }
 }
