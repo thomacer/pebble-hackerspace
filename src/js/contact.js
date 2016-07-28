@@ -83,7 +83,7 @@ class Contact {
 
         if (self.obj['keymasters']) {
             functions.push((cb) => {
-                self._keymasters(self.obj['beverage_supply'], cb);
+                self._keymasters(self.obj['keymasters'], cb);
             });
         }
 
