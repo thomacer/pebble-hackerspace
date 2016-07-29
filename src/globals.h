@@ -7,13 +7,16 @@
 
 #define BUFFER_SIZE 32
 
-/* Defined in the win_sensor_menu file.  */
+/* Defined in the win_keymasters file. */
+extern SecureArray* key_masters;
+
+/* Defined in the win_sensor_menu file. */
 extern SecureArray* sensors_array;
 
-/* Defined in the win_contact file.  */
+/* Defined in the win_contact file. */
 extern Contacts* contacts_section;
 
-/* Defined in the win_basic file.  */
+/* Defined in the win_basic file. */
 extern BasicInfo* basic_info;
 
 /* Keep track of the hackerspace name */

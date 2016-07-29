@@ -220,8 +220,10 @@ void win_main_update(void) {
 
   if (key_masters) {
     static char keymaster_window_buffer[BUFFER_SIZE];
+    /* static char keymaster_window_subtitle_buffer[BUFFER_SIZE]; */
     snprintf(keymaster_window_buffer, BUFFER_SIZE,
         key_masters->length > 1 ? "Keymasters list" : "Keymaster");
+    /* snprintf(keymaster_window_subtitle_buffer, BUFFER_SIZE, "keymaster info about %s", space_name_buffer); */
     DEBUG("Keymaster section added : %i", space_info_current_number);
     space_info_title[space_info_current_number] = keymaster_window_buffer;
     space_info_subtitle[space_info_current_number] = NULL;

@@ -17,5 +17,3 @@ typedef struct KeyMaster {
 } KeyMaster;
 
 KeyMaster* KeyMaster_new (char*, char*, char*, char*, char*);
-
-

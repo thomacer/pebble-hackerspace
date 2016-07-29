@@ -25,8 +25,10 @@ static void window_appear (Window* window) {
   uint32_t count = 0;
   for (uint32_t i = 0; i < number_of_sensors; ++i) {
     Sensor* tmp = (Sensor*) sensors_array->array[i];
+
     s_sensors_menu[i] = tmp->menu(sensors_array->array[i]);
     s_sensors_menu[i].callback = draw_sensor;
+
     ++count;
   }
 

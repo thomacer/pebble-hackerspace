@@ -5,7 +5,6 @@ SecureArray* key_masters = NULL;
 static Window* s_window = NULL;
 static SimpleMenuLayer* s_menu_layer = NULL;
 
-static uint32_t number_of_keymasters = 0;
 static SimpleMenuItem* key_item = NULL;
 static SimpleMenuSection menu_section[1];
 
@@ -13,14 +12,11 @@ static void draw_keymaster (int index, void* context) {
   /* win_keymaster_show((void*) key_masters->array[index]); */
 }
 
-static void window_load (Window* window) {}
-static void window_unload (Window* window) {}
-
 static void window_appear (Window* window) {
   key_item = malloc(sizeof(SimpleMenuItem) * key_masters->current);
 
   uint32_t count = 0;
-  for (uint32_t i = 0; i < number_of_keymasters; ++i) {
+  for (uint32_t i = 0; i < key_masters->current; ++i) {
     if (key_masters->array[i] == NULL) {
       continue;
     }
@@ -58,10 +54,8 @@ void win_keymasters_show(void) {
 void win_keymasters_init(void) {
   s_window = window_create();
   window_set_window_handlers(s_window, (WindowHandlers) {
-    .load = window_load,
     .appear = window_appear,
     .disappear = window_disappear,
-    .unload = window_unload,
   });
 }
 
