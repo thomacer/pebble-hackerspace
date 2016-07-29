@@ -2,6 +2,8 @@
 
 static Window* window;
 
+static GBitmap* urlab_logo;
+
 static ScrollLayer* scroll_layer;
 
 static Layer* image_layer;
@@ -13,7 +15,9 @@ static void image_layer_update (Layer* layer, GContext* ctx) {
   graphics_draw_bitmap_in_rect(ctx, urlab_logo, gbitmap_get_bounds(urlab_logo));
 }
 
-static void window_load(Window* window) {
+static void window_appear(Window* window) {
+  urlab_logo = gbitmap_create_with_resource(RESOURCE_ID_URLAB_LOGO);
+
   Layer* window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
@@ -47,7 +51,8 @@ static void window_load(Window* window) {
   scroll_layer_set_content_size(scroll_layer, GSize(bounds.size.w, image_bound.size.h + bounds.size.h / 2));
 }
 
-static void window_unload(Window *window) {
+static void window_disappear(Window *window) {
+  gbitmap_destroy(urlab_logo);
   layer_destroy(image_layer);
   text_layer_destroy(text_layer);
   scroll_layer_destroy(scroll_layer);
@@ -60,8 +65,8 @@ void win_about_show(void) {
 void win_about_init(void) {
   window = window_create();
   window_set_window_handlers(window, (WindowHandlers) {
-    .load = window_load,
-    .unload = window_unload,
+    .appear = window_appear,
+    .disappear = window_disappear,
   });
 }
 
