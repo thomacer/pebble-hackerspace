@@ -64,7 +64,7 @@ static uint16_t menu_get_num_rows_callback(MenuLayer* menu_layer, uint16_t secti
  * @param {data} :
  */
 static int16_t menu_get_header_height_callback(MenuLayer* menu_layer, uint16_t section_index, void* data) {
-    return MENU_CELL_BASIC_HEADER_HEIGHT;
+  return PBL_IF_RECT_ELSE(MENU_CELL_BASIC_HEADER_HEIGHT, 0);
 }
 
 /* @desc Get cell size.
@@ -81,6 +81,7 @@ static int16_t menu_get_cell_height_callback(MenuLayer *menu_layer, MenuIndex *c
  * @param {data} :
  */
 static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, uint16_t section_index, void* data) {
+#ifndef PBL_ROUND
     switch (section_index) {
         case 0: {
           static char space_state[32];
@@ -108,6 +109,7 @@ static void menu_draw_header_callback(GContext* ctx, const Layer* cell_layer, ui
           break;
         }
     }
+#endif
 }
 
 /* @desc Draw items in the section.

@@ -33,7 +33,9 @@ static void window_appear (Window* window) {
   }
 
   s_sensors_menu_section[0] = (SimpleMenuSection) {
-    .title = "Sensors",
+    .title = PBL_IF_RECT_ELSE(
+        number_of_sensors > 1 ? "Sensors" : "Sensor",
+        NULL),
     .num_items = count,
     .items = s_sensors_menu,
   };

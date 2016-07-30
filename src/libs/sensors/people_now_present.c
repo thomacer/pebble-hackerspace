@@ -118,7 +118,7 @@ void PeopleNowPresent_draw (Window* window, void* s) {
   }
 
   self->menu_sections[0] = (SimpleMenuSection) {
-    .title = "People now present",
+    .title = PBL_IF_RECT_ELSE("People now present", NULL),
     .num_items = self->value,
     .items = self->menu_items,
   };

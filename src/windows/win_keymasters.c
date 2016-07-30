@@ -28,7 +28,9 @@ static void window_appear (Window* window) {
   }
 
   menu_section[0] = (SimpleMenuSection) {
-    .title =  count > 1 ? "Key masters" : "Key master",
+    .title = PBL_IF_RECT_ELSE(
+        count > 1 ? "Key masters" : "Key master",
+        NULL),
     .num_items = count,
     .items = key_item,
   };
