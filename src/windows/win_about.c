@@ -6,7 +6,6 @@ static GBitmap* urlab_logo;
 
 static ScrollLayer* scroll_layer;
 
-/* static Layer* image_layer; */
 static BitmapLayer* image_layer;
 
 static TextLayer* text_layer;
@@ -26,9 +25,6 @@ static void window_appear(Window* window) {
 
   urlab_logo = gbitmap_create_with_resource(RESOURCE_ID_URLAB_LOGO);
   GRect image_bound = gbitmap_get_bounds(urlab_logo);
-  /* image_layer = layer_create(image_bound); */
-  /* layer_add_child(window_layer, image_layer); */
-  /* layer_set_update_proc(image_layer, image_layer_update); */
 
   image_layer = bitmap_layer_create(GRect(0, 0, bounds.size.w, image_bound.size.h));
   bitmap_layer_set_bitmap(image_layer, urlab_logo);
