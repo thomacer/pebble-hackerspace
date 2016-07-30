@@ -90,16 +90,16 @@ SimpleMenuItem Radiation_menu (void* s) {
 
   switch (self->subtype) {
     case KEY_SENSOR_RADIATION_ALPHA:
-      result.icon = alpha_icon;
+      result.icon = get_icon(RESOURCE_ID_ALPHA_ICON);
       break;
     case KEY_SENSOR_RADIATION_BETA:
-      result.icon = beta_icon;
+      result.icon = get_icon(RESOURCE_ID_BETA_ICON);
       break;
     case KEY_SENSOR_RADIATION_GAMMA:
-      result.icon = gamma_icon;
+      result.icon = get_icon(RESOURCE_ID_GAMMA_ICON);
       break;
     case KEY_SENSOR_RADIATION_BETAGAMMA:
-      result.icon = betagamma_icon;
+      result.icon = get_icon(RESOURCE_ID_BETAGAMMA_ICON);
       break;
     default:
       break;

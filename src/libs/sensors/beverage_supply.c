@@ -78,7 +78,7 @@ SimpleMenuItem BeverageSupply_menu (void* s) {
   SimpleMenuItem result = {
     .title = "Beverage Supply",
     .subtitle = t->formated_value,
-    .icon = drink_icon,
+    .icon = get_icon(RESOURCE_ID_DRINK_ICON),
     .callback = NULL,
   };
 

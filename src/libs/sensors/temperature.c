@@ -78,7 +78,7 @@ SimpleMenuItem Temperature_menu (void* s) {
   SimpleMenuItem result = {
     .title = "Temperature",
     .subtitle = t->formated_value,
-    .icon = thermometer_icon,
+    .icon = get_icon(RESOURCE_ID_THERMOMETER_ICON),
     .callback = NULL,
   };
 

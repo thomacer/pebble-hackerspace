@@ -78,7 +78,7 @@ SimpleMenuItem AccountBalance_menu (void* s) {
   SimpleMenuItem result = {
     .title = "Account Balance",
     .subtitle = t->formated_value,
-    .icon = money_icon,
+    .icon = get_icon(RESOURCE_ID_MONEY_ICON),
     .callback = NULL,
   };
 

@@ -78,7 +78,7 @@ SimpleMenuItem Humidity_menu (void* s) {
   SimpleMenuItem result = {
     .title = "Humidity",
     .subtitle = t->formated_value,
-    .icon = humidity_icon,
+    .icon = get_icon(RESOURCE_ID_HUMIDITY_ICON),
     .callback = NULL,
   };
 

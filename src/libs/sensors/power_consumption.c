@@ -78,7 +78,7 @@ SimpleMenuItem PowerConsumption_menu (void* s) {
   SimpleMenuItem result = {
     .title = "Power Consumption",
     .subtitle = t->formated_value,
-    .icon = lightning_icon,
+    .icon = get_icon(RESOURCE_ID_LIGHTNING_ICON),
     .callback = NULL,
   };
 

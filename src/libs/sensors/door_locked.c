@@ -63,7 +63,7 @@ SimpleMenuItem DoorLocked_menu (void* s) {
   SimpleMenuItem result = {
     .title = "Door locked",
     .subtitle = self->formated_value,
-    .icon = door_icon,
+    .icon = get_icon(RESOURCE_ID_KEY_ICON),
     .callback = NULL,
   };
 

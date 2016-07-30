@@ -39,7 +39,7 @@ static SimpleMenuItem KeyMaster_menu (KeyMaster* self) {
   }
 
   return (SimpleMenuItem) {
-    .icon = door_icon,
+    .icon = get_icon(RESOURCE_ID_KEY_ICON),
     .title = title,
   };
 }

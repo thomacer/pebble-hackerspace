@@ -79,7 +79,7 @@ SimpleMenuItem PeopleNowPresent_menu (void* s) {
   SimpleMenuItem result = {
     .title = "People now present",
     .subtitle = NULL,
-    .icon = person_icon,
+    .icon = get_icon(RESOURCE_ID_PERSON_ICON),
     .callback = NULL,
   };
 

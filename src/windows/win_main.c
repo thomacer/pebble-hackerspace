@@ -237,8 +237,6 @@ void win_main_update(void) {
 void win_main_init(void) {
   strcpy(space_name_buffer, "Hackerspace");
 
-  load_icons();
-
   // Section 0 : SpaceAPI basic info
   win_basic_init();
   // Section 1 : SpaceAPI info

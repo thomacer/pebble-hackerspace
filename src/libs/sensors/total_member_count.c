@@ -63,7 +63,7 @@ SimpleMenuItem TotalMemberCount_menu (void* s) {
   SimpleMenuItem result = {
     .title = "Total member count",
     .subtitle = self->formated_value,
-    .icon = person_icon,
+    .icon = get_icon(RESOURCE_ID_PERSON_ICON),
     .callback = NULL,
   };
 

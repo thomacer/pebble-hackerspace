@@ -2,17 +2,18 @@
 
 #include <pebble.h>
 
-extern GBitmap* door_icon;
-extern GBitmap* thermometer_icon;
-extern GBitmap* person_icon;
-extern GBitmap* humidity_icon;
-extern GBitmap* lightning_icon;
-extern GBitmap* money_icon;
-extern GBitmap* drink_icon;
-extern GBitmap* alpha_icon;
-extern GBitmap* beta_icon;
-extern GBitmap* gamma_icon;
-extern GBitmap* betagamma_icon;
+extern GBitmap* RESOURCE_ID_THERMOMETER_ICON_VAR;
+extern GBitmap* RESOURCE_ID_KEY_ICON_VAR;
+extern GBitmap* RESOURCE_ID_PERSON_ICON_VAR;
+extern GBitmap* RESOURCE_ID_HUMIDITY_ICON_VAR;
+extern GBitmap* RESOURCE_ID_LIGHTNING_ICON_VAR;
+extern GBitmap* RESOURCE_ID_MONEY_ICON_VAR;
+extern GBitmap* RESOURCE_ID_DRINK_ICON_VAR;
+extern GBitmap* RESOURCE_ID_ALPHA_ICON_VAR;
+extern GBitmap* RESOURCE_ID_BETA_ICON_VAR;
+extern GBitmap* RESOURCE_ID_GAMMA_ICON_VAR;
+extern GBitmap* RESOURCE_ID_BETAGAMMA_ICON_VAR;
 
-void load_icons ();
-void free_icons ();
+#define get_icon(id) id ## _VAR ? id ## _VAR : gbitmap_create_with_resource(id)
+
+void free_icons();
