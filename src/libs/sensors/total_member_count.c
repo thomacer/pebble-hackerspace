@@ -76,6 +76,18 @@ SimpleMenuItem TotalMemberCount_menu (void* s) {
   return result;
 }
 
-void TotalMemberCount_draw (Window* window, void* s) { }
+void TotalMemberCount_draw (Window* window, void* s) {
+  TotalMemberCount* self = (TotalMemberCount*) s;
 
-void TotalMemberCount_destroy (void* s) { }
+  self->layers = draw_basic(window,
+    "Member count : ",
+    self->formated_value,
+    self->name,
+    self->location,
+    self->description);
+
+}
+
+void TotalMemberCount_destroy (void* s) {
+  free_basic(((TotalMemberCount*) s)->layers);
+}

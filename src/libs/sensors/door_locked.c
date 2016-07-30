@@ -76,6 +76,17 @@ SimpleMenuItem DoorLocked_menu (void* s) {
   return result;
 }
 
-void DoorLocked_draw (Window* window, void* s) { }
+void DoorLocked_draw (Window* window, void* s) {
+  DoorLocked* self = (DoorLocked*) s;
 
-void DoorLocked_destroy (void* s) { }
+  self->layers = draw_basic(window,
+    "Lock status of the door : ",
+    self->formated_value,
+    self->name,
+    self->location,
+    self->description);
+}
+
+void DoorLocked_destroy (void* s) {
+  free_basic(((DoorLocked*) s)->layers);
+}

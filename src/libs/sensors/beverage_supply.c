@@ -91,6 +91,17 @@ SimpleMenuItem BeverageSupply_menu (void* s) {
   return result;
 }
 
-void BeverageSupply_draw (Window* window, void* s) { }
+void BeverageSupply_draw (Window* window, void* s) {
+  BeverageSupply* self = (BeverageSupply*) s;
 
-void BeverageSupply_destroy (void* s) { }
+  self->layers = draw_basic(window,
+    "Beverage supply",
+    self->formated_value,
+    self->name,
+    self->location,
+    self->description);
+}
+
+void BeverageSupply_destroy (void* s) {
+  free_basic(((BeverageSupply*) s)->layers);
+}

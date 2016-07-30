@@ -1,6 +1,7 @@
 #pragma once
 #include <pebble.h>
 #include "./sensors.h"
+#include "./common.h"
 #include "./../../icons.h"
 
 /* @desc : BeverageSupply object according to the spaceAPI specification.
@@ -30,6 +31,8 @@ typedef struct {
     // Additional info.
     char* unit;
     char formated_value[32];
+
+    TextLayer** layers;
 } BeverageSupply;
 
 BeverageSupply* BeverageSupply_new (uint32_t, char*, char*, char*, char*);

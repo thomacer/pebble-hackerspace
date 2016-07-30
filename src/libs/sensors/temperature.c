@@ -91,6 +91,17 @@ SimpleMenuItem Temperature_menu (void* s) {
   return result;
 }
 
-void Temperature_draw (Window* window, void* s) { }
+void Temperature_draw (Window* window, void* s) {
+  Temperature* self = (Temperature*) s;
 
-void Temperature_destroy (void* s) { }
+  self->layers = draw_basic(window,
+    "Your space temperature : ",
+    self->formated_value,
+    self->name,
+    self->location,
+    self->description);
+}
+
+void Temperature_destroy (void* s) {
+  free_basic(((Temperature*) s)->layers);
+}

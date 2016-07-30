@@ -1,6 +1,7 @@
 #pragma once
 #include <pebble.h>
 #include "./sensors.h"
+#include "./common.h"
 #include "../../icons.h"
 
 /* @desc : TotalMemberCount object according to the spaceAPI specification.
@@ -28,6 +29,8 @@ typedef struct {
 
     // Additional info.
     char formated_value[32];
+
+    TextLayer** layers;
 } TotalMemberCount;
 
 TotalMemberCount* TotalMemberCount_new (uint32_t, char*, char*, char*);

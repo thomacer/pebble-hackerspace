@@ -1,6 +1,7 @@
 #pragma once
 #include <pebble.h>
 #include "./sensors.h"
+#include "./common.h"
 
 /* @desc : Barometer object according to the spaceAPI specification.
  *
@@ -29,6 +30,8 @@ typedef struct {
     // Additional info.
     char* unit;
     char formated_value[32];
+
+    TextLayer** layers;
 } Barometer;
 
 Barometer* Barometer_new (uint32_t, char*, char*, char*, char*);

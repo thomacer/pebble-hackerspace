@@ -91,6 +91,17 @@ SimpleMenuItem Humidity_menu (void* s) {
   return result;
 }
 
-void Humidity_draw (Window* window, void* s) { }
+void Humidity_draw (Window* window, void* s) {
+  Humidity* self = (Humidity*) s;
 
-void Humidity_destroy (void* s) { }
+  self->layers = draw_basic(window,
+    "humidity in the space : ",
+    self->formated_value,
+    self->name,
+    self->location,
+    self->description);
+}
+
+void Humidity_destroy (void* s) {
+  free_basic(((Humidity*) s)->layers);
+}

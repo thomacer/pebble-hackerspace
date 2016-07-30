@@ -91,6 +91,18 @@ SimpleMenuItem Barometer_menu (void* s) {
   return result;
 }
 
-void Barometer_draw (Window* window, void* s) { }
+void Barometer_draw (Window* window, void* s) {
+  Barometer* self = (Barometer*) s;
 
-void Barometer_destroy (void* s) { }
+  self->layers = draw_basic(window,
+    "Barometer value : ",
+    self->formated_value,
+    self->name,
+    self->location,
+    self->description);
+
+}
+
+void Barometer_destroy (void* s) {
+  free_basic(((Barometer*) s)->layers);
+}

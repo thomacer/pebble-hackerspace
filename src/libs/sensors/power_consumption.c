@@ -94,49 +94,16 @@ SimpleMenuItem PowerConsumption_menu (void* s) {
 void PowerConsumption_draw (Window* window, void* s) {
   PowerConsumption* self = s;
 
-  Layer* window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_bounds(window_layer);
-
-  self->title_layer = text_layer_create(GRect(0, 0, bounds.size.w, bounds.size.h / 6));
-  text_layer_set_text(self->title_layer, "Your space power consumption is : ");
-  text_layer_set_text_alignment(self->title_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(self->title_layer));
-
-  self->power_layer = text_layer_create(GRect(0, bounds.size.h / 6, bounds.size.w, bounds.size.h / 6));
-  text_layer_set_text(self->power_layer, self->formated_value);
-  text_layer_set_text_alignment(self->power_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(self->power_layer));
-
-  // Name
-  self->info_name_layer = text_layer_create(GRect(0, 2 * bounds.size.h / 6, bounds.size.w / 2, bounds.size.h / 6));
-  text_layer_set_text(self->info_name_layer, "Name : ");
-  text_layer_set_text_alignment(self->info_name_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(self->info_name_layer));
-
-  self->name_layer = text_layer_create(GRect(bounds.size.w / 2, 2 * bounds.size.h / 6, bounds.size.w / 2, bounds.size.h / 6));
-  text_layer_set_text(self->name_layer, self->name ? self->name : "Unknown");
-  text_layer_set_text_alignment(self->name_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(self->name_layer));
-
-  // Location
-  self->info_location_layer = text_layer_create(GRect(0, 3 * bounds.size.h / 6, bounds.size.w / 2, bounds.size.h / 6));
-  text_layer_set_text(self->info_location_layer, "Location : ");
-  text_layer_set_text_alignment(self->info_location_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(self->info_location_layer));
-
-  self->location_layer = text_layer_create(GRect(bounds.size.w / 2, 3 * bounds.size.h / 6, bounds.size.w / 2, bounds.size.h / 6));
-  text_layer_set_text(self->location_layer, self->location ? self->location : "Unknown");
-  text_layer_set_text_alignment(self->location_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(self->location_layer));
+  self->layers = draw_basic (window,
+    "Your space power consumption is : ",
+    self->formated_value,
+    self->name,
+    self->location,
+    self->description);
 }
 
 void PowerConsumption_destroy (void* s) {
   PowerConsumption* self = s;
 
-  text_layer_destroy(self->title_layer);
-  text_layer_destroy(self->power_layer);
-  text_layer_destroy(self->info_name_layer);
-  text_layer_destroy(self->name_layer);
-  text_layer_destroy(self->info_location_layer);
-  text_layer_destroy(self->location_layer);
+  free_basic (self->layers);
 }
