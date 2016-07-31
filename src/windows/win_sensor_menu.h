@@ -3,7 +3,7 @@
 #include <pebble.h>
 
 #include "../globals.h"
-#include "./win_sensor.h"
+#include "./win_object.h"
 #include "../libs/functionnal.h"
 #include "../libs/sensors/sensors.h"
 

@@ -13,7 +13,7 @@ static char** s_title_array = NULL;
 static char** s_subtitle_array = NULL;
 
 static void draw_sensor (int index, void* context) {
-  win_sensor_show((void*) sensors_array->array[index]);
+  win_object_show((void*) sensors_array->array[index]);
 }
 
 static void window_appear (Window* window) {
@@ -75,11 +75,11 @@ void win_sensor_menu_init(void) {
     .appear = window_appear,
     .disappear = window_disappear,
   });
-  win_sensor_init();
+  win_object_init();
 }
 
 void win_sensor_menu_deinit(void) {
-  win_sensor_deinit();
+  win_object_deinit();
 
   if (sensors_array) {
     sensors_array->free(sensors_array, lambda(void, (void* s) {
