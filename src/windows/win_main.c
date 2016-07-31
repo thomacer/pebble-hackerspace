@@ -9,10 +9,9 @@ static MenuLayer* s_menu_layer;
  */
 static uint16_t space_info_current_number = 0;
 
-#define MAX_NUMBER_OF_MENU 4
+#define MAX_NUMBER_OF_MENU 3
 static char* space_info_title[MAX_NUMBER_OF_MENU];
 static char* space_info_subtitle[MAX_NUMBER_OF_MENU];
-/* static char** space_info_icons[MAX_NUMBER_OF_MENU]; */
 static void (*space_info_callback[MAX_NUMBER_OF_MENU]) () = {};
 
 /* ------------------------------------------------------------------------

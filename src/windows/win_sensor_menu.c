@@ -17,10 +17,6 @@ static void draw_sensor (int index, void* context) {
 }
 
 static void window_appear (Window* window) {
-  if (s_sensors_menu && s_title_array && s_subtitle_array) {
-    return;
-  }
-
   number_of_sensors = sensors_array->current;
 
   s_sensors_menu = malloc(sizeof(SimpleMenuItem) * number_of_sensors);
@@ -45,24 +41,30 @@ static void window_appear (Window* window) {
     .items = s_sensors_menu,
   };
 
-  Layer* window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_frame(window_layer);
+  if (s_menu_layer == NULL) {
+    Layer* window_layer = window_get_root_layer(window);
+    GRect bounds = layer_get_frame(window_layer);
 
-  s_menu_layer = simple_menu_layer_create(bounds, window, s_sensors_menu_section, 1, NULL);
-
-  layer_add_child(window_layer, simple_menu_layer_get_layer(s_menu_layer));
+    s_menu_layer = simple_menu_layer_create(bounds, window, s_sensors_menu_section, 1, NULL);
+    layer_add_child(window_layer, simple_menu_layer_get_layer(s_menu_layer));
+  }
 }
 
 static void window_disappear (Window* window) {
+  MEM_STATE();
   if (!window_stack_contains_window(window)) {
     simple_menu_layer_destroy(s_menu_layer);
-    free(s_sensors_menu);
-    s_sensors_menu = NULL;
-    free(s_title_array);
-    s_title_array = NULL;
-    free(s_subtitle_array);
-    s_subtitle_array = NULL;
+    s_menu_layer = NULL;
   }
+
+  free(s_sensors_menu);
+  s_sensors_menu = NULL;
+  free(s_title_array);
+  s_title_array = NULL;
+  free(s_subtitle_array);
+  s_subtitle_array = NULL;
+
+  MEM_STATE();
 }
 
 void win_sensor_menu_show(void) {

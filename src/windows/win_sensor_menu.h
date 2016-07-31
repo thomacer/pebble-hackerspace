@@ -5,6 +5,7 @@
 #include "../globals.h"
 #include "./win_object.h"
 #include "../libs/functionnal.h"
+#include "../libs/log.h"
 #include "../libs/sensors/sensors.h"
 
 extern SecureArray* sensors_array;

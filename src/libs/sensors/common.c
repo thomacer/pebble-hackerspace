@@ -11,7 +11,6 @@ TextLayer** draw_basic (Window* window,
   Layer* window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-
   TextLayer** layers = malloc(sizeof(TextLayer*) * BASIC_TEXT_LAYER_NUMBER);
 
   int16_t y_offset = 0;
