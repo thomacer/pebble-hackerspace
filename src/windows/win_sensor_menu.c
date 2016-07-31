@@ -17,7 +17,12 @@ static void draw_sensor (int index, void* context) {
 }
 
 static void window_appear (Window* window) {
+  if (s_sensors_menu && s_title_array && s_subtitle_array) {
+    return;
+  }
+
   number_of_sensors = sensors_array->current;
+
   s_sensors_menu = malloc(sizeof(SimpleMenuItem) * number_of_sensors);
   s_title_array = malloc(sizeof(char*) * number_of_sensors);
   s_subtitle_array = malloc(sizeof(char*) * number_of_sensors);
@@ -49,13 +54,15 @@ static void window_appear (Window* window) {
 }
 
 static void window_disappear (Window* window) {
-  simple_menu_layer_destroy(s_menu_layer);
-  free(s_sensors_menu);
-  s_sensors_menu = NULL;
-  free(s_title_array);
-  s_title_array = NULL;
-  free(s_subtitle_array);
-  s_subtitle_array = NULL;
+  if (!window_stack_contains_window(window)) {
+    simple_menu_layer_destroy(s_menu_layer);
+    free(s_sensors_menu);
+    s_sensors_menu = NULL;
+    free(s_title_array);
+    s_title_array = NULL;
+    free(s_subtitle_array);
+    s_subtitle_array = NULL;
+  }
 }
 
 void win_sensor_menu_show(void) {
