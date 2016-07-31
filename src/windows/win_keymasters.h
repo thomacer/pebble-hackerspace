@@ -2,6 +2,7 @@
 
 #include <pebble.h>
 #include "../globals.h"
+#include "./win_object.h"
 #include "../libs/keymaster/keymaster.h"
 #include "../libs/functionnal.h"
 #include "../libs/secure_array.h"

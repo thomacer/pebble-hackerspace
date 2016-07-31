@@ -9,10 +9,15 @@ static SimpleMenuItem* key_item = NULL;
 static SimpleMenuSection menu_section[1];
 
 static void draw_keymaster (int index, void* context) {
-  /* win_keymaster_show((void*) key_masters->array[index]); */
+  win_object_show((void*) key_masters->array[index]);
 }
 
 static void window_appear (Window* window) {
+  if (key_item) {
+    // If it's still on the window stack.
+    return;
+  }
+
   key_item = malloc(sizeof(SimpleMenuItem) * key_masters->current);
 
   uint32_t count = 0;
@@ -44,9 +49,11 @@ static void window_appear (Window* window) {
 }
 
 static void window_disappear (Window* window) {
-  simple_menu_layer_destroy(s_menu_layer);
-  free(key_item);
-  key_item = NULL;
+  if (!window_stack_contains_window(window)) {
+    simple_menu_layer_destroy(s_menu_layer);
+    free(key_item);
+    key_item = NULL;
+  }
 }
 
 void win_keymasters_show(void) {

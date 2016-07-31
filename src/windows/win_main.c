@@ -243,6 +243,7 @@ void win_main_init(void) {
   win_basic_init();
   // Section 1 : SpaceAPI info
   win_contact_init();
+  win_object_init();
   win_sensor_menu_init();
   win_keymasters_init();;
   // Section 2 : About.
@@ -259,6 +260,7 @@ void win_main_init(void) {
 void win_main_deinit(void) {
   win_basic_deinit();
   win_contact_deinit();
+  win_object_deinit();
   win_sensor_menu_deinit();
   win_keymasters_deinit();;
   win_about_deinit();

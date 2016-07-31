@@ -14,6 +14,8 @@ typedef struct KeyMaster {
     SimpleMenuItem (*menu)(struct KeyMaster*);
     void (*draw)(Window*, struct KeyMaster*);
     void (*destroy)(struct KeyMaster*);
+
+    TextLayer** layers;
 } KeyMaster;
 
 KeyMaster* KeyMaster_new (char*, char*, char*, char*, char*);
