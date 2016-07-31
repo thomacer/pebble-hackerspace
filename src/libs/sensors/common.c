@@ -65,6 +65,13 @@ TextLayer** draw_basic (Window* window,
   y_offset += text_layer_get_content_size(layers[7]).h;
   layer_add_child(window_layer, text_layer_get_layer(layers[7]));
 
+#ifdef PBL_ROUND
+  uint8_t inset = 4;
+  for (uint32_t i = 0; i < BASIC_TEXT_LAYER_NUMBER; ++i) {
+    text_layer_enable_screen_text_flow_and_paging(layers[i], inset);
+  }
+#endif
+
   return layers;
 }
 
