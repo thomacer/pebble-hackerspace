@@ -1,42 +1,45 @@
 #include "./contacts.h"
 
-Contacts* Contacts_new (uint32_t number) {
-  Contacts* c = malloc(sizeof(Contacts));
-  *c = (Contacts) {
-    .number = number,
-    .current = 0,
-    .array = malloc(sizeof(ContactItem*) * number),
+static void ContactItem_free (void* s) {
+  ContactItem* self = s;
+
+  free(self->type);
+  free(self->value);
+  free(self);
+}
+
+static SimpleMenuItem ContactItem_menu (void* s) {
+  ContactItem* self = s;
+
+  return (SimpleMenuItem) {
+    .title = self->type,
+    .subtitle = self->value,
+  };
+}
+
+ContactItem* ContactItem_new (char* type, char* value) {
+  ContactItem* r = malloc(sizeof(ContactItem));
+
+  *r = (ContactItem) {
+    .free = ContactItem_free,
+    .menu = ContactItem_menu,
+    .win_draw = NULL,
+    .win_destroy = NULL,
+    .type = NULL,
+    .value = NULL,
   };
 
-  return c;
-}
-
-void Contacts_add (Contacts* self, char* type, char* value) {
-  if (self->current < self->number) {
-    size_t type_length = strlen(type);
-    size_t value_length = strlen(value);
-
-    self->array[self->current] = malloc(sizeof(ContactItem));
-    *(self->array[self->current]) = (ContactItem) {
-      .type = malloc(sizeof(char) * type_length),
-      .value = malloc(sizeof(char) * value_length),
-    };
-
-    memcpy(self->array[self->current]->type, type, type_length);
-    memcpy(self->array[self->current]->value, value, value_length);
-
-    ++(self->current);
+  if (type) {
+    size_t length = strlen(type);
+    r->type = malloc(sizeof(char) * length);
+    memcpy(r->type, type, length);
   }
-}
 
-void Contacts_free (Contacts* self) {
-  for (uint32_t i = 0; i < self->number; ++i) {
-    if (self->array[i]) {
-      free(self->array[i]->type);
-      free(self->array[i]->value);
-      free(self->array[i]);
-    }
+  if (value) {
+    size_t length = strlen(value);
+    r->value = malloc(sizeof(char) * length);
+    memcpy(r->value, value, length);
   }
-  free(self->array);
-  free(self);
+
+  return r;
 }

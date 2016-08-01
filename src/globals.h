@@ -14,7 +14,7 @@ extern SecureArray* key_masters;
 extern SecureArray* sensors_array;
 
 /* Defined in the win_contact file. */
-extern Contacts* contacts_section;
+extern SecureArray* contacts_section;
 
 /* Defined in the win_basic file. */
 extern BasicInfo* basic_info;

@@ -207,18 +207,22 @@ void win_main_update(void) {
     ++space_info_current_number;
   }
 
-  if (contacts_section) {
+  if (contacts_section && contacts_section->current) {
     /* Creating the "Contact" menu button
      * It will acces to another window.
      */
     static char contact_window_buffer[BUFFER_SIZE];
     static char contact_window_subtitle_buffer[BUFFER_SIZE];
-    snprintf(contact_window_buffer, BUFFER_SIZE, contacts_section->number > 1 ?  "Contacts" : "Contact");
+    snprintf(contact_window_buffer, BUFFER_SIZE, contacts_section->current > 1 ?  "Contacts" : "Contact");
     snprintf(contact_window_subtitle_buffer, BUFFER_SIZE, "Contact info about %s", space_name_buffer);
     DEBUG("Contact section added : %i", space_info_current_number);
     space_info_title[space_info_current_number] = contact_window_buffer;
     space_info_subtitle[space_info_current_number] = contact_window_subtitle_buffer;
-    space_info_callback[space_info_current_number] = win_contact_show;
+    space_info_callback[space_info_current_number] = lambda(void, () {
+        win_objects_menu_show (contacts_section,
+            sensors_array->current > 1 ? "Contacts" : "Contact"
+        );
+    });
 
     ++space_info_current_number;
   }
@@ -249,7 +253,6 @@ void win_main_init(void) {
   // Section 0 : SpaceAPI basic info
   win_basic_init();
   // Section 1 : SpaceAPI info
-  win_contact_init();
   win_object_init();
   win_objects_menu_init();
   // Section 2 : About.
@@ -265,7 +268,6 @@ void win_main_init(void) {
 
 void win_main_deinit(void) {
   win_basic_deinit();
-  win_contact_deinit();
   win_object_deinit();
   win_objects_menu_deinit();;
   win_about_deinit();
@@ -273,6 +275,7 @@ void win_main_deinit(void) {
   // Globals value.
   key_masters->free(key_masters, NULL);
   sensors_array->free(sensors_array, NULL);
+  contacts_section->free(contacts_section, NULL);
 
   free_icons();
 

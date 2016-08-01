@@ -78,7 +78,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
         LOG("KEY_CONTACT");
 
         if (contacts_section) {
-          Contacts_free(contacts_section);
+          contacts_section->free(contacts_section, NULL);
         }
 
         Tuple* tmp = dict_find(iterator, KEY_LENGTH);
@@ -87,61 +87,83 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
           return;
         }
 
-        contacts_section = Contacts_new(tmp->value->uint32);
+        contacts_section = SecureArray_new(tmp->value->uint32);
 
         tmp = dict_find(iterator, KEY_CONTACT_PHONE_NUMBER);
         if (tmp) {
-          Contacts_add(contacts_section, "Phone number", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Phone number", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_SIP_ADDRESS);
         if (tmp) {
-          Contacts_add(contacts_section, "SIP address", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("SIP address", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_IRC);
         if (tmp) {
-          Contacts_add(contacts_section, "Irc", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("IRC", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_TWITTER);
         if (tmp) {
-          Contacts_add(contacts_section, "Twitter", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Twitter", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_FACEBOOK);
         if (tmp) {
-          Contacts_add(contacts_section, "Facebook", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Facebook", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_IDENTICA);
         if (tmp) {
-          Contacts_add(contacts_section, "Identica", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Identica", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_FOURSQUARE);
         if (tmp) {
-          Contacts_add(contacts_section, "Foursquare", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Foursquare", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_EMAIL);
         if (tmp) {
-          Contacts_add(contacts_section, "Email", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Email", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_MAILLING_LIST);
         if (tmp) {
-          Contacts_add(contacts_section, "Mailling list", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Mailling list", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_JABBER);
         if (tmp) {
-          Contacts_add(contacts_section, "Jabber", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Jabber", tmp->value->cstring)
+          );
         }
 
         tmp = dict_find(iterator, KEY_CONTACT_ISSUE_MAIL);
         if (tmp) {
-          Contacts_add(contacts_section, "Issue mail", tmp->value->cstring);
+          contacts_section->add(contacts_section,
+              ContactItem_new("Issue mail", tmp->value->cstring)
+          );
         }
 
         break;

@@ -2,20 +2,22 @@
 
 static Window* s_window = NULL;
 
-static void* current_object_struct = NULL;
+static PebbleObject* current_object_struct = NULL;
 
 static void window_appear (Window* window) {
-  ((Sensor*) current_object_struct)->win_draw(window, current_object_struct);
+  current_object_struct->win_draw(window, current_object_struct);
 }
 
 static void window_disappear (Window* window) {
-  ((Sensor*) current_object_struct)->win_destroy(current_object_struct);
+  current_object_struct->win_destroy(current_object_struct);
   current_object_struct = NULL;
 }
 
-void win_object_show(void* object_struct) {
-  current_object_struct = object_struct;
-  window_stack_push(s_window, true);
+void win_object_show(PebbleObject* object_struct) {
+  if (object_struct->win_draw) {
+    current_object_struct = object_struct;
+    window_stack_push(s_window, true);
+  }
 }
 
 void win_object_init (void) {
