@@ -14,6 +14,6 @@ extern GBitmap* RESOURCE_ID_BETA_ICON_VAR;
 extern GBitmap* RESOURCE_ID_GAMMA_ICON_VAR;
 extern GBitmap* RESOURCE_ID_BETAGAMMA_ICON_VAR;
 
-#define get_icon(id) id ## _VAR ? id ## _VAR : gbitmap_create_with_resource(id)
+#define get_icon(id) (id ## _VAR) ? (id ## _VAR) : (id ## _VAR = gbitmap_create_with_resource(id))
 
 void free_icons();
