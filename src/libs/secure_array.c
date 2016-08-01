@@ -41,6 +41,10 @@ static void SecureArray_free (SecureArray* self, void (*free_func)(void*)) {
         for (uint32_t i = 0; i < self->current; ++i) {
             free_func(self->array[i]);
         }
+    } else {
+         for (uint32_t i = 0; i < self->current; ++i) {
+            self->array[i]->free(self->array[i]);
+        }
     }
     free(self);
 }
@@ -49,7 +53,7 @@ SecureArray* SecureArray_new (uint32_t length) {
     SecureArray* obj = (SecureArray*) malloc(sizeof(SecureArray));
     *obj = (SecureArray) {
       .length = length,
-      .array = (void**) malloc(sizeof(void*) * length),
+      .array = (PebbleObject**) malloc(sizeof(void*) * length),
       .add = SecureArray_add,
       .get = SecureArray_get,
       .free = SecureArray_free,

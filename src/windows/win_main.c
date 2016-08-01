@@ -270,6 +270,10 @@ void win_main_deinit(void) {
   win_objects_menu_deinit();;
   win_about_deinit();
 
+  // Globals value.
+  key_masters->free(key_masters, NULL);
+  sensors_array->free(sensors_array, NULL);
+
   free_icons();
 
   window_destroy(window);

@@ -81,12 +81,5 @@ void win_objects_menu_init(void) {
 }
 
 void win_objects_menu_deinit(void) {
-  /* if (objects_array) { */
-  /*   objects_array->free(objects_array, lambda(void, (void* s) { */
-  /*     KeyMaster* self = (KeyMaster*) s; */
-  /*     self->free(self); */
-  /*   })); */
-  /* } */
-
   window_destroy(s_window);
 }

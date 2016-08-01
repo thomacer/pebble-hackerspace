@@ -1,12 +1,13 @@
 #pragma once
 
 #include <pebble.h>
+#include "./pebble_object.h"
 
 /* @desc : Data transmited by bluetooth can take some time to get to the pebble,
  *      this datastructure make sure to always know the number of element in it.
  */
 typedef struct SecureArray {
-    void** array;
+    PebbleObject** array;
     uint32_t current;
     uint32_t length;
     void (*add)(struct SecureArray*, void*);
