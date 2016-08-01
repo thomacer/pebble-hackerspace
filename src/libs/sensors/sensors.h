@@ -18,13 +18,14 @@ typedef enum {
 } t_sensors;
 
 typedef struct {
+    void (*free)(void*);
+    SimpleMenuItem (*menu)(void*);
+    void (*win_draw)(Window*, void*);
+    void (*win_destroy)(void*);
+
     t_sensors type;
     int32_t value;
     char* location;
     char* name;
     char* description;
-    void (*free)(void*);
-    SimpleMenuItem (*menu)(void*);
-    void (*win_draw)(Window*, void*);
-    void (*win_destroy)(void*);
 } Sensor;

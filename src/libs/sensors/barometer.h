@@ -16,16 +16,17 @@
  *      additional information to this sensor instance.
  */
 typedef struct {
+    void (*Barometer_free)(void*);
+    SimpleMenuItem (*Barometer_menu)(void*);
+    void (*Barometer_draw)(Window*, void*);
+    void (*Barometer_destroy)(void*);
+
     // Basic Sensor template.
     t_sensors type;
     uint32_t value;
     char* location;
     char* name;
     char* description;
-    void (*Barometer_free)(void*);
-    SimpleMenuItem (*Barometer_menu)(void*);
-    void (*Barometer_draw)(Window*, void*);
-    void (*Barometer_destroy)(void*);
 
     // Additional info.
     char* unit;

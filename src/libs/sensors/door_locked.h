@@ -16,16 +16,17 @@
  *      additional information to this sensor instance.
  */
 typedef struct {
+    void (*DoorLocked_free)(void*);
+    SimpleMenuItem (*DoorLocked_menu)(void*);
+    void (*DoorLocked_draw)(Window*, void*);
+    void (*DoorLocked_destroy)(void*);
+
     // Basic Sensor template.
     t_sensors type;
     uint32_t value;
     char* location;
     char* name;
     char* description;
-    void (*DoorLocked_free)(void*);
-    SimpleMenuItem (*DoorLocked_menu)(void*);
-    void (*DoorLocked_draw)(Window*, void*);
-    void (*DoorLocked_destroy)(void*);
 
     // Additional info.
     char formated_value[32];

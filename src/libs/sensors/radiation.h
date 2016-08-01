@@ -24,6 +24,11 @@
  *      the value field to see how to use the conversion factor.
  */
 typedef struct {
+    void (*Radiation_free)(void*);
+    SimpleMenuItem (*Radiation_menu)(void*);
+    void (*Radiation_draw)(Window*, void*);
+    void (*Radiation_destroy)(void*);
+
     // Basic Sensor template.
     t_sensors type;
     uint32_t subtype;
@@ -31,10 +36,6 @@ typedef struct {
     char* location;
     char* name;
     char* description;
-    void (*Radiation_free)(void*);
-    SimpleMenuItem (*Radiation_menu)(void*);
-    void (*Radiation_draw)(Window*, void*);
-    void (*Radiation_destroy)(void*);
 
     // Additional info.
     char* unit;

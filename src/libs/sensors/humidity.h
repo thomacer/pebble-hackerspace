@@ -17,16 +17,17 @@
  *      additional information to this sensor instance.
  */
 typedef struct {
+    void (*Humidity_free)(void*);
+    SimpleMenuItem (*Humidity_menu)(void*);
+    void (*Humidity_draw)(Window*, void*);
+    void (*Humidity_destroy)(void*);
+
     // Basic Sensor template.
     t_sensors type;
     uint32_t value;
     char* location;
     char* name;
     char* description;
-    void (*Humidity_free)(void*);
-    SimpleMenuItem (*Humidity_menu)(void*);
-    void (*Humidity_draw)(Window*, void*);
-    void (*Humidity_destroy)(void*);
 
     // Additional info.
     char* unit;
