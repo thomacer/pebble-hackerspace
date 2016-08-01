@@ -199,7 +199,11 @@ void win_main_update(void) {
     DEBUG("Added sensors menu position : %i", space_info_current_number);
     space_info_title[space_info_current_number] = sensor_menu_buffer;
     space_info_subtitle[space_info_current_number] = NULL;
-    space_info_callback[space_info_current_number] = win_sensor_menu_show;
+    space_info_callback[space_info_current_number] = lambda(void, () {
+        win_objects_menu_show (sensors_array,
+            sensors_array->current > 1 ? "Sensors" : "Sensor"
+        );
+    });
     ++space_info_current_number;
   }
 
@@ -219,14 +223,18 @@ void win_main_update(void) {
     ++space_info_current_number;
   }
 
-  if (key_masters) {
+  if (key_masters && key_masters->current) {
     static char keymaster_window_buffer[BUFFER_SIZE];
     snprintf(keymaster_window_buffer, BUFFER_SIZE,
         key_masters->length > 1 ? "Keymasters list" : "Keymaster");
     DEBUG("Keymaster section added : %i", space_info_current_number);
     space_info_title[space_info_current_number] = keymaster_window_buffer;
     space_info_subtitle[space_info_current_number] = NULL;
-    space_info_callback[space_info_current_number] = win_keymasters_show;
+    space_info_callback[space_info_current_number] = lambda(void, () {
+        win_objects_menu_show (key_masters,
+            key_masters->current > 1 ? "Keymasters" : "Keymaster"
+        );
+    });
 
     ++space_info_current_number;
   }
@@ -243,8 +251,7 @@ void win_main_init(void) {
   // Section 1 : SpaceAPI info
   win_contact_init();
   win_object_init();
-  win_sensor_menu_init();
-  win_keymasters_init();;
+  win_objects_menu_init();
   // Section 2 : About.
   win_about_init();
 
@@ -260,8 +267,7 @@ void win_main_deinit(void) {
   win_basic_deinit();
   win_contact_deinit();
   win_object_deinit();
-  win_sensor_menu_deinit();
-  win_keymasters_deinit();;
+  win_objects_menu_deinit();;
   win_about_deinit();
 
   free_icons();

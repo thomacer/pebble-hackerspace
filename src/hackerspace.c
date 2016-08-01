@@ -1,7 +1,6 @@
 #include <pebble.h>
 
 #include "./windows/win_main.h"
-#include "./windows/win_sensor_menu.h"
 #include "./libs/log.h"
 #include "./libs/basic/basic.h"
 #include "./libs/sensors/people_now_present.h"
@@ -14,6 +13,7 @@
 #include "./libs/sensors/beverage_supply.h"
 #include "./libs/sensors/total_member_count.h"
 #include "./libs/sensors/radiation.h"
+#include "./libs/keymaster/keymaster.h"
 #include "./globals.h"
 #include "./appinfo.h"
 
