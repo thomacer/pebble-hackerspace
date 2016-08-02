@@ -1,5 +1,9 @@
 # Hackerspace
 
+<a href="https://apps.getpebble.com/applications/578fc2f102f6d8b4aa0001b8">
+  <img src="http://pblweb.com/badge/578fc2f102f6d8b4aa0001b8/orange/medium/" alt="Hackerspace is available on the Pebble appstore" />
+</a>
+
 Hackerspace is an application to display the information of the 
 [SpaceAPI][](http://spaceapi.net/) on your pebble smartwatch. 
 It's the perfect app to monitor your smarthome or local hackerspace.
