@@ -70,6 +70,12 @@
     "resources": {
         "media": [
             {
+                "menuIcon": true,
+                "file": "images/space.png",
+                "name": "SPACE_LOGO",
+                "type": "bitmap"
+            },
+            {
                 "file": "images/urlab.png",
                 "name": "URLAB_LOGO",
                 "type": "bitmap"
@@ -145,7 +151,7 @@
         "chalk"
     ],
     "uuid": "a2d33e61-7bd5-4222-8187-5de924c2ff62",
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": false
     }
